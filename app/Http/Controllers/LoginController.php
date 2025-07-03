@@ -25,9 +25,14 @@ class LoginController extends Controller
     );
     if ($validator->passes()) {
       if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-        return redirect()->route('dashboard');
+        $role = Auth::user()->role;
+        if ($role === 'admin') {
+          return redirect()->route('admin.dashboard');
+        } else {
+          return redirect()->route('user.dashboard');
+        }
       } else {
-        return redirect()->route('login')->with('error', 'Either email or password incorrect!');
+        return redirect()->route('login')->with('error', 'Tài khoản hoặc mật khẩu không đúng!');
       }
     } else {
       return redirect()->route('login')->withInput()->withErrors($validator);

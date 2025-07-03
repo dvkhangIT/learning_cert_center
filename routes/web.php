@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\user\DashboardController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,8 +26,11 @@ Route::group(['middleware' => 'guest'], function () {
   Route::get('/register', [LoginController::class, 'register'])->name('register');
   Route::post('/process-register', [LoginController::class, 'processRegister'])->name('processRegister');
 });
-// Authentication <Route></Route>
+// Authentication Route
 Route::group(['middleware' => 'auth'], function () {
-  Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
   Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+  Route::get('/dashboard', [DashboardController::class, 'index'])->name('user.dashboard');
+});
+Route::group(['prefix' => 'admin', 'middleware' => 'checkRole'], function () {
+  Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 });

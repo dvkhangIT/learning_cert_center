@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel 10 Multi Auth</title>
+    <title>User - Dashboard</title>
     <link rel="stylesheet"
       href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
   </head>
@@ -55,7 +55,7 @@
     <div class="container">
       <div class="card border-0 shadow my-5">
         <div class="card-header bg-light">
-          <h3 class="h5 pt-2">Dashboard</h3>
+          <h3 class="h5 pt-2">Dashboard User</h3>
         </div>
         <div class="card-body">
           You are logged in !!
