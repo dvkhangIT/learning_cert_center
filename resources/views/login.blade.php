@@ -2,96 +2,160 @@
 <html lang="en">
 
   <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel 10 Multi Auth</title>
-    <link rel="stylesheet"
-      href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <!--favicon-->
+    <link rel="icon" href="{{ asset('') }}assets/images/favicon-32x32.png"
+      type="image/png" />
+    <!--plugins-->
+    <link href="{{ asset('assets/plugins/simplebar/css/simplebar.css') }}"
+      rel="stylesheet" />
+    <link
+      href="{{ asset('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}"
+      rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/metismenu/css/metisMenu.min.css') }}"
+      rel="stylesheet" />
+    <!-- loader-->
+    <link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet" />
+    <script src="{{ asset('assets/js/pace.min.js') }}"></script>
+    <!-- Bootstrap CSS -->
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/bootstrap-extended.css') }}"
+      rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet">
+    <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet">
+    <title>Rocker - Bootstrap 5 Admin Dashboard Template</title>
   </head>
 
-  <body class="bg-light">
-    <section class=" p-3 p-md-4 p-xl-5">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-12 col-md-9 col-lg-7 col-xl-6 col-xxl-5">
-            <div class="card border border-light-subtle rounded-4">
-              <div class="card-body p-3 p-md-4 p-xl-5">
-                <div class="row">
-                  <div class="col-12">
+  <body class="">
+    <!--wrapper-->
+    <div class="wrapper">
+      <div
+        class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-0">
+        <div class="container">
+          <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+            <div class="col mx-auto">
+              <div class="card mb-0">
+                <div class="card-body">
+                  <div class="p-4">
                     @if (Session::has('success'))
                       <div class="alert alert-success">
-                        {{ Session::get('success') }}</div>
+                        {{ Session::get('success') }}
+                      </div>
                     @endif
                     @if (Session::has('error'))
                       <div class="alert alert-danger">
-                        {{ Session::get('error') }}</div>
+                        {{ Session::get('error') }}
+                      </div>
                     @endif
-                    <div class="mb-5">
-                      <h4 class="text-center">Login Here</h4>
+                    <div class="mb-3 text-center">
+                      <img src="{{ asset('assets/images/logo.png') }}"
+                        width="60" alt="" />
                     </div>
-                  </div>
-                </div>
-                <form action="{{ route('authenticate') }}" method="POST">
-                  @csrf
-                  <div class="row gy-3 overflow-hidden">
-                    <div class="col-12">
-                      <div class="form-floating mb-3">
-                        <input type="email" value="{{ old('email') }}"
-                          class="form-control @error('email')
-                            is-invalid
-                        @enderror"
-                          name="email" id="email"
-                          placeholder="name@example.com">
-                        <label for="email" class="form-label">Email</label>
-                        @error('email')
-                          <p class="invalid-feedback">{{ $message }}</p>
-                        @enderror
-                      </div>
+                    <div class="text-center mb-4 text-uppercase">
+                      <h5 class="">đăng nhập hệ thống</h5>
                     </div>
-                    <div class="col-12">
-                      <div class="form-floating mb-3">
-                        <input type="password"
-                          class="form-control @error('password')
-                            is-invalid
-                        @enderror"
-                          name="password" id="password" value=""
-                          placeholder="Password">
-                        <label for="password"
-                          class="form-label">Password</label>
-                        @error('password')
-                          <p class="invalid-feedback">{{ $message }}</p>
-                        @enderror
-                      </div>
-                    </div>
-                    <div class="col-12">
-                      <div class="d-grid">
-                        <button class="btn bsb-btn-xl btn-primary py-3"
-                          type="submit">Log in now</button>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-                <div class="row">
-                  <div class="col-12">
-                    <hr class="mt-5 mb-4 border-secondary-subtle">
-                    <div
-                      class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-center">
-                      <a href="{{ route('register') }}"
-                        class="link-secondary text-decoration-none">Create new
-                        account</a>
+                    <div class="form-body">
+                      <form action="{{ route('authenticate') }}" method="POST"
+                        class="row g-3">
+                        @csrf
+                        <div class="col-12">
+                          <label for="inputEmailAddress"
+                            class="form-label">Email</label>
+                          <input type="email"
+                            class="form-control @error('email')
+                              error
+                          @enderror"
+                            id="inputEmailAddress" name="email"
+                            placeholder="Nhập email">
+                          @error('email')
+                            <p class="error mt-1">
+                              {{ $message }}
+                            </p>
+                          @enderror
+                        </div>
+                        <div class="col-12">
+                          <label for="inputChoosePassword"
+                            class="form-label">Mật khẩu</label>
+                          <div class="input-group" id="show_hide_password">
+                            <input type="password" name="password"
+                              class="form-control border-end-0 @error('password') error @enderror"
+                              id="inputChoosePassword"
+                              placeholder="Nhập mật khẩu">
+                            <a href="javascript:;"
+                              @error('password')
+                                style="border-color: #ea5455"
+                            @enderror
+                              class="input-group-text bg-transparent"><i
+                                class='bx bx-hide'></i>
+                            </a>
+                          </div>
+                          @error('password')
+                            <p class="error mt-1">
+                              {{ $message }}
+                            </p>
+                          @enderror
+                        </div>
+                        <div class="col-md-6">
+
+                        </div>
+                        <div class="col-md-6 text-end"> <a
+                            href="authentication-forgot-password.html">Quên mật
+                            khẩu?</a>
+                        </div>
+                        <div class="col-12">
+                          <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Đăng
+                              nhập</button>
+                          </div>
+                        </div>
+                      </form>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <!--end row-->
         </div>
       </div>
-    </section>
+    </div>
+    <!--end wrapper-->
+    <!-- Bootstrap JS -->
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+    <!--plugins-->
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/simplebar/js/simplebar.min.js') }}">
+    </script>
+    <script src="{{ asset('assets/plugins/metismenu/js/metisMenu.min.js') }}">
+    </script>
     <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-      crossorigin="anonymous"></script>
+      src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}">
+    </script>
+    <!--Password show & hide js -->
+    <script>
+      $(document).ready(function() {
+        $("#show_hide_password a").on('click', function(event) {
+          event.preventDefault();
+          if ($('#show_hide_password input').attr("type") == "text") {
+            $('#show_hide_password input').attr('type', 'password');
+            $('#show_hide_password i').addClass("bx-hide");
+            $('#show_hide_password i').removeClass("bx-show");
+          } else if ($('#show_hide_password input').attr("type") ==
+            "password") {
+            $('#show_hide_password input').attr('type', 'text');
+            $('#show_hide_password i').removeClass("bx-hide");
+            $('#show_hide_password i').addClass("bx-show");
+          }
+        });
+      });
+    </script>
+    <!--app JS-->
+    <script src="{{ asset('assets/js/app.js') }}"></script>
   </body>
 
 </html>
