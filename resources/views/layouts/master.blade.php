@@ -30,7 +30,6 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
       rel="stylesheet">
-    <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet">
     <!-- Theme Style CSS -->
 
@@ -38,8 +37,15 @@
     <link rel="stylesheet" href="{{ asset('assets/css/semi-dark.css') }}" />
     <link rel="stylesheet"
       href="{{ asset('assets/css/header-colors.css') }}" />
+    {{-- lib --}}
+    <link rel="stylesheet" href="{{ asset('assets/css/dataTables.min.css') }}">
 
-    <title>Rocker - Bootstrap 5 Admin Dashboard Template</title>
+    {{-- icon --}}
+    <link rel="stylesheet"
+      href="{{ asset('assets/fontawesome/css/all.min.css') }}">
+
+    <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
+    <title>Quản lý chứng chỉ</title>
   </head>
 
   <body>
@@ -186,6 +192,25 @@
     <script>
       new PerfectScrollbar(".app-container");
     </script>
+    {{-- lib --}}
+    <script src="{{ asset('assets/js/dataTables.min.js') }}"></script>
+
+    <script
+      src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js">
+    </script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js">
+    </script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js">
+    </script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js">
+    </script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js">
+    </script>
+    @stack('scripts')
   </body>
 
 </html>

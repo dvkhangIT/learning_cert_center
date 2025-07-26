@@ -13,6 +13,7 @@ return new class extends Migration
   {
     Schema::create('tai_khoan', function (Blueprint $table) {
       $table->id('ma_tk');
+      $table->string('ho_ten');
       $table->string('email');
       $table->string('mat_khau');
       $table->enum('vai_tro', ['quanly', 'nhanvien'])->default('nhanvien');

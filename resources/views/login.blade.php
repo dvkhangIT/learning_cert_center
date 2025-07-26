@@ -82,12 +82,12 @@
                           <label for="inputChoosePassword"
                             class="form-label">Mật khẩu</label>
                           <div class="input-group" id="show_hide_password">
-                            <input type="password" name="password"
-                              class="form-control border-end-0 @error('password') error @enderror"
+                            <input type="password" name="mat_khau"
+                              class="form-control border-end-0 @error('mat_khau') error @enderror"
                               id="inputChoosePassword"
                               placeholder="Nhập mật khẩu">
                             <a href="javascript:;"
-                              @error('password')
+                              @error('mat_khau')
                                 style="border-color: #ea5455"
                             @enderror
                               class="input-group-text bg-transparent"><i

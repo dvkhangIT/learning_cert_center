@@ -20,13 +20,14 @@ class LoginController extends Controller
       $request->all(),
       [
         'email' => 'required|email',
-        'password' => 'required'
+        'mat_khau' => 'required'
       ]
     );
+    // dd(Auth::attempt(['email' => $request->email, 'mat_khau' => $request->mat_khau]));
     if ($validator->passes()) {
-      if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-        $role = Auth::user()->role;
-        if ($role === 'admin') {
+      if (Auth::attempt(['email' => $request->email, 'password' => $request->mat_khau])) {
+        $vai_tro = Auth::user()->vai_tro;
+        if ($vai_tro === 'quanly') {
           return redirect()->route('admin.dashboard');
         } else {
           return redirect()->route('user.dashboard');

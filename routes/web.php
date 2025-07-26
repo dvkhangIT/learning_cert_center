@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\AccountController;
 use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\user\DashboardController;
 use App\Http\Controllers\LoginController;
@@ -33,4 +34,5 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::group(['prefix' => 'admin', 'middleware' => 'checkRole'], function () {
   Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+  Route::get('/account', [AccountController::class, 'index'])->name('admin.account.index');
 });
