@@ -2,6 +2,7 @@
 <html lang="en">
 
   <head>
+    <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -214,6 +215,55 @@
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js">
     </script>
     <script src="{{ asset('vendor/flasher/flasher.min.js') }}"></script>
+    <script src="{{ asset('assets/js/sweetalert2.js') }}"></script>
+    <script>
+      $(document).ready(function() {
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
+      });
+      $(document).ready(function() {
+        $('body').on('click', '.delete-item', function(e) {
+          e.preventDefault();
+          let url = $(this).attr('href');
+          Swal.fire({
+            title: "Bạn có chắc chắn xóa không?",
+            text: "Bạn sẽ không thể khôi phục lại!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Xóa!",
+            cancelButtonText: 'Hủy',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              $.ajax({
+                type: "DELETE",
+                url: url,
+                success: function(data) {
+                  if (data.status == 'success') {
+                    Swal.fire({
+                      title: "Đã xóa!",
+                      text: data.message,
+                      icon: "success"
+                    });
+                    window.location.reload();
+                  } else if (data.status == 'error') {
+                    Swal.fire({
+                      title: "Không thể xóa!",
+                      text: data.message,
+                      icon: "error",
+                    });
+                  }
+                }
+              });
+            }
+          });
+        })
+      });
+    </script>
     @stack('scripts')
   </body>
 

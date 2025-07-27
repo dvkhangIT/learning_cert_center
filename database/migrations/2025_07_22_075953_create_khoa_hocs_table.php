@@ -15,7 +15,7 @@ return new class extends Migration
       $table->id('ma_kh');
       $table->foreignId('ma_tk')->constrained('tai_khoan', 'ma_tk')->onDelete('cascade');
       $table->string('ten_kh');
-      $table->timestamp('ngay_cap_tao')->nullable();
+      $table->timestamp('ngay_tao')->nullable();
       $table->timestamp('ngay_cap_nhat')->nullable();
     });
   }

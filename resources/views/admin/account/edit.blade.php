@@ -2,13 +2,14 @@
 @section('name')
   <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
     <div class="breadcrumb-title pe-3">Tài khoản</div>
+    <button class="delete-item">demo</button>
     <div class="ps-3">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb mb-0 p-0">
           <li class="breadcrumb-item"><a href="javascript:;"><i
                 class="bx bx-home-alt"></i></a>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">Tạo tài khoản
+          <li class="breadcrumb-item active" aria-current="page">Cập nhật tài khoản
           </li>
         </ol>
       </nav>
@@ -24,12 +25,14 @@
     <div class="col-xl-6 mx-auto">
       <div class="card">
         <div class="card-body p-4">
-          <form id="create-user-form" action="{{ route('admin.account.store') }}"
+          <form id="create-user-form"
+            action="{{ route('admin.account.update', $user->ma_tk) }}"
             class="row g-3 needs-validation" method="POST">
             @csrf
+            @method('PUT')
             <div class="col-md-12">
               <label for="input3" class="form-label">Họ và tên</label>
-              <input type="text" value="{{ old('ho_ten') }}"
+              <input type="text" value="{{ old('ho_ten', $user->ho_ten) }}"
                 class="form-control @error('ho_ten')
                   is-invalid
               @enderror"
@@ -46,7 +49,8 @@
                 class="form-control @error('email')
                     is-invalid
               @enderror"
-                id="input4" name="email" value="{{ old('email') }}">
+                id="input4" name="email"
+                value="{{ old('email', $user->email) }}">
               @error('email')
                 <div class="invalid-feedback">
                   {{ $message }}

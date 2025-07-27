@@ -27,9 +27,9 @@ trait DefaultConfig
           'search' => 'Tìm kiếm',
           'lengthMenu' => '',
           'zeroRecords' => 'Không tìm thấy kết quả',
-          'info' => 'Hiển thị _START_ tới _END_ của _TOTAL_ dòng',
-          'infoEmpty' => 'Không có dữ liệu',
-          'infoFiltered' => '(lọc từ _MAX_ dòng)',
+          'info' => '',
+          'infoEmpty' => '',
+          'infoFiltered' => '',
         ],
       ])
       ->setTableAttribute('class', 'table table-bordered table-striped');

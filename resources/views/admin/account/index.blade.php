@@ -38,6 +38,25 @@
   <script
     src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js">
   </script>
+  <script>
+    $(document).ready(function() {
+      $('body').on('change', '.change-status', function(e) {
+        let isChecked = $(this).is(':checked');
+        let ma_tk = $(this).data('id');
+        $.ajax({
+          method: "PUT",
+          url: "{{ route('admin.account.change-status') }}",
+          data: {
+            trang_thai: isChecked,
+            ma_tk: ma_tk,
+          },
+          success: function(data) {
+            flasher.success(data.message, '');
+          }
+        });
+      })
+    });
+  </script>
   <script src="/vendor/datatables/buttons.server-side.js"></script>
   {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
 @endpush

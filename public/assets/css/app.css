@@ -1806,13 +1806,13 @@ form select.error:focus {
     z-index: 1;
 }
 
-.btn i {
+/* .btn i {
     vertical-align: middle;
     font-size: 1.3rem;
     margin-top: -1em;
     margin-bottom: -1em;
     margin-right: 5px;
-}
+} */
 
 .btn-inverse-primary {
     color: #008cff;
@@ -2621,4 +2621,11 @@ input::placeholder {
     .chat-top-header-menu {
         display: none;
     }
+}
+.mr-5 {
+    margin-right: 5px;
+}
+.form-switch .form-check-input {
+    width: 2rem;
+    height: 1rem;
 }
