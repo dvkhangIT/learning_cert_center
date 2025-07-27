@@ -17,7 +17,7 @@ return new class extends Migration
       $table->date('ngay_sinh');
       $table->string('noi_sinh');
       $table->enum('gioi_tinh', ['nam', 'nu']);
-      $table->timestamp('ngay_cap_tao')->nullable();
+      $table->timestamp('ngay_tao')->nullable();
       $table->timestamp('ngay_cap_nhat')->nullable();
     });
   }

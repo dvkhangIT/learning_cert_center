@@ -20,7 +20,7 @@ return new class extends Migration
       $table->string('so_vao_so');
       $table->date('ngay_bat_dau');
       $table->date('ngay_ket_thuc');
-      $table->timestamp('ngay_cap_tao')->nullable();
+      $table->timestamp('ngay_tao')->nullable();
       $table->timestamp('ngay_cap_nhat')->nullable();
     });
   }

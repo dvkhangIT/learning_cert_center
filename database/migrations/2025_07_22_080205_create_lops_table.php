@@ -17,7 +17,7 @@ return new class extends Migration
       $table->string('ten_lop');
       $table->date('ngay_bat_dau');
       $table->date('ngay_ket_thuc');
-      $table->timestamp('ngay_cap_tao')->nullable();
+      $table->timestamp('ngay_tao')->nullable();
       $table->timestamp('ngay_cap_nhat')->nullable();
     });
   }

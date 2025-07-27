@@ -22,7 +22,7 @@ return new class extends Migration
       $table->float('diem_ngu_phap_doc')->nullable();
       $table->float('diem_trac_nghiem')->nullable();
       $table->float('diem_thuc_hanh')->nullable();
-      $table->timestamp('ngay_cap_tao')->nullable();
+      $table->timestamp('ngay_tao')->nullable();
       $table->timestamp('ngay_cap_nhat')->nullable();
     });
   }
