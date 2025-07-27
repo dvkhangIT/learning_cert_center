@@ -35,4 +35,6 @@ Route::group(['middleware' => 'auth'], function () {
 Route::group(['prefix' => 'admin', 'middleware' => 'checkRole'], function () {
   Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
   Route::get('/account', [AccountController::class, 'index'])->name('admin.account.index');
+  Route::get('/account/create-user', [AccountController::class, 'create'])->name('admin.account.create');
+  Route::post('/account/create-user/store', [AccountController::class, 'store'])->name('admin.account.store');
 });

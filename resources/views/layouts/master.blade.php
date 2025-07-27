@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
   <head>
@@ -39,6 +39,9 @@
       href="{{ asset('assets/css/header-colors.css') }}" />
     {{-- lib --}}
     <link rel="stylesheet" href="{{ asset('assets/css/dataTables.min.css') }}">
+
+    <link rel="stylesheet"
+      href="{{ asset('vendor/flasher/flasher.min.css') }}">
 
     {{-- icon --}}
     <link rel="stylesheet"
@@ -210,6 +213,7 @@
     </script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js">
     </script>
+    <script src="{{ asset('vendor/flasher/flasher.min.js') }}"></script>
     @stack('scripts')
   </body>
 

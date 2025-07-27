@@ -14,7 +14,8 @@
       </nav>
     </div>
     <div class="ms-auto">
-      <a class="btn btn-outline-primary" href="#"><i
+      <a class="btn btn-outline-primary"
+        href="{{ route('admin.account.create') }}"><i
           class="fa-solid fa-plus"></i>Tạo tài
         khoản</a>
     </div>
