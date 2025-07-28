@@ -39,6 +39,7 @@
     src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js">
   </script>
   <script>
+    // change status
     $(document).ready(function() {
       $('body').on('change', '.change-status', function(e) {
         let isChecked = $(this).is(':checked');
@@ -56,6 +57,49 @@
         });
       })
     });
+    // reset password
+    $('body').on('click', '.reset-password', function(e) {
+      e.preventDefault();
+      let url = $(this).attr('href');
+      Swal.fire({
+        title: "Bạn có chắc chắn khôi phục mật khẩu?",
+        // text: "Bạn sẽ không thể khôi phục lại!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ok!",
+        cancelButtonText: 'Hủy',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: 'Vui lòng chờ!...',
+            allowOutsideClick: false,
+            didOpen: () => {
+              Swal.showLoading();
+            }
+          });
+          $.ajax({
+            type: "PUT",
+            url: url,
+            success: function(data) {
+              if (data.status == 'success') {
+                Swal.fire({
+                  title: "Thành công!",
+                  text: data.message,
+                  icon: "success"
+                });
+              } else if (data.status == 'error') {
+                Swal.fire({
+                  text: data.message,
+                  icon: "error",
+                });
+              }
+            }
+          });
+        }
+      });
+    })
   </script>
   <script src="/vendor/datatables/buttons.server-side.js"></script>
   {{ $dataTable->scripts(attributes: ['type' => 'module']) }}

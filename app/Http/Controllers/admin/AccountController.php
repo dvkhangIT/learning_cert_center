@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\DataTables\TaiKhoanDataTable;
 use App\Http\Controllers\Controller;
 use App\Mail\SendPasswordMail;
+use App\Mail\SendResetPasswordMail;
 use App\Models\TaiKhoan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -92,5 +93,14 @@ class AccountController extends Controller
     $user->trang_thai = $request->trang_thai == 'true' ? '1' : '0';
     $user->save();
     return response()->json(['message' => 'Cập nhật thành công!']);
+  }
+  public function resetPassword(string $ma_tk)
+  {
+    $user = TaiKhoan::findOrFail($ma_tk);
+    $password = Str::random(8);
+    $user->mat_khau = Hash::make($password);
+    $user->save();
+    Mail::to($user->email)->send(new SendResetPasswordMail($user->ho_ten, $password, $user->email));
+    return response()->json(['status' => 'success', 'message' => 'Mật khẩu mới đã gửi qua email.']);
   }
 }

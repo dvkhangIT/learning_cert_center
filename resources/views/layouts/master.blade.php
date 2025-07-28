@@ -217,6 +217,11 @@
     <script src="{{ asset('vendor/flasher/flasher.min.js') }}"></script>
     <script src="{{ asset('assets/js/sweetalert2.js') }}"></script>
     <script>
+      Pace.restart();
+      // $(document).ajaxStart(function() {
+      //   Pace.restart();
+      // });
+      Pace.restart();
       $(document).ready(function() {
         $.ajaxSetup({
           headers: {

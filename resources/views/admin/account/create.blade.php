@@ -25,7 +25,7 @@
       <div class="card">
         <div class="card-body p-4">
           <form id="create-user-form" action="{{ route('admin.account.store') }}"
-            class="row g-3 needs-validation" method="POST">
+            class="create-user-form row g-3 needs-validation" method="POST">
             @csrf
             <div class="col-md-12">
               <label for="input3" class="form-label">Họ và tên</label>

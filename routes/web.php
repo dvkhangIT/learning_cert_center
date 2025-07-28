@@ -41,4 +41,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkRole'], function () {
   Route::get('account/edit/{ma_tk}', [AccountController::class, 'edit'])->name('admin.account.edit');
   Route::put('account/update/{ma_tk}', [AccountController::class, 'update'])->name('admin.account.update');
   Route::delete('account/delete/{ma_tk}', [AccountController::class, 'destroy'])->name('admin.account.destroy');
+  Route::put('account/reset-password/{ma_tk}', [AccountController::class, 'resetPassword'])->name('admin.account.reset-password');
 });
