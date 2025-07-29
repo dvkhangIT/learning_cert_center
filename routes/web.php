@@ -26,6 +26,10 @@ Route::group(['middleware' => 'guest'], function () {
   Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
   Route::get('/register', [LoginController::class, 'register'])->name('register');
   Route::post('/process-register', [LoginController::class, 'processRegister'])->name('processRegister');
+  Route::get('forgot-password', [LoginController::class, 'forgotPassword'])->name('forgot.password');
+  Route::post('forgot-password-process', [LoginController::class, 'forgotPasswordProcess'])->name('forgot.password.process');
+  Route::get('reset-password/{token}', [LoginController::class, 'resetPassword'])->name('reset.password');
+  Route::put('process-reset-password', [LoginController::class, 'processResestPassword'])->name('process.reset.password');
 });
 // Authentication Route
 Route::group(['middleware' => 'auth'], function () {
