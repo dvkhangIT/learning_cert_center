@@ -26,7 +26,7 @@ class KetQuaSeeder extends Seeder
         'diem_ngu_phap_doc' => rand(50, 100),
         'diem_trac_nghiem' => rand(1, 10),
         'diem_thuc_hanh' => rand(1, 10),
-        'ngay_cap_tao' => now(),
+        'ngay_tao' => now(),
         'ngay_cap_nhat' => now(),
       ]);
     }

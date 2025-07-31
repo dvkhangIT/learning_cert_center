@@ -32,12 +32,7 @@
     </div>
   </div>
 @endsection
-@push('scripts')
-  <link rel="stylesheet"
-    href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
-  <script
-    src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js">
-  </script>
+@section('scripts')
   <script>
     // change status
     $(document).ready(function() {
@@ -45,14 +40,17 @@
         let isChecked = $(this).is(':checked');
         let ma_tk = $(this).data('id');
         $.ajax({
-          method: "PUT",
+          type: "POST",
           url: "{{ route('admin.account.change-status') }}",
           data: {
+            _token: $('meta[name="csrf-token"]').attr(
+              'content'),
+            _method: 'PUT',
             trang_thai: isChecked,
             ma_tk: ma_tk,
           },
           success: function(data) {
-            flasher.success(data.message, '');
+            toastr.success(data.message, '');
           }
         });
       })
@@ -101,6 +99,12 @@
       });
     })
   </script>
-  <script src="/vendor/datatables/buttons.server-side.js"></script>
+@endsection
+@push('scripts')
+  <link rel="stylesheet"
+    href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
+  <script
+    src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js">
+  </script>
   {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
 @endpush

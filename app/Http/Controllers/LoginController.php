@@ -39,12 +39,15 @@ class LoginController extends Controller
       if (Auth::attempt(['email' => $request->email, 'password' => $request->mat_khau])) {
         $vai_tro = Auth::user()->vai_tro;
         if ($vai_tro === 'quanly') {
+          toastr()->success('Đăng nhập thành cônng!', ' ');
           return redirect()->route('admin.dashboard');
         } else {
+          toastr()->success('Đăng nhập thành cônng!', ' ');
           return redirect()->route('user.dashboard');
         }
       } else {
-        return redirect()->route('login')->with('error', 'Tài khoản hoặc mật khẩu không đúng!');
+        toastr()->error('Tài khoản hoặc mật khẩu không đúng!', ' ');
+        return redirect()->route('login');
       }
     } else {
       return redirect()->route('login')->withInput()->withErrors($validator);
@@ -102,7 +105,7 @@ class LoginController extends Controller
       ['token' => $token, 'created_at' => Carbon::now()]
     );
     Mail::to($request->email)->send(new SendForgotPasswordMail($user->ho_ten, $user->email, $token));
-    flasher('Vui lòng kiểm tra email.',)->setTitle(' ');
+    toastr()->success('Vui lòng kiểm tra email.', ' ');
     return redirect()->route('login');
   }
   public function resetPassword(string $tokenString)
@@ -130,23 +133,23 @@ class LoginController extends Controller
       ->where('token', $request->token)
       ->first();
     if (!$token) {
-      flasher('Liên kết không hợp lệ.', 'error')->setTitle(' ');
+      toastr()->error('Liên kết không hợp lệ.', ' ');
       return redirect()->route('forgot.password');
     }
     if (!$token->email) {
-      flasher('Email không hợp lệ.', 'error')->setTitle(' ');
+      toastr()->error('Email không hợp lệ.', ' ');
       return redirect()->route('forgot.password');
     }
     if (Carbon::parse($token->created_at)->addMinutes(1)->isPast()) {
       DB::table('password_reset_tokens')->where('email', $token->email)->delete();
-      flasher('Liên kết đã hết hạn.', 'error')->setTitle(' ');
+      toastr()->error('Liên kết đã hết hạn.', ' ');
       return back();
     }
     $user = TaiKhoan::where('email', $token->email)->firstOrFail();
     $user->mat_khau = Hash::make($request->new_password);
     $user->save();
     DB::table('password_reset_tokens')->where('email', $token->email)->delete();
-    flasher('Mật khẩu được thay đổi thành công.', 'success')->setTitle(' ');
+    toastr()->success('Mật khẩu được thay đổi thành công.', ' ');
     return redirect()->route('login');
   }
 }

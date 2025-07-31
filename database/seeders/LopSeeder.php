@@ -21,7 +21,7 @@ class LopSeeder extends Seeder
         'ten_lop' => 'Lớp ' . strtoupper($faker->randomLetter),
         'ngay_bat_dau' => $faker->dateTimeBetween('-2 months', '-1 month'),
         'ngay_ket_thuc' => $faker->dateTimeBetween('-1 month', '+1 month'),
-        'ngay_cap_tao' => now(),
+        'ngay_tao' => now(),
         'ngay_cap_nhat' => now(),
       ]);
     }

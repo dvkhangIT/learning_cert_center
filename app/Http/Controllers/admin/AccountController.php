@@ -49,7 +49,7 @@ class AccountController extends Controller
     $user->save();
 
     Mail::to($user->email)->send(new SendPasswordMail($user->ho_ten, $password, $user->email));
-    flasher('Tài khoản đã được tạo và gửi mật khẩu qua email.',)->setTitle(' ');
+    toastr()->success('Tài khoản đã được tạo và đã gửi mật khẩu qua email.', ' ');
     return back();
   }
   public function edit(string $ma_tk)
@@ -77,8 +77,7 @@ class AccountController extends Controller
     $user->email = $request->email;
     $user->ngay_cap_nhat = now();
     $user->save();
-
-    flasher('Cập nhật thông tin thành công.',)->setTitle(' ');
+    toastr()->success('Cập nhật thông tin thành công.', ' ');
     return redirect()->route('admin.account.index');
   }
   public function destroy(string $ma_tk)

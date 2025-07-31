@@ -28,8 +28,23 @@
            <li> <a href="{{ route('admin.account.index') }}"><i
                  class='bx bx-radio-circle'></i>Danh sách tài khoản</a>
            </li>
-           <li> <a href="app-chat-box.html"><i
-                 class='bx bx-radio-circle'></i>Chat Box</a>
+           <li> <a href="{{ route('admin.account.create') }}"><i
+                 class='bx bx-radio-circle'></i>Tạo tài khoản</a>
+           </li>
+         </ul>
+       </li>
+       <li>
+         <a href="javascript:;" class="has-arrow">
+           <div class="parent-icon"><i class="bx bx-category"></i>
+           </div>
+           <div class="menu-title">Khóa học</div>
+         </a>
+         <ul>
+           <li> <a href="{{ route('admin.course.index') }}"><i
+                 class='bx bx-radio-circle'></i>Danh sách khóa học</a>
+           </li>
+           <li> <a href="{{ route('admin.account.create') }}"><i
+                 class='bx bx-radio-circle'></i>Tạo khóa học</a>
            </li>
          </ul>
        </li>

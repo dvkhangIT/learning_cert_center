@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AccountController;
+use App\Http\Controllers\admin\CourseController;
 use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\user\DashboardController;
 use App\Http\Controllers\LoginController;
@@ -38,6 +39,8 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::group(['prefix' => 'admin', 'middleware' => 'checkRole'], function () {
   Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+
+  // Tài khoản
   Route::get('/account', [AccountController::class, 'index'])->name('admin.account.index');
   Route::get('/account/create', [AccountController::class, 'create'])->name('admin.account.create');
   Route::post('/account/store', [AccountController::class, 'store'])->name('admin.account.store');
@@ -46,4 +49,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkRole'], function () {
   Route::put('account/update/{ma_tk}', [AccountController::class, 'update'])->name('admin.account.update');
   Route::delete('account/delete/{ma_tk}', [AccountController::class, 'destroy'])->name('admin.account.destroy');
   Route::put('account/reset-password/{ma_tk}', [AccountController::class, 'resetPassword'])->name('admin.account.reset-password');
+
+  // khóa học
+  Route::get('course', [CourseController::class, 'index'])->name('admin.course.index');
+  Route::put('course/update/{ma_kh}', [CourseController::class, 'update'])->name('admin.course.update');
 });

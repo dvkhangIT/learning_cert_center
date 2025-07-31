@@ -24,7 +24,7 @@ class ChungChiSeeder extends Seeder
         'ngay_vao_so' => $faker->dateTimeBetween('-1 month', 'now'),
         'ngay_bat_dau' => $faker->dateTimeBetween('-3 months', '-2 months'),
         'ngay_ket_thuc' => $faker->dateTimeBetween('-2 months', 'now'),
-        'ngay_cap_tao' => now(),
+        'ngay_tao' => now(),
         'ngay_cap_nhat' => now(),
       ]);
     }

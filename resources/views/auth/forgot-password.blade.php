@@ -42,7 +42,7 @@
   <script>
     document.querySelector('form').addEventListener('submit', function() {
       Swal.fire({
-        title: 'Đang gửi...',
+        title: 'Vui lòng chờ...',
         allowOutsideClick: false,
         didOpen: () => {
           Swal.showLoading();

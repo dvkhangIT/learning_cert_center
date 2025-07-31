@@ -26,11 +26,11 @@ class KhoaHocSeeder extends Seeder
     }
 
     // Sinh 5 khóa học
-    foreach (range(1, 5) as $i) {
+    foreach (range(1, 20) as $i) {
       DB::table('khoa_hoc')->insert([
         'ma_tk' => $faker->randomElement($taiKhoanIds),  // ✅ Gán đúng khoá ngoại
         'ten_kh' => 'Khóa ' . ucfirst($faker->word),
-        'ngay_cap_tao' => now(),
+        'ngay_tao' => now(),
         'ngay_cap_nhat' => now(),
       ]);
     }

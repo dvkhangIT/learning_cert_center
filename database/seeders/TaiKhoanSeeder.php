@@ -24,7 +24,7 @@ class TaiKhoanSeeder extends Seeder
         'vai_tro' => $faker->randomElement(['quanly', 'nhanvien']),
         'trang_thai' => 1,
         'remember_token' => Str::random(10),
-        'ngay_cap_tao' => now(),
+        'ngay_tao' => now(),
         'ngay_cap_nhat' => now(),
       ]);
     }
