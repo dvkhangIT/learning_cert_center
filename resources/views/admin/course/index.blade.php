@@ -14,9 +14,11 @@
       </nav>
     </div>
     <div class="ms-auto">
-      <a class="btn btn-outline-primary"
-        href="{{ route('admin.account.create') }}"><i
-          class="fa-solid fa-plus"></i>Tạo khóa học</a>
+      <a data-bs-toggle="modal" data-bs-target="#createCourse"
+        class="btn btn-outline-primary course-create"
+        href="{{ route('admin.course.store') }}"><i
+          class="fa-solid fa-plus"></i>Tạo khóa
+        học</a>
     </div>
   </div>
   <div class="section-body">
@@ -30,8 +32,8 @@
       </div>
     </div>
   </div>
-  {{-- Modal --}}
-  <div class="modal fade" id="editCourse" tabindex="-1">
+  {{-- Modal update course --}}
+  <div class="modal fade" id="updateCourse" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -46,8 +48,37 @@
             @method('PUT')
             <div class="col-md-12">
               <label for="input3" class="form-label">Khóa học</label>
-              <input id="ten_kh" type="text" value=""
-                class="form-control " name="ten_kh" id="input3">
+              <input id="ten_kh_edit" type="text" value=""
+                class="form-control " name="ten_kh">
+              <p></p>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"
+            data-bs-dismiss="modal">Hủy</button>
+          <button type="submit" class="btn btn-primary">Lưu</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  {{-- Modal create course --}}
+  <div class="modal fade" id="createCourse" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Tạo khóa học</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="create-course-form"
+            class="create-user-form row g-3 needs-validation">
+            @csrf
+            <div class="col-md-12">
+              <label for="input3" class="form-label">Khóa học</label>
+              <input id="ten_kh_create" type="text" value=""
+                class="form-control " name="ten_kh">
               <p></p>
             </div>
         </div>
@@ -84,6 +115,7 @@
           }
         });
       })
+
       // reset password
       $('body').on('click', '.reset-password', function(e) {
         e.preventDefault();
@@ -127,12 +159,15 @@
           }
         });
       })
-      // edit course
-      $('body').on('click', '.edit-item', function(e) {
+      console.log('object');
+      console.log($.fn.dataTable.isDataTable('#khoahoc-table'));
+
+      // update course
+      $('body').on('click', '.update-item', function(e) {
         e.preventDefault();
         let url = $(this).attr('href');
-        $('#ten_kh').val($(this).data('name'));
-        $('#ten_kh').removeClass('is-invalid')
+        $('#ten_kh_edit').val($(this).data('name'));
+        $('#ten_kh_edit').removeClass('is-invalid')
           .siblings('p')
           .removeClass('invalid-feedback')
           .html('');
@@ -152,7 +187,7 @@
                 window.location.reload();
               } else {
                 if (response.errors.ten_kh) {
-                  $("#ten_kh").addClass('is-invalid')
+                  $("#ten_kh_edit").addClass('is-invalid')
                     .siblings('p')
                     .addClass('invalid-feedback')
                     .html(response.errors.ten_kh)
@@ -162,6 +197,43 @@
           });
         })
       });
+
+      // create course
+      let createUrl = '';
+      $('body').on('click', '.course-create', function(e) {
+        e.preventDefault();
+        createUrl = $(this).attr('href')
+        $('#ten_kh_create').removeClass('is-invalid')
+          .siblings('p')
+          .removeClass('invalid-feedback')
+          .html('');
+      })
+      $('#create-course-form').submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+          type: "POST",
+          url: createUrl,
+          data: $("#create-course-form").serializeArray(),
+          dataType: "json",
+          success: function(response) {
+            if (response.status == true) {
+              $('#ten_kh').removeClass('is-invalid')
+                .siblings('p')
+                .removeClass('invalid-feedback')
+                .html('')
+              window.location.reload();
+            } else {
+              if (response.errors.ten_kh) {
+                $("#ten_kh_create").addClass('is-invalid')
+                  .siblings('p')
+                  .addClass('invalid-feedback')
+                  .html(response.errors.ten_kh)
+              }
+            }
+          }
+        });
+      });
+      // end create course
     });
   </script>
 @endsection

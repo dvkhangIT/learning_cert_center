@@ -52,5 +52,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkRole'], function () {
 
   // khóa học
   Route::get('course', [CourseController::class, 'index'])->name('admin.course.index');
+  Route::post('/course/store', [CourseController::class, 'store'])->name('admin.course.store');
   Route::put('course/update/{ma_kh}', [CourseController::class, 'update'])->name('admin.course.update');
+  Route::delete('course/delete/{ma_kh}', [CourseController::class, 'destroy'])->name('admin.course.destroy');
 });

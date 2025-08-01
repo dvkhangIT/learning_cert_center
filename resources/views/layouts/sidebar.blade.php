@@ -43,9 +43,6 @@
            <li> <a href="{{ route('admin.course.index') }}"><i
                  class='bx bx-radio-circle'></i>Danh sách khóa học</a>
            </li>
-           <li> <a href="{{ route('admin.account.create') }}"><i
-                 class='bx bx-radio-circle'></i>Tạo khóa học</a>
-           </li>
          </ul>
        </li>
      </ul>

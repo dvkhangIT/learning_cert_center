@@ -26,9 +26,9 @@ class KhoaHocDataTable extends DataTable
   {
     return (new EloquentDataTable($query))
       ->addColumn('action', function ($query) {
-        $btnEdit = '<a href="' . route('admin.course.update', $query->ma_kh) . '" title="Sửa tài khóa học" data-bs-toggle="modal"
-        data-bs-target="#editCourse" data-name="' . $query->ten_kh . '" class="edit-item btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>';
-        $btnDelete = '<a href="' . route('admin.account.destroy', $query->ma_kh) . '" title="Xóa tài khoản" class="delete-item btn btn-outline-danger btn-sm mx-1"><i class="fa-solid fa-trash"></i></a>';
+        $btnEdit = '<a href="' . route('admin.course.update', $query->ma_kh) . '" title="Sửa khóa học" data-bs-toggle="modal"
+        data-bs-target="#updateCourse" data-name="' . $query->ten_kh . '" class="update-item btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>';
+        $btnDelete = '<a href="' . route('admin.course.destroy', $query->ma_kh) . '" title="Xóa tài khoản" class="delete-item btn btn-outline-danger btn-sm mx-1"><i class="fa-solid fa-trash"></i></a>';
         return $btnEdit . $btnDelete;
       })
       ->addColumn('ngay_tao', function ($query) {
@@ -39,6 +39,16 @@ class KhoaHocDataTable extends DataTable
       })
       ->addColumn('ma_tk', function ($query) {
         return $query->taikhoan->ho_ten;
+      })
+      ->filterColumn('ma_tk', function ($query, $keyword) {
+        $query->whereHas('taikhoan', function ($q) use ($keyword) {
+          $q->where('ho_ten', 'like', "%{$keyword}%");
+        });
+      })
+      ->orderColumn('ma_tk', function ($query, $direction) {
+        $query->join('tai_khoan', 'khoa_hoc.ma_tk', '=', 'tai_khoan.ma_tk')
+          ->orderBy('tai_khoan.ho_ten', $direction)
+          ->select('khoa_hoc.*');
       })
       ->rawColumns(['action', 'ngay_tao', 'ngay_cap_nhat', 'ma_tk'])
       ->setRowId('id');
@@ -52,7 +62,7 @@ class KhoaHocDataTable extends DataTable
    */
   public function query(KhoaHoc $model): QueryBuilder
   {
-    return $model->newQuery();
+    return $model->newQuery()->with('taikhoan');
   }
 
   /**
@@ -70,15 +80,16 @@ class KhoaHocDataTable extends DataTable
       ->selectStyleSingle()
       ->buttons([
         Button::make('excel')
-          ->text('Xuất Excel')
           ->exportOptions([
             'columns' => ':not(.no-export)'
-          ]),
+          ])
+          ->text('<i class="fa-solid fa-file-excel me-1"></i> Xuất Excel'),
         Button::make('print')
-          ->text('In bảng')
+          // ->text('In bảng')
           ->exportOptions([
             'columns' => ':not(.no-export)'
-          ]),
+          ])
+          ->text('<i class="fa-solid fa-print me-1"></i> In bảng')
       ]);
   }
 
@@ -90,10 +101,9 @@ class KhoaHocDataTable extends DataTable
   public function getColumns(): array
   {
     return [
-
-      Column::make('ma_kh')->title('#')->type('string'),
+      Column::make('ma_kh')->title('#'),
       Column::make('ten_kh')->title('Khóa học'),
-      Column::computed('ma_tk')->title('Người tạo'),
+      Column::make('ma_tk')->title('Người tạo')->searchable(true)->orderable(true),
       Column::make('ngay_tao')->title('Ngày tạo'),
       Column::make('ngay_cap_nhat')->title('Cập nhật'),
       Column::computed('action')->title('Thao tác')
