@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AccountController;
+use App\Http\Controllers\admin\ClassController;
 use App\Http\Controllers\admin\CourseController;
 use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\user\DashboardController;
@@ -55,4 +56,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkRole'], function () {
   Route::post('/course/store', [CourseController::class, 'store'])->name('admin.course.store');
   Route::put('course/update/{ma_kh}', [CourseController::class, 'update'])->name('admin.course.update');
   Route::delete('course/delete/{ma_kh}', [CourseController::class, 'destroy'])->name('admin.course.destroy');
+
+  // Lớp
+  Route::get('class', [ClassController::class, 'index'])->name('admin.class.index');
+  Route::get('/class/create', [ClassController::class, 'create'])->name('admin.class.create');
+  Route::post('/class/store', [ClassController::class, 'store'])->name('admin.class.store');
+  Route::get('class/edit/{ma_lop}', [ClassController::class, 'edit'])->name('admin.class.edit');
+  Route::put('class/update/{ma_lop}', [ClassController::class, 'update'])->name('admin.class.update');
+  Route::delete('class/delete/{ma_lop}', [ClassController::class, 'destroy'])->name('admin.class.destroy');
 });

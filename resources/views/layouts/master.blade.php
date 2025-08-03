@@ -19,7 +19,6 @@
     <link
       href="{{ asset('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}"
       rel="stylesheet" />
-
     <link href="{{ asset('assets/plugins/metismenu/css/metisMenu.min.css') }}"
       rel="stylesheet" />
     <!-- loader-->
@@ -34,12 +33,10 @@
       rel="stylesheet">
     <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet">
     <!-- Theme Style CSS -->
-
     <link rel="stylesheet" href="{{ asset('assets/css/dark-theme.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/semi-dark.css') }}" />
     <link rel="stylesheet"
       href="{{ asset('assets/css/header-colors.css') }}" />
-
     {{-- dataTables css --}}
     <link rel="stylesheet"
       href="{{ asset('assets/dataTables/dataTables.bootstrap5.min.css') }}">
@@ -52,7 +49,8 @@
     {{-- icon --}}
     <link rel="stylesheet"
       href="{{ asset('assets/fontawesome/css/all.min.css') }}">
-
+    @yield('css')
+    {{-- custom css --}}
     <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
     <title>Quản lý chứng chỉ</title>
   </head>
@@ -81,9 +79,6 @@
       <a href="javaScript:;" class="back-to-top"><i
           class='bx bxs-up-arrow-alt'></i></a>
       <!--End Back To Top Button-->
-      <footer class="page-footer">
-        <p class="mb-0">Copyright © 2022. All right reserved.</p>
-      </footer>
     </div>
     <!--end wrapper-->
     <!-- Bootstrap JS -->
@@ -122,19 +117,6 @@
     </script>
     <script src="https://cdn.datatables.net/buttons/3.2.4/js/buttons.print.min.js">
     </script>
-
-
-    {{-- <script
-      src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js">
-    </script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js">
-    </script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js">
-    </script> --}}
-
-
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js">
     </script>
     <script
@@ -143,11 +125,6 @@
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js">
     </script>
-
-
-
-
-
     <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
 
     <script src="{{ asset('assets/js/sweetalert2.js') }}"></script>

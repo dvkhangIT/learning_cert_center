@@ -45,6 +45,18 @@
            </li>
          </ul>
        </li>
+       <li>
+         <a href="javascript:;" class="has-arrow">
+           <div class="parent-icon"><i class="bx bx-category"></i>
+           </div>
+           <div class="menu-title">Lớp</div>
+         </a>
+         <ul>
+           <li> <a href="{{ route('admin.class.index') }}"><i
+                 class='bx bx-radio-circle'></i>Danh sách lớp</a>
+           </li>
+         </ul>
+       </li>
      </ul>
      <!--end navigation-->
    </div>
