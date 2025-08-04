@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('name')
+@section('content')
   <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
     <div class="breadcrumb-title pe-3">Tài khoản</div>
     <div class="ps-3">
@@ -159,9 +159,6 @@
           }
         });
       })
-      console.log('object');
-      console.log($.fn.dataTable.isDataTable('#khoahoc-table'));
-
       // update course
       $('body').on('click', '.update-item', function(e) {
         e.preventDefault();

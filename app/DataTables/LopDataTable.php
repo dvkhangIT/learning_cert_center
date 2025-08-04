@@ -77,6 +77,7 @@ class LopDataTable extends DataTable
       ->columns($this->getColumns())
       ->minifiedAjax()
       ->orderBy(0)
+      ->responsive(true) //
       ->selectStyleSingle()
       ->buttons([
         Button::make('excel')

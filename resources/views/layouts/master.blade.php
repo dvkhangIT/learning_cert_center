@@ -40,6 +40,8 @@
     {{-- dataTables css --}}
     <link rel="stylesheet"
       href="{{ asset('assets/dataTables/dataTables.bootstrap5.min.css') }}">
+    <link rel="stylesheet"
+      href="https://cdn.datatables.net/responsive/3.0.5/css/responsive.dataTables.min.css">
     {{-- <link rel="stylesheet"
       href="https://cdn.datatables.net/buttons/3.2.4/css/buttons.dataTables.min.css"> --}}
 
@@ -67,8 +69,7 @@
       <!--start page wrapper -->
       <div class="page-wrapper">
         <div class="page-content">
-          @yield('name')
-
+          @yield('content')
         </div>
       </div>
       <!--end page wrapper -->
@@ -109,7 +110,9 @@
     <script src="{{ asset('assets/dataTables/dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/dataTables/dataTables.bootstrap5.min.js') }}">
     </script>
-
+    <script
+      src="https://cdn.datatables.net/responsive/3.0.5/js/dataTables.responsive.min.js">
+    </script>
     <script
       src="https://cdn.datatables.net/buttons/3.2.4/js/dataTables.buttons.min.js">
     </script>
@@ -181,6 +184,11 @@
         })
       });
     </script>
+    {{-- <script>
+      $(document).ready(function() {
+        $('#menu').metisMenu();
+      });
+    </script> --}}
     @stack('scripts')
     @yield('scripts')
   </body>

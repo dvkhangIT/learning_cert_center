@@ -68,6 +68,7 @@ class TaiKhoanDataTable extends DataTable
     return $builder
       ->columns($this->getColumns())
       ->orderBy(0)
+      ->responsive(true) //
       // ->dom('Bfrtip')
       ->selectStyleSingle()
       ->buttons([
