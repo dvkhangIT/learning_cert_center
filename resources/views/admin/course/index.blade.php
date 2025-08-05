@@ -94,71 +94,7 @@
 @endsection
 @section('scripts')
   <script>
-    // change status
     $(document).ready(function() {
-      // Display an info toast with no title
-      $('body').on('change', '.change-status', function(e) {
-        let isChecked = $(this).is(':checked');
-        let ma_tk = $(this).data('id');
-        $.ajax({
-          type: "POST",
-          url: "{{ route('admin.account.change-status') }}",
-          data: {
-            _token: $('meta[name="csrf-token"]').attr(
-              'content'),
-            _method: 'PUT',
-            trang_thai: isChecked,
-            ma_tk: ma_tk,
-          },
-          success: function(data) {
-            toastr.success(data.message, '');
-          }
-        });
-      })
-
-      // reset password
-      $('body').on('click', '.reset-password', function(e) {
-        e.preventDefault();
-        let url = $(this).attr('href');
-        Swal.fire({
-          title: "Bạn có chắc chắn khôi phục mật khẩu?",
-          // text: "Bạn sẽ không thể khôi phục lại!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Ok!",
-          cancelButtonText: 'Hủy',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire({
-              title: 'Vui lòng chờ!...',
-              allowOutsideClick: false,
-              didOpen: () => {
-                Swal.showLoading();
-              }
-            });
-            $.ajax({
-              type: "PUT",
-              url: url,
-              success: function(data) {
-                if (data.status == 'success') {
-                  Swal.fire({
-                    title: "Thành công!",
-                    text: data.message,
-                    icon: "success"
-                  });
-                } else if (data.status == 'error') {
-                  Swal.fire({
-                    text: data.message,
-                    icon: "error",
-                  });
-                }
-              }
-            });
-          }
-        });
-      })
       // update course
       $('body').on('click', '.update-item', function(e) {
         e.preventDefault();

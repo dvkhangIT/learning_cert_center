@@ -26,9 +26,22 @@ class LopDataTable extends DataTable
   {
     return (new EloquentDataTable($query))
       ->addColumn('action', function ($query) {
-        $btnEdit = '<a href="' . route('admin.class.edit', $query->ma_lop) . '" title="Sửa tài khoản" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>';
-        $btnDelete = '<a href="' . route('admin.class.destroy', $query->ma_lop) . '" title="Xóa tài khoản" class="delete-item btn btn-outline-danger btn-sm mx-1"><i class="fa-solid fa-trash"></i></a>';
-        return $btnEdit . $btnDelete;
+        // $btnEdit = '<a href="' . route('admin.class.edit', $query->ma_lop) . '" title="Sửa tài khoản" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>';
+        // $btnDelete = '<a href="' . route('admin.class.destroy', $query->ma_lop) . '" title="Xóa tài khoản" class="delete-item btn btn-outline-danger btn-sm mx-1"><i class="fa-solid fa-trash"></i></a>';
+        $btnMore = '<div class="dropdown">
+											<button class="btn-outline-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">•••</button>
+											<ul class="dropdown-menu">
+												<li><a class="dropdown-item btn" href="' . route('admin.class.edit', $query->ma_lop) . '">Sửa thông tin lớp</a>
+												</li>
+												<li><a class="delete-item dropdown-item btn" href="' . route('admin.class.destroy', $query->ma_lop) . '" >Xóa lớp</a>
+												</li>
+												<li><a data-bs-toggle="modal"
+                        data-bs-target="#themHocVienModal"
+                        data-ma-lop="' . $query->ma_lop . '" class="btn dropdown-item">Thêm học viên</a>
+												</li>
+											</ul>
+										</div>';
+        return $btnMore;
       })
       ->addColumn('ngay_tao', function ($query) {
         return \Carbon\Carbon::parse($query->ngay_tao)->format('d/m/Y');

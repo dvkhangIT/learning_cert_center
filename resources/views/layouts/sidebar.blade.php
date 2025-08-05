@@ -57,6 +57,18 @@
            </li>
          </ul>
        </li>
+       <li>
+         <a href="javascript:;" class="has-arrow">
+           <div class="parent-icon"><i class="bx bx-category"></i>
+           </div>
+           <div class="menu-title">Học viên</div>
+         </a>
+         <ul>
+           <li> <a href="{{ route('admin.student.index') }}"><i
+                 class='bx bx-radio-circle'></i>Danh sách học viên</a>
+           </li>
+         </ul>
+       </li>
      </ul>
      <!--end navigation-->
    </div>

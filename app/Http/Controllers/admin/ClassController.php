@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\DataTables\LopDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\HocVien;
 use App\Models\KhoaHoc;
 use App\Models\Lop;
 use Illuminate\Http\Request;
@@ -90,5 +91,30 @@ class ClassController extends Controller
     $class->save();
     toastr()->success('Tạo lớp thành công!', ' ');
     return redirect()->route('admin.class.index');
+  }
+  public function themHocVien(string $ma_lop)
+  {
+    $lop = Lop::with('hocViens')->findOrFail($ma_lop);
+    $hocVien = HocVien::whereDoesntHave('lop', function ($query) use ($ma_lop) {
+      $query->where('hoc_vien_lop.ma_lop', $ma_lop);
+    })->get();
+
+    return view('admin.class.them-hoc-vien', compact('lop', 'hocVien'));
+  }
+
+  public function getHocVien($ma_lop)
+  {
+    $hocVien = HocVien::whereDoesntHave('lop', function ($q) use ($ma_lop) {
+      $q->where('hoc_vien_lop.ma_lop', $ma_lop);
+    })->get(['ma_hv', 'hoten_hv']);
+
+    return response()->json($hocVien);
+  }
+  public function luuHocVien(Request $request, string $ma_lop)
+  {
+    $lop = Lop::findOrFail($ma_lop);
+    $lop->hocVien()->attach($request->hoc_vien_id);
+    toastr()->success('Đã thêm học viên vào lớp', ' ');
+    return redirect()->back();
   }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\AccountController;
 use App\Http\Controllers\admin\ClassController;
 use App\Http\Controllers\admin\CourseController;
 use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\admin\StudentController;
 use App\Http\Controllers\user\DashboardController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
@@ -64,4 +65,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkRole'], function () {
   Route::get('class/edit/{ma_lop}', [ClassController::class, 'edit'])->name('admin.class.edit');
   Route::put('class/update/{ma_lop}', [ClassController::class, 'update'])->name('admin.class.update');
   Route::delete('class/delete/{ma_lop}', [ClassController::class, 'destroy'])->name('admin.class.destroy');
+
+  Route::get('lop/them-hoc-vien/{ma_lop}', [ClassController::class, 'themHocVien'])->name('admin.class.them-hoc-vien');
+  Route::get('lop/{ma_lop}/hoc-vien-chua-co', [ClassController::class, 'getHocVien']);
+  Route::post('lop/luu-hoc-vien/{ma_lop}', [ClassController::class, 'luuHocVien'])->name('admin.class.luu-hoc-vien');
+
+  //Học viên
+  Route::get('student', [StudentController::class, 'index'])->name('admin.student.index');
 });
