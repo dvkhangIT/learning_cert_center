@@ -10,6 +10,6 @@ class StudentController extends Controller
 {
   public function index(HocVienDataTable $dataTable)
   {
-    return $dataTable->render('admin.student.index');
+    return $dataTable->render('admin.hoc_vien.index');
   }
 }

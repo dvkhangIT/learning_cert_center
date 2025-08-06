@@ -69,6 +69,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkRole'], function () {
   Route::get('lop/them-hoc-vien/{ma_lop}', [ClassController::class, 'themHocVien'])->name('admin.class.them-hoc-vien');
   Route::get('lop/{ma_lop}/hoc-vien-chua-co', [ClassController::class, 'getHocVien']);
   Route::post('lop/luu-hoc-vien/{ma_lop}', [ClassController::class, 'luuHocVien'])->name('admin.class.luu-hoc-vien');
+  Route::get('lop/{ma_lop}/hoc-vien', [ClassController::class, 'hocVienTrongLop'])
+    ->name('admin.lop.hoc-vien');
+  Route::delete('lop/{ma_lop}/hoc-vien/{ma_hv}', [ClassController::class, 'xoaHocVien'])->name('lop.hocvien.xoa');
 
   //Học viên
   Route::get('student', [StudentController::class, 'index'])->name('admin.student.index');

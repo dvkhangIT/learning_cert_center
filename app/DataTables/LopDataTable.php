@@ -39,6 +39,8 @@ class LopDataTable extends DataTable
                         data-bs-target="#themHocVienModal"
                         data-ma-lop="' . $query->ma_lop . '" class="btn dropdown-item">Thêm học viên</a>
 												</li>
+												<li><a href="' . route('admin.lop.hoc-vien', $query->ma_lop) . '" class="btn dropdown-item">Danh sách học viên</a>
+												</li>
 											</ul>
 										</div>';
         return $btnMore;

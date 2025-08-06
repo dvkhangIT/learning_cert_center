@@ -13,7 +13,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class HocVienDataTable extends DataTable
+class HocVienTrongLopDataTable extends DataTable
 {
   use DefaultConfig;
   /**
@@ -22,19 +22,22 @@ class HocVienDataTable extends DataTable
    * @param QueryBuilder $query Results from query() method.
    * @return \Yajra\DataTables\EloquentDataTable
    */
+  protected $ma_lop;
+
+  public function setMaLop($ma_lop)
+  {
+    $this->ma_lop = $ma_lop;
+  }
   public function dataTable(QueryBuilder $query): EloquentDataTable
   {
+    $ma_lop = $this->ma_lop;
     return (new EloquentDataTable($query))
-      ->addColumn('action', function ($query) {
-        $btnEdit = '<a href="' . route('admin.account.edit', $query->ma_hv) . '" title="Sửa tài khoản" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>';
-        $btnDelete = '<a href="' . route('admin.account.destroy', $query->ma_hv) . '" title="Xóa tài khoản" class="delete-item btn btn-outline-danger btn-sm mx-1"><i class="fa-solid fa-trash"></i></a>';
-        $btnReset = '<a href="' . route('admin.account.reset-password', $query->ma_hv) . '" title="Khôi phục mật khẩu" class="reset-password btn btn-outline-success btn-sm"><i class="fa-solid fa-arrow-rotate-right"></i></a>';
-        return $btnEdit . $btnDelete . $btnReset;
+      ->addColumn('action', function ($query) use ($ma_lop) {
+        $btnDelete = '<a href="' . route('lop.hocvien.xoa', [$ma_lop, $query->ma_hv]) . '" title="Xóa học viên ra khỏi lớp" class="delete-item btn btn-outline-danger btn-sm mx-1"><i class="fa-solid fa-trash"></i></a>';
+        return  $btnDelete;
       })
-      ->addColumn('lop', function ($query) {
-        return $query->lop->map(function ($lop) {
-          return '<span class="badge bg-success me-1">' . $lop->ten_lop . '</span>';
-        })->implode(' ');
+      ->addColumn('ngay_sinh', function ($query) {
+        return \Carbon\Carbon::parse($query->ngay_sinh)->format('d/m/Y');
       })
       ->addColumn('ngay_tao', function ($query) {
         return \Carbon\Carbon::parse($query->ngay_tao)->format('d/m/Y');
@@ -42,10 +45,7 @@ class HocVienDataTable extends DataTable
       ->addColumn('ngay_cap_nhat', function ($query) {
         return \Carbon\Carbon::parse($query->ngay_cap_nhat)->format('d/m/Y');
       })
-      ->addColumn('ngay_sinh', function ($query) {
-        return \Carbon\Carbon::parse($query->ngay_sinh)->format('d/m/Y');
-      })
-      ->rawColumns(['lop', 'action', 'ngay_tao', 'ngay_cap_nhat', 'ngay_sinh'])
+      ->rawColumns(['ngay_sinh', 'action'])
       ->setRowId('ma_hv');
   }
 
@@ -57,7 +57,9 @@ class HocVienDataTable extends DataTable
    */
   public function query(HocVien $model): QueryBuilder
   {
-    return $model->with('lop')->newQuery();
+    return $model->whereHas('lop', function ($q) {
+      $q->where('lop.ma_lop', $this->ma_lop);
+    });
   }
 
   /**
@@ -67,10 +69,11 @@ class HocVienDataTable extends DataTable
    */
   public function html(): HtmlBuilder
   {
-    $builder = $this->applyDefaultHtmlConfig($this->builder(), 'hocvien-table', true);
+    $builder = $this->applyDefaultHtmlConfig($this->builder(), 'hocvientronglop-table', true);
     return $builder
       ->columns($this->getColumns())
       ->minifiedAjax()
+      //->dom('Bfrtip')
       ->orderBy(0)
       ->selectStyleSingle()
       ->buttons([
@@ -97,7 +100,6 @@ class HocVienDataTable extends DataTable
     return [
       Column::make('ma_hv')->title('#')->type('string'),
       Column::make('hoten_hv')->title('Họ tên'),
-      Column::make('lop')->title('Lớp'),
       Column::make('ngay_sinh')->title('Ngày sinh'),
       Column::make('noi_sinh')->title('Nơi sinh'),
       Column::make('gioi_tinh')->title('Giới tính'),
@@ -106,10 +108,11 @@ class HocVienDataTable extends DataTable
       Column::computed('action')->title('Thao tác')
         ->exportable(false)
         ->printable(false)
-        ->width(150)
+        ->width(100)
         ->addClass('text-center no-export'),
     ];
   }
+
 
   /**
    * Get filename for export.
@@ -118,6 +121,6 @@ class HocVienDataTable extends DataTable
    */
   protected function filename(): string
   {
-    return 'HocVien_' . date('YmdHis');
+    return 'HocVienTrongLop_' . date('YmdHis');
   }
 }

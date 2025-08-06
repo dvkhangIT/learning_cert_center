@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\DataTables\HocVienTrongLopDataTable;
 use App\DataTables\LopDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\HocVien;
 use App\Models\KhoaHoc;
 use App\Models\Lop;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ClassController extends Controller
 {
@@ -116,5 +118,24 @@ class ClassController extends Controller
     $lop->hocVien()->attach($request->hoc_vien_id);
     toastr()->success('Đã thêm học viên vào lớp', ' ');
     return redirect()->back();
+  }
+  public function hocVienTrongLop(string $ma_lop, HocVienTrongLopDataTable $dataTable)
+  {
+    $lop = Lop::findOrFail($ma_lop);
+    $dataTable->setMaLop($ma_lop);
+    return $dataTable->render('admin.class.hoc_vien.hoc_vien_trong_lop', compact('lop', 'ma_lop'));
+  }
+  public function xoaHocVien($ma_lop, $ma_hv)
+  {
+    DB::table('hoc_vien_lop')
+      ->where('ma_lop', $ma_lop)
+      ->where('ma_hv', $ma_hv)
+      ->delete();
+    return response()->json(
+      [
+        'status' => 'success',
+        'message' => 'Đã xóa học viên khỏi lớp'
+      ]
+    );
   }
 }

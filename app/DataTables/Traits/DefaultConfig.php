@@ -30,6 +30,7 @@ trait DefaultConfig
           'info' => '',
           'infoEmpty' => '',
           'infoFiltered' => '',
+          'emptyTable' => "Không có dữ liệu",
         ],
       ])
       ->setTableAttribute('class', 'table table-bordered table-striped');
