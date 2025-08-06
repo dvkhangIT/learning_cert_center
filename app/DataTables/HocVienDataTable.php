@@ -26,10 +26,9 @@ class HocVienDataTable extends DataTable
   {
     return (new EloquentDataTable($query))
       ->addColumn('action', function ($query) {
-        $btnEdit = '<a href="' . route('admin.account.edit', $query->ma_hv) . '" title="Sửa tài khoản" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>';
-        $btnDelete = '<a href="' . route('admin.account.destroy', $query->ma_hv) . '" title="Xóa tài khoản" class="delete-item btn btn-outline-danger btn-sm mx-1"><i class="fa-solid fa-trash"></i></a>';
-        $btnReset = '<a href="' . route('admin.account.reset-password', $query->ma_hv) . '" title="Khôi phục mật khẩu" class="reset-password btn btn-outline-success btn-sm"><i class="fa-solid fa-arrow-rotate-right"></i></a>';
-        return $btnEdit . $btnDelete . $btnReset;
+        $btnEdit = '<a href="" title="Sửa tài khoản" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>';
+        $btnDelete = '<a href="" title="Xóa tài khoản" class="delete-item btn btn-outline-danger btn-sm mx-1"><i class="fa-solid fa-trash"></i></a>';
+        return $btnEdit . $btnDelete;
       })
       ->addColumn('lop', function ($query) {
         return $query->lop->map(function ($lop) {

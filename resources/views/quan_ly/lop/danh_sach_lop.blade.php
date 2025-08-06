@@ -23,7 +23,7 @@
     </div>
     <div class="ms-auto">
       <a class="btn btn-outline-primary"
-        href="{{ route('admin.class.create') }}"><i
+        href="{{ route('quan-ly.form-tao-lop') }}"><i
           class="fa-solid fa-plus"></i>Tạo lớp</a>
     </div>
   </div>
@@ -108,10 +108,11 @@
           const modal = $(this);
           // Cập nhật URL submit
           modal.find('#themHocVienForm').attr('action',
-            `/admin/lop/luu-hoc-vien/${maLop}`);
+            `/quan-ly/lop/luu-hoc-vien/${maLop}`);
           // Gọi API lấy danh sách học viên chưa có lớp này
-          $.get(`/admin/lop/${maLop}/hoc-vien-chua-co`, function(data) {
+          $.get(`/quan-ly/lop/${maLop}/hoc-vien-chua-co`, function(data) {
             let html = '';
+            console.log(data);
             data.forEach(hv => {
               html +=
                 `<option value="${hv.ma_hv}">${hv.hoten_hv}</option>`;
@@ -120,7 +121,8 @@
             select.html(html);
             // Re-initialize Select2
             select.select2({
-              dropdownParent: modal
+              dropdownParent: $('#themHocVienModal'),
+              width: '100%'
             });
           });
         });

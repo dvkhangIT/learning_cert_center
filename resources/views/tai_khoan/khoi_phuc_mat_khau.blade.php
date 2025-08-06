@@ -1,4 +1,4 @@
-@extends('auth.master')
+@extends('tai_khoan.master')
 @section('content')
   <div class="wrapper">
     <div
@@ -18,8 +18,7 @@
                     <p class="mb-0">Chúng tôi đã nhận được yêu cầu đặt lại mật
                       khẩu của bạn. Vui lòng nhập mật khẩu mới của bạn!</p>
                   </div>
-                  <form action="{{ route('process.reset.password') }}"
-                    method="POST">
+                  <form action="{{ route('khoi-phuc-mat-khau') }}" method="POST">
                     @csrf
                     @method('PUT')
                     <input type="hidden" value="{{ $tokenString }}"
@@ -51,7 +50,8 @@
                     <div class="d-grid gap-2">
                       <button type="submit" class="btn btn-primary">Cập
                         nhật</button>
-                      <a href="{{ route('login') }}" class="btn btn-light"><i
+                      <a href="{{ route('form-dang-nhap') }}"
+                        class="btn btn-light"><i
                           class="bx bx-arrow-back mr-1"></i>Đăng nhập</a>
                     </div>
                   </form>

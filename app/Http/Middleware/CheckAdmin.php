@@ -15,9 +15,9 @@ class CheckAdmin
    */
   public function handle(Request $request, Closure $next): Response
   {
-    if ($request->user() == null) return redirect()->route('login');
+    if ($request->user() == null) return redirect()->route('form-dang-nhap');
     if ($request->user()->vai_tro != 'quanly') {
-      return redirect()->route('login')->with('error', 'Bạn không có quyền truy cập');
+      return redirect()->route('form-dang-nhap')->with('error', 'Bạn không có quyền truy cập');
     }
     return $next($request);
   }

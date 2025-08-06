@@ -22,7 +22,8 @@
       </nav>
     </div>
     <div class="ms-auto">
-      <a class="btn btn-outline-primary" href="{{ route('admin.class.index') }}">
+      <a class="btn btn-outline-primary"
+        href="{{ route('quan-ly.danh-sach-lop') }}">
         <i class="fa-solid fa-arrow-left"></i>
       </a>
     </div>
@@ -31,7 +32,7 @@
     <div class="col-xl-6 mx-auto">
       <div class="card">
         <div class="card-body p-4">
-          <form id="create-user-form" action="{{ route('admin.class.store') }}"
+          <form id="create-user-form" action="{{ route('quan-ly.luu-lop') }}"
             class="row g-3 needs-validation" method="POST">
             @csrf
             <div class="col-md-12">

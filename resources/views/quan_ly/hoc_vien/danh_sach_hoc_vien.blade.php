@@ -14,8 +14,7 @@
       </nav>
     </div>
     <div class="ms-auto">
-      <a class="btn btn-outline-primary"
-        href="{{ route('admin.class.create') }}"><i
+      <a class="btn btn-outline-primary" href=""><i
           class="fa-solid fa-plus"></i>Tạo lớp</a>
     </div>
   </div>

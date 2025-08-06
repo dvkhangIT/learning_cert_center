@@ -40,7 +40,7 @@ class SendPasswordMail extends Mailable
   public function content(): Content
   {
     return new Content(
-      view: 'emails.send-password',
+      view: 'emails.mat_khau',
       with: [
         'name' => $this->name,
         'password' => $this->password,

@@ -40,7 +40,7 @@ class SendResetPasswordMail extends Mailable
   public function content(): Content
   {
     return new Content(
-      view: 'emails.send-reset-password',
+      view: 'emails.khoi_phuc_mat_khau',
       with: [
         'name' => $this->name,
         'password' => $this->password,

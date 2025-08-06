@@ -15,7 +15,7 @@
     </div>
     <div class="ms-auto">
       <a class="btn btn-outline-primary"
-        href="{{ route('admin.account.create') }}"><i
+        href="{{ route('quan-ly.tao-tai-khoan') }}"><i
           class="fa-solid fa-plus"></i>Tạo tài
         khoản</a>
     </div>
@@ -41,7 +41,7 @@
         let ma_tk = $(this).data('id');
         $.ajax({
           type: "POST",
-          url: "{{ route('admin.account.change-status') }}",
+          url: "{{ route('quan-ly.trang-thai-tai-khoan') }}",
           data: {
             _token: $('meta[name="csrf-token"]').attr(
               'content'),
@@ -78,8 +78,12 @@
             }
           });
           $.ajax({
-            type: "PUT",
+            type: "POST",
             url: url,
+            data: {
+              _token: $('meta[name="csrf-token"]').attr('content'),
+              _method: 'PUT',
+            },
             success: function(data) {
               if (data.status == 'success') {
                 Swal.fire({

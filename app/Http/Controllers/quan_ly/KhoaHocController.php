@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\quan_ly;
 
 use App\DataTables\KhoaHocDataTable;
 use App\Http\Controllers\Controller;
@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
-class CourseController extends Controller
+class KhoaHocController extends Controller
 {
-  public function index(KhoaHocDataTable $dataTables)
+  public function danhSachKhoaHoc(KhoaHocDataTable $dataTables)
   {
-    return $dataTables->render('admin.course.index');
+    return $dataTables->render('quan_ly.khoa_hoc.danh_sach_khoa_hoc');
   }
-  public function update(Request $request, string $ma_kh)
+  public function suaKhoaHoc(Request $request, string $ma_kh)
   {
     $validator = Validator::make($request->all(), [
       'ten_kh' => 'required|max:200|min:5|unique:khoa_hoc,ten_kh,' . $ma_kh . ',ma_kh'
@@ -43,7 +43,7 @@ class CourseController extends Controller
       ]);
     }
   }
-  public function store(Request $request)
+  public function luuKhoaHoc(Request $request)
   {
     $validator = Validator::make($request->all(), [
       'ten_kh' => 'required|max:200|min:5|unique:khoa_hoc,ten_kh'
@@ -72,7 +72,7 @@ class CourseController extends Controller
       ]);
     }
   }
-  public function destroy(string $ma_kh)
+  public function xoaKhoaHoc(string $ma_kh)
   {
     $course = KhoaHoc::findOrFail($ma_kh);
     $course->delete();

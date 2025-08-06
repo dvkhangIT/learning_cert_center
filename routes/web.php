@@ -3,10 +3,14 @@
 use App\Http\Controllers\admin\AccountController;
 use App\Http\Controllers\admin\ClassController;
 use App\Http\Controllers\admin\CourseController;
-use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\admin\StudentController;
+use App\Http\Controllers\quan_ly\HocVienController;
+use App\Http\Controllers\quan_ly\KhoaHocController;
+use App\Http\Controllers\quan_ly\LopController;
+use App\Http\Controllers\quan_ly\NguoiDungController;
+use App\Http\Controllers\quan_ly\ThongKeController;
 use App\Http\Controllers\user\DashboardController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\TaiKhoanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,54 +29,54 @@ Route::get('/', function () {
 });
 // Guest Route
 Route::group(['middleware' => 'guest'], function () {
-  Route::get('/login', [LoginController::class, 'index'])->name('login');
-  Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
-  Route::get('/register', [LoginController::class, 'register'])->name('register');
-  Route::post('/process-register', [LoginController::class, 'processRegister'])->name('processRegister');
-  Route::get('forgot-password', [LoginController::class, 'forgotPassword'])->name('forgot.password');
-  Route::post('forgot-password-process', [LoginController::class, 'forgotPasswordProcess'])->name('forgot.password.process');
-  Route::get('reset-password/{token}', [LoginController::class, 'resetPassword'])->name('reset.password');
-  Route::put('process-reset-password', [LoginController::class, 'processResestPassword'])->name('process.reset.password');
+  Route::get('dang-nhap', [TaiKhoanController::class, 'formDangNhap'])->name('form-dang-nhap');
+  Route::post('dang-nhap', [TaiKhoanController::class, 'dangNhap'])->name('dang-nhap');
+  Route::get('/register', [TaiKhoanController::class, 'register'])->name('register');
+  Route::post('/process-register', [TaiKhoanController::class, 'processRegister'])->name('processRegister');
+  Route::get('quen-mat-khau', [TaiKhoanController::class, 'formQuenMatKhau'])->name('form-quen-mat-khau');
+  Route::post('quen-mat-khau', [TaiKhoanController::class, 'quenMatKhau'])->name('quen-mat-khau');
+  Route::get('khoi-phuc-mat-khau/{token}', [TaiKhoanController::class, 'formKhoiPhucMatKhau'])->name('form-khoi-phuc-mat-khau');
+  Route::put('khoi-phuc-mat-khau', [TaiKhoanController::class, 'khoiPhucMatKhau'])->name('khoi-phuc-mat-khau');
 });
 // Authentication Route
 Route::group(['middleware' => 'auth'], function () {
-  Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-  Route::get('/dashboard', [DashboardController::class, 'index'])->name('user.dashboard');
+  Route::get('dang-xuat', [TaiKhoanController::class, 'dangXuat'])->name('dang-xuat');
+  Route::get('dashboard', [DashboardController::class, 'index'])->name('user.dashboard');
 });
-Route::group(['prefix' => 'admin', 'middleware' => 'checkRole'], function () {
-  Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+Route::group(['prefix' => 'quan-ly', 'middleware' => 'checkRole'], function () {
+  Route::get('trang-chu', [ThongKeController::class, 'trangChu'])->name('quan-ly.trang-chu');
 
   // Tài khoản
-  Route::get('/account', [AccountController::class, 'index'])->name('admin.account.index');
-  Route::get('/account/create', [AccountController::class, 'create'])->name('admin.account.create');
-  Route::post('/account/store', [AccountController::class, 'store'])->name('admin.account.store');
-  Route::put('account/change-satus', [AccountController::class, 'changeStatus'])->name('admin.account.change-status');
-  Route::get('account/edit/{ma_tk}', [AccountController::class, 'edit'])->name('admin.account.edit');
-  Route::put('account/update/{ma_tk}', [AccountController::class, 'update'])->name('admin.account.update');
-  Route::delete('account/delete/{ma_tk}', [AccountController::class, 'destroy'])->name('admin.account.destroy');
-  Route::put('account/reset-password/{ma_tk}', [AccountController::class, 'resetPassword'])->name('admin.account.reset-password');
+  Route::get('danh-sach-tai-khoan', [NguoiDungController::class, 'danhSachTaiKhoan'])->name('quan-ly.danh-sach-tai-khoan');
+  Route::get('tao-tai-khoan', [NguoiDungController::class, 'taoTaiKhoan'])->name('quan-ly.tao-tai-khoan');
+  Route::post('luu-tai-khoan', [NguoiDungController::class, 'luuTaiKhoan'])->name('quan-ly.luu-tai-khoan');
+  Route::put('trang-thai-tai-khoan', [NguoiDungController::class, 'trangThai'])->name('quan-ly.trang-thai-tai-khoan');
+  Route::get('sua-tai-khoan/{ma_tk}', [NguoiDungController::class, 'formSuaTaiKhoan'])->name('quan-ly.form-sua-tai-khoan');
+  Route::put('sua-tai-khoan/{ma_tk}', [NguoiDungController::class, 'suaTaiKhoan'])->name('quan-ly.sua-tai-khoan');
+  Route::delete('xoa-tai-khoan/{ma_tk}', [NguoiDungController::class, 'XoaTaiKhoan'])->name('quan-ly.xoa-tai-khoan');
+  Route::put('khoi-phuc-mat-khau-tai-khoan/{ma_tk}', [NguoiDungController::class, 'khoiPhucMatKhau'])->name('quan-ly.khoi-phuc-mat-khau-tai-khoan');
 
   // khóa học
-  Route::get('course', [CourseController::class, 'index'])->name('admin.course.index');
-  Route::post('/course/store', [CourseController::class, 'store'])->name('admin.course.store');
-  Route::put('course/update/{ma_kh}', [CourseController::class, 'update'])->name('admin.course.update');
-  Route::delete('course/delete/{ma_kh}', [CourseController::class, 'destroy'])->name('admin.course.destroy');
+  Route::get('danh-sach-khoa-hoc', [KhoaHocController::class, 'danhSachKhoaHoc'])->name('quan-ly.danh-sach-khoa-hoc');
+  Route::post('luu-khoa-hoc', [KhoaHocController::class, 'luuKhoaHoc'])->name('quan-ly.luu-khoa-hoc');
+  Route::put('sua-khoa-hoc/{ma_kh}', [KhoaHocController::class, 'suaKhoaHoc'])->name('quan-ly.sua-khoa-hoc');
+  Route::delete('xoa-khoa-hoc/{ma_kh}', [KhoaHocController::class, 'xoaKhoaHoc'])->name('quan-ly.xoa-khoa-hoc');
 
   // Lớp
-  Route::get('class', [ClassController::class, 'index'])->name('admin.class.index');
-  Route::get('/class/create', [ClassController::class, 'create'])->name('admin.class.create');
-  Route::post('/class/store', [ClassController::class, 'store'])->name('admin.class.store');
-  Route::get('class/edit/{ma_lop}', [ClassController::class, 'edit'])->name('admin.class.edit');
-  Route::put('class/update/{ma_lop}', [ClassController::class, 'update'])->name('admin.class.update');
-  Route::delete('class/delete/{ma_lop}', [ClassController::class, 'destroy'])->name('admin.class.destroy');
+  Route::get('danh-sach-lop', [LopController::class, 'danhSachLop'])->name('quan-ly.danh-sach-lop');
+  Route::get('tao-lop', [LopController::class, 'formTaoLop'])->name('quan-ly.form-tao-lop');
+  Route::post('luu-lop', [LopController::class, 'luuLop'])->name('quan-ly.luu-lop');
+  Route::get('sua-lop/{ma_lop}', [LopController::class, 'formSuaLop'])->name('quan-ly.form-sua-lop');
+  Route::put('sua-lop/{ma_lop}', [LopController::class, 'suaLop'])->name('quan-ly.sua-lop');
+  Route::delete('xoa-lop/{ma_lop}', [LopController::class, 'xoaLop'])->name('quan-ly.xoa-lop');
 
-  Route::get('lop/them-hoc-vien/{ma_lop}', [ClassController::class, 'themHocVien'])->name('admin.class.them-hoc-vien');
-  Route::get('lop/{ma_lop}/hoc-vien-chua-co', [ClassController::class, 'getHocVien']);
-  Route::post('lop/luu-hoc-vien/{ma_lop}', [ClassController::class, 'luuHocVien'])->name('admin.class.luu-hoc-vien');
-  Route::get('lop/{ma_lop}/hoc-vien', [ClassController::class, 'hocVienTrongLop'])
-    ->name('admin.lop.hoc-vien');
-  Route::delete('lop/{ma_lop}/hoc-vien/{ma_hv}', [ClassController::class, 'xoaHocVien'])->name('lop.hocvien.xoa');
+  Route::get('lop/them-hoc-vien/{ma_lop}', [LopController::class, 'themHocVien'])->name('quan-ly.lop.them-hoc-vien');
+  Route::get('lop/{ma_lop}/hoc-vien-chua-co', [LopController::class, 'getHocVien']);
+  Route::post('lop/luu-hoc-vien/{ma_lop}', [LopController::class, 'luuHocVien']);
+  Route::get('lop/{ma_lop}/hoc-vien', [LopController::class, 'hocVienTrongLop'])
+    ->name('quan-ly.lop.hoc-vien');
+  Route::delete('lop/{ma_lop}/hoc-vien/{ma_hv}', [LopController::class, 'xoaHocVien'])->name('lop.hocvien.xoa');
 
   //Học viên
-  Route::get('student', [StudentController::class, 'index'])->name('admin.student.index');
+  Route::get('danh-sach-hoc-vien', [HocVienController::class, 'danhSachHocVien'])->name('quan-ly.danh-sach-hoc-vien');
 });

@@ -1,4 +1,4 @@
-@extends('auth.master')
+@extends('tai_khoan.master')
 @section('content')
   <div class="wrapper">
     <div
@@ -27,7 +27,7 @@
                     <h5 class="">đăng nhập hệ thống</h5>
                   </div>
                   <div class="form-body">
-                    <form action="{{ route('authenticate') }}" method="POST"
+                    <form action="{{ route('dang-nhap') }}" method="POST"
                       class="row g-3">
                       @csrf
                       <div class="col-12">
@@ -70,7 +70,7 @@
 
                       </div>
                       <div class="col-md-6 text-end"> <a
-                          href="{{ route('forgot.password') }}">Quên mật
+                          href="{{ route('form-quen-mat-khau') }}">Quên mật
                           khẩu?</a>
                       </div>
                       <div class="col-12">

@@ -22,7 +22,8 @@
       </nav>
     </div>
     <div class="ms-auto">
-      <a class="btn btn-outline-primary" href="{{ route('admin.class.index') }}">
+      <a class="btn btn-outline-primary"
+        href="{{ route('quan-ly.danh-sach-lop') }}">
         <i class="fa-solid fa-arrow-left"></i>
       </a>
     </div>
@@ -32,7 +33,7 @@
       <div class="card">
         <div class="card-body p-4">
           <form id="create-user-form"
-            action="{{ route('admin.class.update', $class->ma_lop) }}"
+            action="{{ route('quan-ly.sua-lop', $class->ma_lop) }}"
             class="row g-3 needs-validation" method="POST">
             @csrf
             @method('PUT')

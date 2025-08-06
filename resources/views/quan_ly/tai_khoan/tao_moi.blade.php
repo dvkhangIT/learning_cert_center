@@ -8,14 +8,14 @@
           <li class="breadcrumb-item"><a href="javascript:;"><i
                 class="bx bx-home-alt"></i></a>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">Cập nhật tài khoản
+          <li class="breadcrumb-item active" aria-current="page">Tạo tài khoản
           </li>
         </ol>
       </nav>
     </div>
     <div class="ms-auto">
       <a class="btn btn-outline-primary"
-        href="{{ route('admin.account.index') }}">
+        href="{{ route('quan-ly.danh-sach-tai-khoan') }}">
         <i class="fa-solid fa-arrow-left"></i>
       </a>
     </div>
@@ -25,13 +25,12 @@
       <div class="card">
         <div class="card-body p-4">
           <form id="create-user-form"
-            action="{{ route('admin.account.update', $user->ma_tk) }}"
-            class="row g-3 needs-validation" method="POST">
+            action="{{ route('quan-ly.luu-tai-khoan') }}"
+            class="create-user-form row g-3 needs-validation" method="POST">
             @csrf
-            @method('PUT')
             <div class="col-md-12">
               <label for="input3" class="form-label">Họ và tên</label>
-              <input type="text" value="{{ old('ho_ten', $user->ho_ten) }}"
+              <input type="text" value="{{ old('ho_ten') }}"
                 class="form-control @error('ho_ten')
                   is-invalid
               @enderror"
@@ -48,8 +47,7 @@
                 class="form-control @error('email')
                     is-invalid
               @enderror"
-                id="input4" name="email"
-                value="{{ old('email', $user->email) }}">
+                id="input4" name="email" value="{{ old('email') }}">
               @error('email')
                 <div class="invalid-feedback">
                   {{ $message }}

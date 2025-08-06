@@ -31,15 +31,15 @@ class LopDataTable extends DataTable
         $btnMore = '<div class="dropdown">
 											<button class="btn-outline-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">•••</button>
 											<ul class="dropdown-menu">
-												<li><a class="dropdown-item btn" href="' . route('admin.class.edit', $query->ma_lop) . '">Sửa thông tin lớp</a>
+												<li><a class="dropdown-item btn" href="' . route('quan-ly.sua-lop', $query->ma_lop) . '">Sửa thông tin lớp</a>
 												</li>
-												<li><a class="delete-item dropdown-item btn" href="' . route('admin.class.destroy', $query->ma_lop) . '" >Xóa lớp</a>
+												<li><a class="delete-item dropdown-item btn" href="' . route('quan-ly.xoa-lop', $query->ma_lop) . '" >Xóa lớp</a>
 												</li>
 												<li><a data-bs-toggle="modal"
                         data-bs-target="#themHocVienModal"
                         data-ma-lop="' . $query->ma_lop . '" class="btn dropdown-item">Thêm học viên</a>
 												</li>
-												<li><a href="' . route('admin.lop.hoc-vien', $query->ma_lop) . '" class="btn dropdown-item">Danh sách học viên</a>
+												<li><a href="' . route('quan-ly.lop.hoc-vien', $query->ma_lop) . '" class="btn dropdown-item">Danh sách học viên</a>
 												</li>
 											</ul>
 										</div>';

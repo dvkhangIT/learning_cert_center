@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\quan_ly;
 
 use App\DataTables\TaiKhoanDataTable;
 use App\Http\Controllers\Controller;
@@ -11,19 +11,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Str;
-use Carbon\Carbon;
 
-class AccountController extends Controller
+class NguoiDungController extends Controller
 {
-  public function index(TaiKhoanDataTable $dataTables)
+  public function danhSachTaiKhoan(TaiKhoanDataTable $dataTables)
   {
-    return $dataTables->render('admin.account.index');
+    return $dataTables->render('quan_ly.tai_khoan.danh_sach_tai_khoan');
   }
-  public function create()
+  public function taoTaiKhoan()
   {
-    return view('admin.account.create');
+    return view('quan_ly.tai_khoan.tao_moi');
   }
-  public function store(Request $request)
+  public function luuTaiKhoan(Request $request)
   {
     $request->validate([
       'ho_ten' => 'required|string|max:255',
@@ -52,12 +51,12 @@ class AccountController extends Controller
     toastr()->success('Tài khoản đã được tạo và đã gửi mật khẩu qua email.', ' ');
     return back();
   }
-  public function edit(string $ma_tk)
+  public function formSuaTaiKhoan(string $ma_tk)
   {
     $user = TaiKhoan::findOrFail($ma_tk);
-    return view('admin.account.edit', compact('user'));
+    return view('quan_ly.tai_khoan.sua_tai_khoan', compact('user'));
   }
-  public function update(Request $request, string $ma_tk)
+  public function suaTaiKhoan(Request $request, string $ma_tk)
   {
     $request->validate([
       'ho_ten' => 'required|string|max:255',
@@ -78,22 +77,22 @@ class AccountController extends Controller
     $user->ngay_cap_nhat = now();
     $user->save();
     toastr()->success('Cập nhật thông tin thành công.', ' ');
-    return redirect()->route('admin.account.index');
+    return redirect()->route('quan-ly.danh-sach-tai-khoan');
   }
-  public function destroy(string $ma_tk)
+  public function XoaTaiKhoan(string $ma_tk)
   {
     $user = TaiKhoan::findOrFail($ma_tk);
     $user->delete();
     return response()->json(['status' => 'success', 'message' => 'Xóa thành công!']);
   }
-  public function changeStatus(Request $request)
+  public function trangThai(Request $request)
   {
     $user = TaiKhoan::findOrFail($request->ma_tk);
     $user->trang_thai = $request->trang_thai == 'true' ? '1' : '0';
     $user->save();
     return response()->json(['message' => 'Cập nhật thành công!']);
   }
-  public function resetPassword(string $ma_tk)
+  public function khoiPhucMatKhau(string $ma_tk)
   {
     $user = TaiKhoan::findOrFail($ma_tk);
     $password = Str::random(8);

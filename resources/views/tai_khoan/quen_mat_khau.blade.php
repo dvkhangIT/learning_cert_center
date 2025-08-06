@@ -1,4 +1,4 @@
-@extends('auth.master')
+@extends('tai_khoan.master')
 @section('content')
   <div class="wrapper">
     <div
@@ -13,7 +13,7 @@
             <h4 class="mt-5 font-weight-bold">Quên mật khẩu?</h4>
             <p class="text-muted">Nhập địa chỉ email đăng ký của bạn để đặt lại
               mật khẩu</p>
-            <form action="{{ route('forgot.password.process') }}" method="POST">
+            <form action="{{ route('quen-mat-khau') }}" method="POST">
               @csrf
               <div class="my-4">
                 <label class="form-label">Email</label>
@@ -30,7 +30,7 @@
               </div>
               <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-primary">Xác nhận</button>
-                <a href="{{ route('login') }}" class="btn btn-light"><i
+                <a href="{{ route('form-dang-nhap') }}" class="btn btn-light"><i
                     class='bx bx-arrow-back me-1'></i>Đăng nhập</a>
               </div>
             </form>

@@ -40,8 +40,8 @@
               <div class="dropdown-divider mb-0"></div>
             </li>
             <li><a class="dropdown-item d-flex align-items-center"
-                href="{{ route('logout') }}"><i
-                  class="bx bx-log-out-circle"></i><span>Logout</span></a>
+                href="{{ route('dang-xuat') }}"><i
+                  class="bx bx-log-out-circle"></i><span>Đăng xuất</span></a>
             </li>
           </ul>
         </div>

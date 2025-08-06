@@ -15,13 +15,13 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Str;
 
-class LoginController extends Controller
+class TaiKhoanController extends Controller
 {
-  public function index()
+  public function formDangNhap()
   {
-    return view('auth.login');
+    return view('tai_khoan.dang_nhap');
   }
-  public function authenticate(Request $request)
+  public function dangNhap(Request $request)
   {
     $validator = Validator::make(
       $request->all(),
@@ -40,17 +40,17 @@ class LoginController extends Controller
         $vai_tro = Auth::user()->vai_tro;
         if ($vai_tro === 'quanly') {
           toastr()->success('Đăng nhập thành cônng!', ' ');
-          return redirect()->route('admin.dashboard');
+          return redirect()->route('quan-ly.trang-chu');
         } else {
           toastr()->success('Đăng nhập thành cônng!', ' ');
           return redirect()->route('user.dashboard');
         }
       } else {
         toastr()->error('Tài khoản hoặc mật khẩu không đúng!', ' ');
-        return redirect()->route('login');
+        return redirect()->route('form-dang-nhap');
       }
     } else {
-      return redirect()->route('login')->withInput()->withErrors($validator);
+      return redirect()->route('form-dang-nhap')->withInput()->withErrors($validator);
     }
   }
   public function register(Request $request)
@@ -79,16 +79,16 @@ class LoginController extends Controller
       return redirect()->route('register')->withInput()->withErrors($validator);
     }
   }
-  public function logout()
+  public function dangXuat()
   {
     Auth::logout();
-    return redirect()->route('login');
+    return redirect()->route('form-dang-nhap');
   }
-  public function forgotPassword()
+  public function formQuenMatKhau()
   {
-    return view('auth.forgot-password');
+    return view('tai_khoan.quen_mat_khau');
   }
-  public function forgotPasswordProcess(Request $request)
+  public function quenMatKhau(Request $request)
   { //
     $request->validate([
       'email' => 'required|email|exists:tai_khoan,email'
@@ -106,9 +106,9 @@ class LoginController extends Controller
     );
     Mail::to($request->email)->send(new SendForgotPasswordMail($user->ho_ten, $user->email, $token));
     toastr()->success('Vui lòng kiểm tra email.', ' ');
-    return redirect()->route('login');
+    return redirect()->route('form-dang-nhap');
   }
-  public function resetPassword(string $tokenString)
+  public function formKhoiPhucMatKhau(string $tokenString)
   {
     $token = DB::table('password_reset_tokens')
       ->where('token', $tokenString)
@@ -116,9 +116,9 @@ class LoginController extends Controller
     if (!$token) {
       abort(404);
     }
-    return view('auth.reset-password', compact('tokenString'));
+    return view('tai_khoan.khoi_phuc_mat_khau', compact('tokenString'));
   }
-  public function processResestPassword(Request $request)
+  public function khoiPhucMatKhau(Request $request)
   {
     $request->validate([
       'new_password' => 'required|min:8',
@@ -134,11 +134,11 @@ class LoginController extends Controller
       ->first();
     if (!$token) {
       toastr()->error('Liên kết không hợp lệ.', ' ');
-      return redirect()->route('forgot.password');
+      return redirect()->route('form-quen-mat-khau');
     }
     if (!$token->email) {
       toastr()->error('Email không hợp lệ.', ' ');
-      return redirect()->route('forgot.password');
+      return redirect()->route('form-quen-mat-khau');
     }
     if (Carbon::parse($token->created_at)->addMinutes(1)->isPast()) {
       DB::table('password_reset_tokens')->where('email', $token->email)->delete();
@@ -150,6 +150,6 @@ class LoginController extends Controller
     $user->save();
     DB::table('password_reset_tokens')->where('email', $token->email)->delete();
     toastr()->success('Mật khẩu được thay đổi thành công.', ' ');
-    return redirect()->route('login');
+    return redirect()->route('dang-nhap');
   }
 }

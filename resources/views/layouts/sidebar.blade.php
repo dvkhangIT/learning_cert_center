@@ -12,7 +12,7 @@
      <!--navigation-->
      <ul class="metismenu" id="menu">
        <li class="">
-         <a href="{{ route('admin.dashboard') }}" class="">
+         <a href="{{ route('quan-ly.trang-chu') }}" class="">
            <div class="parent-icon"><i class='bx bx-home-alt'></i>
            </div>
            <div class="menu-title">Tổng quan</div>
@@ -25,10 +25,10 @@
            <div class="menu-title">Tài khoản</div>
          </a>
          <ul>
-           <li> <a href="{{ route('admin.account.index') }}"><i
+           <li> <a href="{{ route('quan-ly.danh-sach-tai-khoan') }}"><i
                  class='bx bx-radio-circle'></i>Danh sách tài khoản</a>
            </li>
-           <li> <a href="{{ route('admin.account.create') }}"><i
+           <li> <a href="{{ route('quan-ly.tao-tai-khoan') }}"><i
                  class='bx bx-radio-circle'></i>Tạo tài khoản</a>
            </li>
          </ul>
@@ -40,7 +40,7 @@
            <div class="menu-title">Khóa học</div>
          </a>
          <ul>
-           <li> <a href="{{ route('admin.course.index') }}"><i
+           <li> <a href="{{ route('quan-ly.danh-sach-khoa-hoc') }}"><i
                  class='bx bx-radio-circle'></i>Danh sách khóa học</a>
            </li>
          </ul>
@@ -52,7 +52,7 @@
            <div class="menu-title">Lớp</div>
          </a>
          <ul>
-           <li> <a href="{{ route('admin.class.index') }}"><i
+           <li> <a href="{{ route('quan-ly.danh-sach-lop') }}"><i
                  class='bx bx-radio-circle'></i>Danh sách lớp</a>
            </li>
          </ul>
@@ -64,7 +64,7 @@
            <div class="menu-title">Học viên</div>
          </a>
          <ul>
-           <li> <a href="{{ route('admin.student.index') }}"><i
+           <li> <a href="{{ route('quan-ly.danh-sach-hoc-vien') }}"><i
                  class='bx bx-radio-circle'></i>Danh sách học viên</a>
            </li>
          </ul>

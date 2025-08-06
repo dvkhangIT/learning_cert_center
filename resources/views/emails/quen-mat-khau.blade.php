@@ -16,7 +16,7 @@
       <p>Vui lòng nhấn vào nút bên dưới để đặt lại mật khẩu:</p>
 
       <p style="text-align: center;">
-        <a href="{{ route('reset.password', $token) }}"
+        <a href="{{ route('form-khoi-phuc-mat-khau', $token) }}"
           style="background-color: #007bff; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Đặt
           lại mật khẩu</a>
       </p>

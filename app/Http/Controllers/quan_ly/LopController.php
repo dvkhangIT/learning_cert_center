@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\quan_ly;
 
 use App\DataTables\HocVienTrongLopDataTable;
 use App\DataTables\LopDataTable;
@@ -11,19 +11,19 @@ use App\Models\Lop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ClassController extends Controller
+class LopController extends Controller
 {
-  public function index(LopDataTable $dataTables)
+  public function danhSachLop(LopDataTable $dataTables)
   {
-    return $dataTables->render('admin.class.index');
+    return $dataTables->render('quan_ly.lop.danh_sach_lop');
   }
-  public function edit($ma_lop)
+  public function formSuaLop($ma_lop)
   {
     $courses = KhoaHoc::all();
     $class = Lop::findOrFail($ma_lop);
-    return view('admin.class.edit', compact('class', 'courses'));
+    return view('quan_ly.lop.sua_lop', compact('class', 'courses'));
   }
-  public function update(Request $request, string $ma_lop)
+  public function suaLop(Request $request, string $ma_lop)
   {
     $request->validate([
       'ten_lop' => 'required|min:5|max:200|unique:lop,ten_lop,' . $ma_lop . ',ma_lop',
@@ -51,20 +51,20 @@ class ClassController extends Controller
     $class->ngay_cap_nhat = now();
     $class->save();
     toastr()->success('Cập nhật thành công!', ' ');
-    return redirect()->route('admin.class.index');
+    return redirect()->route('quan-ly.danh-sach-lop');
   }
-  public function destroy($ma_lop)
+  public function xoaLop($ma_lop)
   {
     $class = Lop::findOrFail($ma_lop);
     $class->delete();
     return response()->json(['status' => 'success', 'message' => 'Xóa thành công!']);
   }
-  public function create()
+  public function formTaoLop()
   {
     $courses = KhoaHoc::all();
-    return view('admin.class.create', compact('courses'));
+    return view('quan_ly.lop.tao_lop', compact('courses'));
   }
-  public function store(Request $request)
+  public function luuLop(Request $request)
   {
     $request->validate([
       'ten_lop' => 'required|min:5|max:200|unique:lop,ten_lop',
@@ -92,7 +92,7 @@ class ClassController extends Controller
     $class->ngay_cap_nhat = now();
     $class->save();
     toastr()->success('Tạo lớp thành công!', ' ');
-    return redirect()->route('admin.class.index');
+    return redirect()->route('quan-ly.danh-sach-lop');
   }
   public function themHocVien(string $ma_lop)
   {
@@ -123,7 +123,7 @@ class ClassController extends Controller
   {
     $lop = Lop::findOrFail($ma_lop);
     $dataTable->setMaLop($ma_lop);
-    return $dataTable->render('admin.class.hoc_vien.hoc_vien_trong_lop', compact('lop', 'ma_lop'));
+    return $dataTable->render('quan_ly.lop.hoc_vien.hoc_vien_trong_lop', compact('lop', 'ma_lop'));
   }
   public function xoaHocVien($ma_lop, $ma_hv)
   {
