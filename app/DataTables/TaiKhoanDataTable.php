@@ -25,9 +25,9 @@ class TaiKhoanDataTable extends DataTable
   {
     return (new EloquentDataTable($query))
       ->addColumn('action', function ($query) {
-        $btnEdit = '<a href="' . route('quan-ly.sua-tai-khoan', $query->ma_tk) . '" title="Sửa tài khoản" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>';
-        $btnDelete = '<a href="' . route('quan-ly.xoa-tai-khoan', $query->ma_tk) . '" title="Xóa tài khoản" class="delete-item btn btn-outline-danger btn-sm mx-1"><i class="fa-solid fa-trash"></i></a>';
-        $btnReset = '<a href="' . route('quan-ly.khoi-phuc-mat-khau-tai-khoan', $query->ma_tk) . '" title="Khôi phục mật khẩu" class="reset-password btn btn-outline-success btn-sm"><i class="fa-solid fa-arrow-rotate-right"></i></a>';
+        $btnEdit = '<a href="' . route('quan-ly.tai-khoan.sua-tai-khoan', $query->ma_tk) . '" title="Sửa tài khoản" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>';
+        $btnDelete = '<a href="' . route('quan-ly.tai-khoan.xoa-tai-khoan', $query->ma_tk) . '" title="Xóa tài khoản" class="delete-item btn btn-outline-danger btn-sm mx-1"><i class="fa-solid fa-trash"></i></a>';
+        $btnReset = '<a href="' . route('quan-ly.tai-khoan.khoi-phuc-mat-khau-tai-khoan', $query->ma_tk) . '" title="Khôi phục mật khẩu" class="reset-password btn btn-outline-success btn-sm"><i class="fa-solid fa-arrow-rotate-right"></i></a>';
         return $btnEdit . $btnDelete . $btnReset;
       })
       ->addColumn('trang_thai', function ($query) {

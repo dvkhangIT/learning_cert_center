@@ -15,7 +15,7 @@
     </div>
     <div class="ms-auto">
       <a class="btn btn-outline-primary"
-        href="{{ route('quan-ly.tao-tai-khoan') }}"><i
+        href="{{ route('quan-ly.tai-khoan.tao-tai-khoan') }}"><i
           class="fa-solid fa-plus"></i>Tạo tài
         khoản</a>
     </div>
@@ -41,7 +41,7 @@
         let ma_tk = $(this).data('id');
         $.ajax({
           type: "POST",
-          url: "{{ route('quan-ly.trang-thai-tai-khoan') }}",
+          url: "{{ route('quan-ly.tai-khoan.trang-thai-tai-khoan') }}",
           data: {
             _token: $('meta[name="csrf-token"]').attr(
               'content'),

@@ -51,7 +51,7 @@ class LopController extends Controller
     $class->ngay_cap_nhat = now();
     $class->save();
     toastr()->success('Cập nhật thành công!', ' ');
-    return redirect()->route('quan-ly.danh-sach-lop');
+    return redirect()->route('quan-ly.lop.danh-sach-lop');
   }
   public function xoaLop($ma_lop)
   {
@@ -92,18 +92,8 @@ class LopController extends Controller
     $class->ngay_cap_nhat = now();
     $class->save();
     toastr()->success('Tạo lớp thành công!', ' ');
-    return redirect()->route('quan-ly.danh-sach-lop');
+    return redirect()->route('quan-ly.lop.danh-sach-lop');
   }
-  public function themHocVien(string $ma_lop)
-  {
-    $lop = Lop::with('hocViens')->findOrFail($ma_lop);
-    $hocVien = HocVien::whereDoesntHave('lop', function ($query) use ($ma_lop) {
-      $query->where('hoc_vien_lop.ma_lop', $ma_lop);
-    })->get();
-
-    return view('admin.class.them-hoc-vien', compact('lop', 'hocVien'));
-  }
-
   public function getHocVien($ma_lop)
   {
     $hocVien = HocVien::whereDoesntHave('lop', function ($q) use ($ma_lop) {
@@ -112,8 +102,25 @@ class LopController extends Controller
 
     return response()->json($hocVien);
   }
+
+  public function themHocVien(string $ma_lop, HocVienTrongLopDataTable $dataTable)
+  {
+    $lop = Lop::findOrFail($ma_lop);
+    $dataTable->setMaLop($ma_lop);
+    $hocVien = HocVien::whereDoesntHave('lop', function ($q) use ($ma_lop) {
+      $q->where('hoc_vien_lop.ma_lop', $ma_lop);
+    })->get(['ma_hv', 'hoten_hv']);
+    return $dataTable->render('quan_ly.lop.hoc_vien.them_hoc_vien', compact('lop', 'ma_lop', 'hocVien'));
+  }
   public function luuHocVien(Request $request, string $ma_lop)
   {
+    $request->validate([
+      'hoc_vien_id' => 'required|array',
+      'hoc_vien_id.*' => 'exists:hoc_vien,ma_hv',
+    ], [
+      'hoc_vien_id.required' => 'Vui lòng chọn ít nhất một học viên.',
+      'hoc_vien_id.*.exists' => 'Một trong các học viên đã chọn không hợp lệ.',
+    ]);
     $lop = Lop::findOrFail($ma_lop);
     $lop->hocVien()->attach($request->hoc_vien_id);
     toastr()->success('Đã thêm học viên vào lớp', ' ');

@@ -26,9 +26,9 @@ class KhoaHocDataTable extends DataTable
   {
     return (new EloquentDataTable($query))
       ->addColumn('action', function ($query) {
-        $btnEdit = '<a href="' . route('quan-ly.sua-khoa-hoc', $query->ma_kh) . '" title="Sửa khóa học" data-bs-toggle="modal"
+        $btnEdit = '<a href="' . route('quan-ly.khoa-hoc.sua-khoa-hoc', $query->ma_kh) . '" title="Sửa khóa học" data-bs-toggle="modal"
         data-bs-target="#updateCourse" data-name="' . $query->ten_kh . '" class="update-item btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>';
-        $btnDelete = '<a href="' . route('quan-ly.xoa-khoa-hoc', $query->ma_kh) . '" title="Xóa tài khoản" class="delete-item btn btn-outline-danger btn-sm mx-1"><i class="fa-solid fa-trash"></i></a>';
+        $btnDelete = '<a href="' . route('quan-ly.khoa-hoc.xoa-khoa-hoc', $query->ma_kh) . '" title="Xóa tài khoản" class="delete-item btn btn-outline-danger btn-sm mx-1"><i class="fa-solid fa-trash"></i></a>';
         return $btnEdit . $btnDelete;
       })
       ->addColumn('ngay_tao', function ($query) {

@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-  return view('welcome');
+  return view('tai_khoan.dang_nhap');
 });
 // Guest Route
 Route::group(['middleware' => 'guest'], function () {
@@ -47,36 +47,35 @@ Route::group(['prefix' => 'quan-ly', 'middleware' => 'checkRole'], function () {
   Route::get('trang-chu', [ThongKeController::class, 'trangChu'])->name('quan-ly.trang-chu');
 
   // Tài khoản
-  Route::get('danh-sach-tai-khoan', [NguoiDungController::class, 'danhSachTaiKhoan'])->name('quan-ly.danh-sach-tai-khoan');
-  Route::get('tao-tai-khoan', [NguoiDungController::class, 'taoTaiKhoan'])->name('quan-ly.tao-tai-khoan');
-  Route::post('luu-tai-khoan', [NguoiDungController::class, 'luuTaiKhoan'])->name('quan-ly.luu-tai-khoan');
-  Route::put('trang-thai-tai-khoan', [NguoiDungController::class, 'trangThai'])->name('quan-ly.trang-thai-tai-khoan');
-  Route::get('sua-tai-khoan/{ma_tk}', [NguoiDungController::class, 'formSuaTaiKhoan'])->name('quan-ly.form-sua-tai-khoan');
-  Route::put('sua-tai-khoan/{ma_tk}', [NguoiDungController::class, 'suaTaiKhoan'])->name('quan-ly.sua-tai-khoan');
-  Route::delete('xoa-tai-khoan/{ma_tk}', [NguoiDungController::class, 'XoaTaiKhoan'])->name('quan-ly.xoa-tai-khoan');
-  Route::put('khoi-phuc-mat-khau-tai-khoan/{ma_tk}', [NguoiDungController::class, 'khoiPhucMatKhau'])->name('quan-ly.khoi-phuc-mat-khau-tai-khoan');
+  Route::get('danh-sach-tai-khoan', [NguoiDungController::class, 'danhSachTaiKhoan'])->name('quan-ly.tai-khoan.danh-sach-tai-khoan');
+  Route::get('tao-tai-khoan', [NguoiDungController::class, 'taoTaiKhoan'])->name('quan-ly.tai-khoan.tao-tai-khoan');
+  Route::post('luu-tai-khoan', [NguoiDungController::class, 'luuTaiKhoan'])->name('quan-ly.tai-khoan.luu-tai-khoan');
+  Route::put('trang-thai-tai-khoan', [NguoiDungController::class, 'trangThai'])->name('quan-ly.tai-khoan.trang-thai-tai-khoan');
+  Route::get('sua-tai-khoan/{ma_tk}', [NguoiDungController::class, 'formSuaTaiKhoan'])->name('quan-ly.tai-khoan.form-sua-tai-khoan');
+  Route::put('sua-tai-khoan/{ma_tk}', [NguoiDungController::class, 'suaTaiKhoan'])->name('quan-ly.tai-khoan.sua-tai-khoan');
+  Route::delete('xoa-tai-khoan/{ma_tk}', [NguoiDungController::class, 'XoaTaiKhoan'])->name('quan-ly.tai-khoan.xoa-tai-khoan');
+  Route::put('khoi-phuc-mat-khau-tai-khoan/{ma_tk}', [NguoiDungController::class, 'khoiPhucMatKhau'])->name('quan-ly.tai-khoan.khoi-phuc-mat-khau-tai-khoan');
 
   // khóa học
-  Route::get('danh-sach-khoa-hoc', [KhoaHocController::class, 'danhSachKhoaHoc'])->name('quan-ly.danh-sach-khoa-hoc');
-  Route::post('luu-khoa-hoc', [KhoaHocController::class, 'luuKhoaHoc'])->name('quan-ly.luu-khoa-hoc');
-  Route::put('sua-khoa-hoc/{ma_kh}', [KhoaHocController::class, 'suaKhoaHoc'])->name('quan-ly.sua-khoa-hoc');
-  Route::delete('xoa-khoa-hoc/{ma_kh}', [KhoaHocController::class, 'xoaKhoaHoc'])->name('quan-ly.xoa-khoa-hoc');
+  Route::get('danh-sach-khoa-hoc', [KhoaHocController::class, 'danhSachKhoaHoc'])->name('quan-ly.khoa-hoc.danh-sach-khoa-hoc');
+  Route::post('luu-khoa-hoc', [KhoaHocController::class, 'luuKhoaHoc'])->name('quan-ly.khoa-hoc.luu-khoa-hoc');
+  Route::put('sua-khoa-hoc/{ma_kh}', [KhoaHocController::class, 'suaKhoaHoc'])->name('quan-ly.khoa-hoc.sua-khoa-hoc');
+  Route::delete('xoa-khoa-hoc/{ma_kh}', [KhoaHocController::class, 'xoaKhoaHoc'])->name('quan-ly.khoa-hoc.xoa-khoa-hoc');
 
   // Lớp
-  Route::get('danh-sach-lop', [LopController::class, 'danhSachLop'])->name('quan-ly.danh-sach-lop');
-  Route::get('tao-lop', [LopController::class, 'formTaoLop'])->name('quan-ly.form-tao-lop');
-  Route::post('luu-lop', [LopController::class, 'luuLop'])->name('quan-ly.luu-lop');
-  Route::get('sua-lop/{ma_lop}', [LopController::class, 'formSuaLop'])->name('quan-ly.form-sua-lop');
-  Route::put('sua-lop/{ma_lop}', [LopController::class, 'suaLop'])->name('quan-ly.sua-lop');
-  Route::delete('xoa-lop/{ma_lop}', [LopController::class, 'xoaLop'])->name('quan-ly.xoa-lop');
-
-  Route::get('lop/them-hoc-vien/{ma_lop}', [LopController::class, 'themHocVien'])->name('quan-ly.lop.them-hoc-vien');
+  Route::get('danh-sach-lop', [LopController::class, 'danhSachLop'])->name('quan-ly.lop.danh-sach-lop');
+  Route::get('tao-lop', [LopController::class, 'formTaoLop'])->name('quan-ly.lop.form-tao-lop');
+  Route::post('luu-lop', [LopController::class, 'luuLop'])->name('quan-ly.lop.luu-lop');
+  Route::get('sua-lop/{ma_lop}', [LopController::class, 'formSuaLop'])->name('quan-ly.lop.form-sua-lop');
+  Route::put('sua-lop/{ma_lop}', [LopController::class, 'suaLop'])->name('quan-ly.lop.sua-lop');
+  Route::delete('xoa-lop/{ma_lop}', [LopController::class, 'xoaLop'])->name('quan-ly.lop.xoa-lop');
   Route::get('lop/{ma_lop}/hoc-vien-chua-co', [LopController::class, 'getHocVien']);
-  Route::post('lop/luu-hoc-vien/{ma_lop}', [LopController::class, 'luuHocVien']);
+  Route::get('lop/them-hoc-vien/{ma_lop}', [LopController::class, 'themHocVien'])->name('quan-ly.lop.them-hoc-vien');
+  Route::post('lop/luu-hoc-vien/{ma_lop}', [LopController::class, 'luuHocVien'])->name('quan-ly.lop.luu-hoc-vien');
   Route::get('lop/{ma_lop}/hoc-vien', [LopController::class, 'hocVienTrongLop'])
     ->name('quan-ly.lop.hoc-vien');
-  Route::delete('lop/{ma_lop}/hoc-vien/{ma_hv}', [LopController::class, 'xoaHocVien'])->name('lop.hocvien.xoa');
+  Route::delete('lop/{ma_lop}/hoc-vien/{ma_hv}', [LopController::class, 'xoaHocVien'])->name('lop.hoc-vien.xoa');
 
   //Học viên
-  Route::get('danh-sach-hoc-vien', [HocVienController::class, 'danhSachHocVien'])->name('quan-ly.danh-sach-hoc-vien');
+  Route::get('danh-sach-hoc-vien', [HocVienController::class, 'danhSachHocVien'])->name('quan-ly.hoc-vien.danh-sach-hoc-vien');
 });

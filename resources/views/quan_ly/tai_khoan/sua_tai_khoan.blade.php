@@ -15,7 +15,7 @@
     </div>
     <div class="ms-auto">
       <a class="btn btn-outline-primary"
-        href="{{ route('quan-ly.danh-sach-tai-khoan') }}">
+        href="{{ route('quan-ly.tai-khoan.danh-sach-tai-khoan') }}">
         <i class="fa-solid fa-arrow-left"></i>
       </a>
     </div>
@@ -25,7 +25,7 @@
       <div class="card">
         <div class="card-body p-4">
           <form id="create-user-form"
-            action="{{ route('quan-ly.sua-tai-khoan', $user->ma_tk) }}"
+            action="{{ route('quan-ly.tai-khoan.sua-tai-khoan', $user->ma_tk) }}"
             class="row g-3 needs-validation" method="POST">
             @csrf
             @method('PUT')

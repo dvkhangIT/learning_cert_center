@@ -33,7 +33,7 @@ class HocVienTrongLopDataTable extends DataTable
     $ma_lop = $this->ma_lop;
     return (new EloquentDataTable($query))
       ->addColumn('action', function ($query) use ($ma_lop) {
-        $btnDelete = '<a href="' . route('lop.hocvien.xoa', [$ma_lop, $query->ma_hv]) . '" title="Xóa học viên ra khỏi lớp" class="delete-item btn btn-outline-danger btn-sm mx-1"><i class="fa-solid fa-trash"></i></a>';
+        $btnDelete = '<a href="' . route('lop.hoc-vien.xoa', [$ma_lop, $query->ma_hv]) . '" title="Xóa học viên ra khỏi lớp" class="delete-item btn btn-outline-danger btn-sm mx-1"><i class="fa-solid fa-trash"></i></a>';
         return  $btnDelete;
       })
       ->addColumn('ngay_sinh', function ($query) {

@@ -23,7 +23,7 @@
     </div>
     <div class="ms-auto">
       <a class="btn btn-outline-primary"
-        href="{{ route('quan-ly.form-tao-lop') }}"><i
+        href="{{ route('quan-ly.lop.form-tao-lop') }}"><i
           class="fa-solid fa-plus"></i>Tạo lớp</a>
     </div>
   </div>
@@ -63,77 +63,77 @@
         </form>
       </div>
     </div>
-  @endsection
-  @section('scripts')
-    <script
-      src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js">
-    </script>
-    <script src="{{ asset('assets/plugins/select2/js/select2-custom.js') }}">
-    </script>
-    <script>
-      $.fn.select2.defaults.set('language', {
-        errorLoading: function() {
-          return "Không thể tải kết quả.";
-        },
-        inputTooLong: function(args) {
-          var overChars = args.input.length - args.maximum;
-          return "Vui lòng xóa bớt " + overChars + " ký tự";
-        },
-        inputTooShort: function(args) {
-          var remainingChars = args.minimum - args.input.length;
-          return "Vui lòng nhập thêm " + remainingChars + " ký tự";
-        },
-        loadingMore: function() {
-          return "Đang tải thêm kết quả…";
-        },
-        maximumSelected: function(args) {
-          return "Chỉ có thể chọn tối đa " + args.maximum + " mục";
-        },
-        noResults: function() {
-          return "Không tìm thấy kết quả";
-        },
-        searching: function() {
-          return "Đang tìm…";
-        },
-        removeAllItems: function() {
-          return "Xóa tất cả các mục";
-        }
-      });
-    </script>
-    <script>
-      $(document).ready(function() {
-        $('#themHocVienModal').on('show.bs.modal', function(event) {
-          const button = $(event.relatedTarget);
-          const maLop = button.data('ma-lop');
-          const modal = $(this);
-          // Cập nhật URL submit
-          modal.find('#themHocVienForm').attr('action',
-            `/quan-ly/lop/luu-hoc-vien/${maLop}`);
-          // Gọi API lấy danh sách học viên chưa có lớp này
-          $.get(`/quan-ly/lop/${maLop}/hoc-vien-chua-co`, function(data) {
-            let html = '';
-            console.log(data);
-            data.forEach(hv => {
-              html +=
-                `<option value="${hv.ma_hv}">${hv.hoten_hv}</option>`;
-            });
-            const select = $('#hocVienSelect');
-            select.html(html);
-            // Re-initialize Select2
-            select.select2({
-              dropdownParent: $('#themHocVienModal'),
-              width: '100%'
-            });
+  </div>
+@endsection
+@section('scripts')
+  <script
+    src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js">
+  </script>
+  <script src="{{ asset('assets/plugins/select2/js/select2-custom.js') }}">
+  </script>
+  <script>
+    $.fn.select2.defaults.set('language', {
+      errorLoading: function() {
+        return "Không thể tải kết quả.";
+      },
+      inputTooLong: function(args) {
+        var overChars = args.input.length - args.maximum;
+        return "Vui lòng xóa bớt " + overChars + " ký tự";
+      },
+      inputTooShort: function(args) {
+        var remainingChars = args.minimum - args.input.length;
+        return "Vui lòng nhập thêm " + remainingChars + " ký tự";
+      },
+      loadingMore: function() {
+        return "Đang tải thêm kết quả…";
+      },
+      maximumSelected: function(args) {
+        return "Chỉ có thể chọn tối đa " + args.maximum + " mục";
+      },
+      noResults: function() {
+        return "Không tìm thấy kết quả";
+      },
+      searching: function() {
+        return "Đang tìm…";
+      },
+      removeAllItems: function() {
+        return "Xóa tất cả các mục";
+      }
+    });
+  </script>
+  <script>
+    $(document).ready(function() {
+      $('#themHocVienModal').on('show.bs.modal', function(event) {
+        const button = $(event.relatedTarget);
+        const maLop = button.data('ma-lop');
+        const modal = $(this);
+        // Cập nhật URL submit
+        modal.find('#themHocVienForm').attr('action',
+          `/quan-ly/lop/luu-hoc-vien/${maLop}`);
+        // Gọi API lấy danh sách học viên chưa có lớp này
+        $.get(`/quan-ly/lop/${maLop}/hoc-vien-chua-co`, function(data) {
+          let html = '';
+          data.forEach(hv => {
+            html +=
+              `<option value="${hv.ma_hv}">${hv.hoten_hv}</option>`;
+          });
+          const select = $('#hocVienSelect');
+          select.html(html);
+          // Re-initialize Select2
+          select.select2({
+            dropdownParent: $('#themHocVienModal'),
+            width: '100%'
           });
         });
       });
-    </script>
-  @endsection
-  @push('scripts')
-    <link rel="stylesheet"
-      href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
-    <script
-      src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js">
-    </script>
-    {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
-  @endpush
+    });
+  </script>
+@endsection
+@push('scripts')
+  <link rel="stylesheet"
+    href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
+  <script
+    src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js">
+  </script>
+  {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+@endpush

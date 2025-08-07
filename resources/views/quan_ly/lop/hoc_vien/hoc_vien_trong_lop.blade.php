@@ -15,7 +15,8 @@
       </nav>
     </div>
     <div class="ms-auto">
-      <a class="btn btn-outline-primary" href="#">
+      <a class="btn btn-outline-primary"
+        href="{{ route('quan-ly.lop.danh-sach-lop') }}">
         <i class="fa-solid fa-arrow-left"></i>
       </a>
     </div>

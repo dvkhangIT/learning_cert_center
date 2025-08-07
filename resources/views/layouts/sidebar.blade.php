@@ -25,10 +25,11 @@
            <div class="menu-title">Tài khoản</div>
          </a>
          <ul>
-           <li> <a href="{{ route('quan-ly.danh-sach-tai-khoan') }}"><i
+           <li> <a
+               href="{{ route('quan-ly.tai-khoan.danh-sach-tai-khoan') }}"><i
                  class='bx bx-radio-circle'></i>Danh sách tài khoản</a>
            </li>
-           <li> <a href="{{ route('quan-ly.tao-tai-khoan') }}"><i
+           <li> <a href="{{ route('quan-ly.tai-khoan.tao-tai-khoan') }}"><i
                  class='bx bx-radio-circle'></i>Tạo tài khoản</a>
            </li>
          </ul>
@@ -40,7 +41,7 @@
            <div class="menu-title">Khóa học</div>
          </a>
          <ul>
-           <li> <a href="{{ route('quan-ly.danh-sach-khoa-hoc') }}"><i
+           <li> <a href="{{ route('quan-ly.khoa-hoc.danh-sach-khoa-hoc') }}"><i
                  class='bx bx-radio-circle'></i>Danh sách khóa học</a>
            </li>
          </ul>
@@ -52,7 +53,7 @@
            <div class="menu-title">Lớp</div>
          </a>
          <ul>
-           <li> <a href="{{ route('quan-ly.danh-sach-lop') }}"><i
+           <li> <a href="{{ route('quan-ly.lop.danh-sach-lop') }}"><i
                  class='bx bx-radio-circle'></i>Danh sách lớp</a>
            </li>
          </ul>
@@ -64,7 +65,7 @@
            <div class="menu-title">Học viên</div>
          </a>
          <ul>
-           <li> <a href="{{ route('quan-ly.danh-sach-hoc-vien') }}"><i
+           <li> <a href="{{ route('quan-ly.hoc-vien.danh-sach-hoc-vien') }}"><i
                  class='bx bx-radio-circle'></i>Danh sách học viên</a>
            </li>
          </ul>
