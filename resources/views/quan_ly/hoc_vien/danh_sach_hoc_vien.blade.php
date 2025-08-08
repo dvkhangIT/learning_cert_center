@@ -1,21 +1,22 @@
 @extends('layouts.master')
 @section('content')
   <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-    <div class="breadcrumb-title pe-3">Lớp</div>
+    <div class="breadcrumb-title pe-3">Học viên</div>
     <div class="ps-3">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb mb-0 p-0">
           <li class="breadcrumb-item"><a href="javascript:;"><i
                 class="bx bx-home-alt"></i></a>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">Danh sách lớp
+          <li class="breadcrumb-item active" aria-current="page">Danh sách học viên
           </li>
         </ol>
       </nav>
     </div>
     <div class="ms-auto">
-      <a class="btn btn-outline-primary" href=""><i
-          class="fa-solid fa-plus"></i>Tạo lớp</a>
+      <a class="btn btn-outline-primary"
+        href="{{ route('quan-ly.hoc-vien.form-tao-hoc-vien') }}"><i
+          class="fa-solid fa-plus"></i>Thêm học viên</a>
     </div>
   </div>
   <div class="section-body">

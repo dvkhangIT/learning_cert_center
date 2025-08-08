@@ -26,8 +26,8 @@ class HocVienDataTable extends DataTable
   {
     return (new EloquentDataTable($query))
       ->addColumn('action', function ($query) {
-        $btnEdit = '<a href="" title="Sửa tài khoản" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>';
-        $btnDelete = '<a href="" title="Xóa tài khoản" class="delete-item btn btn-outline-danger btn-sm mx-1"><i class="fa-solid fa-trash"></i></a>';
+        $btnEdit = '<a href="' . route('quan-ly.hoc-vien.form-sua-hoc-vien', $query->ma_hv) . '" title="Sửa học viên" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>';
+        $btnDelete = '<a href="' . route('quan-ly.hoc-vien.xoa-hoc-vien', $query->ma_hv) . '" title="Xóa học viên" class="delete-item btn btn-outline-danger btn-sm mx-1"><i class="fa-solid fa-trash"></i></a>';
         return $btnEdit . $btnDelete;
       })
       ->addColumn('lop', function ($query) {

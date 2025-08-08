@@ -78,4 +78,9 @@ Route::group(['prefix' => 'quan-ly', 'middleware' => 'checkRole'], function () {
 
   //Học viên
   Route::get('danh-sach-hoc-vien', [HocVienController::class, 'danhSachHocVien'])->name('quan-ly.hoc-vien.danh-sach-hoc-vien');
+  Route::get('tao-hoc-vien', [HocVienController::class, 'formTaoHocVien'])->name('quan-ly.hoc-vien.form-tao-hoc-vien');
+  Route::post('luu-hoc-vien', [HocVienController::class, 'luuHocVien'])->name('quan-ly.hoc-vien.luu-hoc-vien');
+  Route::get('sua-hoc-vien/{ma_hv}', [HocVienController::class, 'formSuaHocVien'])->name('quan-ly.hoc-vien.form-sua-hoc-vien');
+  Route::put('sua-hoc-vien/{ma_hv}', [HocVienController::class, 'suaHocVien'])->name('quan-ly.hoc-vien.sua-hoc-vien');
+  Route::delete('xoa-hoc-vien/{ma_hv}', [HocVienController::class, 'xoaHocVien'])->name('quan-ly.hoc-vien.xoa-hoc-vien');
 });

@@ -77,7 +77,7 @@ class NguoiDungController extends Controller
     $user->ngay_cap_nhat = now();
     $user->save();
     toastr()->success('Cập nhật thông tin thành công.', ' ');
-    return redirect()->route('quan-ly.danh-sach-tai-khoan');
+    return redirect()->route('quan-ly.tai-khoan.danh-sach-tai-khoan');
   }
   public function XoaTaiKhoan(string $ma_tk)
   {

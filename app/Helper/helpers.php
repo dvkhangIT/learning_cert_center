@@ -1,5 +1,5 @@
 <?php
-function setAcive(array $route)
+function setActive(array $route)
 {
   if (is_array($route)) {
     foreach ($route as $r) {

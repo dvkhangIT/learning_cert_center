@@ -117,7 +117,9 @@
                   .siblings('p')
                   .removeClass('invalid-feedback')
                   .html('')
-                window.location.reload();
+                // window.location.reload();
+                window.location.href =
+                  "{{ route('quan-ly.khoa-hoc.danh-sach-khoa-hoc') }}";
               } else {
                 if (response.errors.ten_kh) {
                   $("#ten_kh_edit").addClass('is-invalid')

@@ -652,7 +652,8 @@ a {
 }
 
 .error {
-    color: #dc3545;
+    color: #fd3550;
+    font-size: 0.875em;
 }
 
 form select.error,
@@ -2639,4 +2640,8 @@ button.dt-button.buttons-print {
     color: #037de2;
     border-radius: 5px;
     border-color: #037de2;
+}
+table.dataTable td,
+table.dataTable th {
+    vertical-align: middle !important;
 }
