@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\AccountController;
 use App\Http\Controllers\admin\ClassController;
 use App\Http\Controllers\admin\CourseController;
 use App\Http\Controllers\admin\StudentController;
+use App\Http\Controllers\quan_ly\ChungChiController;
 use App\Http\Controllers\quan_ly\HocVienController;
 use App\Http\Controllers\quan_ly\KhoaHocController;
 use App\Http\Controllers\quan_ly\LopController;
@@ -83,4 +84,12 @@ Route::group(['prefix' => 'quan-ly', 'middleware' => 'checkRole'], function () {
   Route::get('sua-hoc-vien/{ma_hv}', [HocVienController::class, 'formSuaHocVien'])->name('quan-ly.hoc-vien.form-sua-hoc-vien');
   Route::put('sua-hoc-vien/{ma_hv}', [HocVienController::class, 'suaHocVien'])->name('quan-ly.hoc-vien.sua-hoc-vien');
   Route::delete('xoa-hoc-vien/{ma_hv}', [HocVienController::class, 'xoaHocVien'])->name('quan-ly.hoc-vien.xoa-hoc-vien');
+
+  // Chứng chỉ
+  Route::get('danh-sach-chung-chi', [ChungChiController::class, 'danhSachChungChi'])->name('quan-ly.chung-chi.danh-sach-chung-chi');
+  Route::get('tao-chung-chi', [ChungChiController::class, 'formTaoChungChi'])->name('quan-ly.chung-chi.form-tao-chung-chi');
+  Route::post('luu-chung-chi', [ChungChiController::class, 'luuChungChi'])->name('quan-ly.chung-chi.luu-chung-chi');
+  Route::get('sua-chung-chi/{ma_cc}', [ChungChiController::class, 'formSuaChungChi'])->name('quan-ly.chung-chi.form-sua-chung-chi');
+  Route::put('sua-chung-chi/{ma_cc}', [ChungChiController::class, 'suaChungChi'])->name('quan-ly.chung-chi.sua-chung-chi');
+  Route::delete('xoa-chung-chi/{ma_cc}', [ChungChiController::class, 'xoaChungChi'])->name('quan-ly.chung-chi.xoa-chung-chi');
 });

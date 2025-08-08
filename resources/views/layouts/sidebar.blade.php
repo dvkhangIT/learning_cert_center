@@ -22,7 +22,7 @@
          <a href="javascript:;" class="has-arrow">
            <div class="parent-icon"><i class="bx bx-category"></i>
            </div>
-           <div class="menu-title">Tài khoản</div>
+           <div class="menu-title">Quản lý tài khoản</div>
          </a>
          <ul>
            <li
@@ -40,7 +40,7 @@
          <a href="javascript:;" class="has-arrow">
            <div class="parent-icon"><i class="bx bx-category"></i>
            </div>
-           <div class="menu-title">Khóa học</div>
+           <div class="menu-title">Quản lý khóa học</div>
          </a>
          <ul>
            <li class="{{ setActive(['quan-ly.khoa-hoc.danh-sach-khoa-hoc']) }}">
@@ -53,7 +53,7 @@
          <a href="javascript:;" class="has-arrow">
            <div class="parent-icon"><i class="bx bx-category"></i>
            </div>
-           <div class="menu-title">Lớp</div>
+           <div class="menu-title">Quản lý lớp</div>
          </a>
          <ul>
            <li class="{{ setActive(['quan-ly.lop.*']) }}"> <a
@@ -66,7 +66,7 @@
          <a href="javascript:;" class="has-arrow">
            <div class="parent-icon"><i class="bx bx-category"></i>
            </div>
-           <div class="menu-title">Học viên</div>
+           <div class="menu-title">Quản lý học viên</div>
          </a>
          <ul>
            <li
@@ -76,6 +76,25 @@
            </li>
            <li> <a href="{{ route('quan-ly.hoc-vien.form-tao-hoc-vien') }}"><i
                  class='bx bx-radio-circle'></i>Thêm học viên</a>
+           </li>
+         </ul>
+       </li>
+       <li class="{{ setActive(['quan-ly.chung-chi.*']) }}">
+         <a href="javascript:;" class="has-arrow">
+           <div class="parent-icon"><i class="bx bx-category"></i>
+           </div>
+           <div class="menu-title">Quản lý chứng chỉ</div>
+         </a>
+         <ul>
+           <li
+             class="{{ setActive(['quan-ly.chung-chi.danh-sach-chung-chi']) }}">
+             <a href="{{ route('quan-ly.chung-chi.danh-sach-chung-chi') }}"><i
+                 class='bx bx-radio-circle'></i>Danh sách chứng chỉ</a>
+           </li>
+           <li
+             class="{{ setActive(['quan-ly.chung-chi.form-tao-chung-chi']) }}">
+             <a href="{{ route('quan-ly.chung-chi.form-tao-chung-chi') }}"><i
+                 class='bx bx-radio-circle'></i>Tạo chứng chỉ</a>
            </li>
          </ul>
        </li>

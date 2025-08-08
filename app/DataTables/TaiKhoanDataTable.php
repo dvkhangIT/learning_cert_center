@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\DataTables\Traits\DefaultConfig;
 use App\Models\TaiKhoan;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -42,10 +43,10 @@ class TaiKhoanDataTable extends DataTable
         }
       })
       ->addColumn('ngay_tao', function ($query) {
-        return \Carbon\Carbon::parse($query->ngay_tao)->format('d/m/Y');
+        return Carbon::parse($query->ngay_tao)->format('d/m/Y');
       })
       ->addColumn('ngay_cap_nhat', function ($query) {
-        return \Carbon\Carbon::parse($query->ngay_cap_nhat)->format('d/m/Y');
+        return Carbon::parse($query->ngay_cap_nhat)->format('d/m/Y');
       })
       ->rawColumns(['trang_thai', 'action', 'ngay_tao', 'ngay_cap_nhat'])
       ->setRowId('id');

@@ -77,6 +77,7 @@ class KhoaHocDataTable extends DataTable
       ->columns($this->getColumns())
       ->minifiedAjax()
       ->orderBy(0)
+      ->responsive(true)
       ->selectStyleSingle()
       ->buttons([
         Button::make('excel')
@@ -101,7 +102,7 @@ class KhoaHocDataTable extends DataTable
   public function getColumns(): array
   {
     return [
-      Column::make('ma_kh')->title('#'),
+      Column::make('ma_kh')->title('Mã khóa học')->type('string'),
       Column::make('ten_kh')->title('Khóa học'),
       Column::make('ma_tk')->title('Người tạo')->searchable(true)->orderable(true),
       Column::make('ngay_tao')->title('Ngày tạo'),

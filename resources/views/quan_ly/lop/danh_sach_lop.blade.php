@@ -101,33 +101,6 @@
       }
     });
   </script>
-  <script>
-    $(document).ready(function() {
-      $('#themHocVienModal').on('show.bs.modal', function(event) {
-        const button = $(event.relatedTarget);
-        const maLop = button.data('ma-lop');
-        const modal = $(this);
-        // Cập nhật URL submit
-        modal.find('#themHocVienForm').attr('action',
-          `/quan-ly/lop/luu-hoc-vien/${maLop}`);
-        // Gọi API lấy danh sách học viên chưa có lớp này
-        $.get(`/quan-ly/lop/${maLop}/hoc-vien-chua-co`, function(data) {
-          let html = '';
-          data.forEach(hv => {
-            html +=
-              `<option value="${hv.ma_hv}">${hv.hoten_hv}</option>`;
-          });
-          const select = $('#hocVienSelect');
-          select.html(html);
-          // Re-initialize Select2
-          select.select2({
-            dropdownParent: $('#themHocVienModal'),
-            width: '100%'
-          });
-        });
-      });
-    });
-  </script>
 @endsection
 @push('scripts')
   <link rel="stylesheet"

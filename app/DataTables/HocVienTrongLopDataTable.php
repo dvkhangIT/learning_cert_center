@@ -39,12 +39,6 @@ class HocVienTrongLopDataTable extends DataTable
       ->addColumn('ngay_sinh', function ($query) {
         return \Carbon\Carbon::parse($query->ngay_sinh)->format('d/m/Y');
       })
-      ->addColumn('ngay_tao', function ($query) {
-        return \Carbon\Carbon::parse($query->ngay_tao)->format('d/m/Y');
-      })
-      ->addColumn('ngay_cap_nhat', function ($query) {
-        return \Carbon\Carbon::parse($query->ngay_cap_nhat)->format('d/m/Y');
-      })
       ->rawColumns(['ngay_sinh', 'action'])
       ->setRowId('ma_hv');
   }
@@ -98,13 +92,11 @@ class HocVienTrongLopDataTable extends DataTable
   public function getColumns(): array
   {
     return [
-      Column::make('ma_hv')->title('#')->type('string'),
+      Column::make('ma_hv')->title('Mã học viên')->type('string')->width(150),
       Column::make('hoten_hv')->title('Họ tên'),
       Column::make('ngay_sinh')->title('Ngày sinh'),
       Column::make('noi_sinh')->title('Nơi sinh'),
       Column::make('gioi_tinh')->title('Giới tính'),
-      Column::make('ngay_tao')->title('Ngày tạo'),
-      Column::make('ngay_cap_nhat')->title('Cập nhật'),
       Column::computed('action')->title('Thao tác')
         ->exportable(false)
         ->printable(false)

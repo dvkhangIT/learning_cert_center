@@ -3,7 +3,7 @@
 namespace App\DataTables;
 
 use App\DataTables\Traits\DefaultConfig;
-use App\Models\Lop;
+use App\Models\ChungChi;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -14,7 +14,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class LopDataTable extends DataTable
+class ChungChiDataTable extends DataTable
 {
   use DefaultConfig;
   /**
@@ -27,20 +27,9 @@ class LopDataTable extends DataTable
   {
     return (new EloquentDataTable($query))
       ->addColumn('action', function ($query) {
-        $btnMore = '<div class="dropdown">
-											<button class="btn-outline-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">•••</button>
-											<ul class="dropdown-menu">
-												<li><a class="dropdown-item btn" href="' . route('quan-ly.lop.sua-lop', $query->ma_lop) . '">Sửa thông tin lớp</a>
-												</li>
-												<li><a class="delete-item dropdown-item btn" href="' . route('quan-ly.lop.xoa-lop', $query->ma_lop) . '" >Xóa lớp</a>
-												</li>
-												<li><a href="' . route('quan-ly.lop.them-hoc-vien', $query->ma_lop) . '" class="btn dropdown-item btn-them-hv">Thêm học viên</a>
-												</li>
-												<li><a href="' . route('quan-ly.lop.hoc-vien', $query->ma_lop) . '" class="btn dropdown-item">Danh sách học viên</a>
-												</li>
-											</ul>
-										</div>';
-        return $btnMore;
+        $btnEdit = '<a href="' . route('quan-ly.chung-chi.form-sua-chung-chi', $query->ma_cc) . '" title="Sửa chứng chỉ" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>';
+        $btnDelete = '<a href="' . route('quan-ly.chung-chi.xoa-chung-chi', $query->ma_cc) . '" title="Xóa chứng chỉ" class="delete-item btn btn-outline-danger btn-sm mx-1"><i class="fa-solid fa-trash"></i></a>';
+        return $btnEdit . $btnDelete;
       })
       ->addColumn('ngay_tao', function ($query) {
         return Carbon::parse($query->ngay_tao)->format('d/m/Y');
@@ -54,25 +43,20 @@ class LopDataTable extends DataTable
       ->addColumn('ngay_ket_thuc', function ($query) {
         return Carbon::parse($query->ngay_ket_thuc)->format('d/m/Y');
       })
-      ->addColumn('ma_kh', function ($query) {
-        return $query->khoaHoc->ten_kh;
+      ->addColumn('ngay_vao_so', function ($query) {
+        return Carbon::parse($query->ngay_vao_so)->format('d/m/Y');
       })
-      ->filterColumn('ma_kh', function ($query, $keyword) {
-        $query->whereHas('khoaHoc', function ($q) use ($keyword) {
-          $q->where('ten_kh', 'like', "%{$keyword}%");
-        });
-      })
-      ->rawColumns(['ngay_tao', 'ngay_cap_nhat', 'action', 'ngay_bat_dau', 'ngay_ket_thuc', 'ten_kh'])
-      ->setRowId('id');
+      ->rawColumns(['action', 'ngay_tao', 'ngay_cap_nhat', 'ngay_bat_dau', 'ngay_ket_thuc', 'ngay_vao_so'])
+      ->setRowId('ma_cc');
   }
 
   /**
    * Get query source of dataTable.
    *
-   * @param \App\Models\Lop $model
+   * @param \App\Models\ChungChi $model
    * @return \Illuminate\Database\Eloquent\Builder
    */
-  public function query(Lop $model): QueryBuilder
+  public function query(ChungChi $model): QueryBuilder
   {
     return $model->newQuery();
   }
@@ -84,26 +68,13 @@ class LopDataTable extends DataTable
    */
   public function html(): HtmlBuilder
   {
-    $builder = $this->applyDefaultHtmlConfig($this->builder(), 'lop-table', true);
-    return $builder
+    return $this->applyDefaultHtmlConfig($this->builder(), 'chungchi-table', false)
       ->columns($this->getColumns())
       ->minifiedAjax()
+      //->dom('Bfrtip')
       ->orderBy(0)
       ->responsive(true)
-      ->selectStyleSingle()
-      ->buttons([
-        Button::make('excel')
-          ->exportOptions([
-            'columns' => ':not(.no-export)'
-          ])
-          ->text('<i class="fa-solid fa-file-excel me-1"></i> Xuất Excel'),
-        Button::make('print')
-          // ->text('In bảng')
-          ->exportOptions([
-            'columns' => ':not(.no-export)'
-          ])
-          ->text('<i class="fa-solid fa-print me-1"></i> In bảng')
-      ]);
+      ->selectStyleSingle();
   }
 
   /**
@@ -114,9 +85,11 @@ class LopDataTable extends DataTable
   public function getColumns(): array
   {
     return [
-      Column::make('ma_lop')->title('Mã lớp')->type('string'),
-      Column::make('ten_lop')->title('Lớp'),
-      Column::make('ma_kh')->title('Khóa học')->searchable(true)->orderable(true),
+      Column::make('ma_cc')->title('Mã chứng chỉ')->type('string'),
+      Column::make('ten_cc')->title('Chứng chỉ'),
+      Column::make('so_hieu')->title('Số hiệu'),
+      Column::make('ngay_vao_so')->title('Vào sổ'),
+      Column::make('so_vao_so')->title('Số vào sổ'),
       Column::make('ngay_bat_dau')->title('Bắt đầu'),
       Column::make('ngay_ket_thuc')->title('Kết thúc'),
       Column::make('ngay_tao')->title('Ngày tạo'),
@@ -125,7 +98,7 @@ class LopDataTable extends DataTable
         ->exportable(false)
         ->printable(false)
         ->width(100)
-        ->addClass('text-center no-export'),
+        ->addClass('text-center'),
     ];
   }
 
@@ -136,6 +109,6 @@ class LopDataTable extends DataTable
    */
   protected function filename(): string
   {
-    return 'Lop_' . date('YmdHis');
+    return 'ChungChi_' . date('YmdHis');
   }
 }

@@ -35,14 +35,14 @@
                           class="form-label">Email</label>
                         <input type="email"
                           class="form-control @error('email')
-                              error
+                             is-invalid
                           @enderror"
                           id="inputEmailAddress" name="email"
                           placeholder="Nhập email">
                         @error('email')
-                          <p class="error mt-1">
+                          <div class="invalid-feedback">
                             {{ $message }}
-                          </p>
+                          </div>
                         @enderror
                       </div>
                       <div class="col-12">
@@ -50,7 +50,7 @@
                           khẩu</label>
                         <div class="input-group" id="show_hide_password">
                           <input type="password" name="mat_khau"
-                            class="form-control border-end-0 @error('mat_khau') error @enderror"
+                            class="form-control border-end-0 @error('mat_khau') is-invalid @enderror"
                             id="inputChoosePassword" placeholder="Nhập mật khẩu">
                           <a href="javascript:;"
                             @error('mat_khau')
@@ -59,15 +59,14 @@
                             class="input-group-text bg-transparent"><i
                               class='bx bx-hide'></i>
                           </a>
+                          @error('mat_khau')
+                            <div class="invalid-feedback">
+                              {{ $message }}
+                            </div>
+                          @enderror
                         </div>
-                        @error('mat_khau')
-                          <p class="error mt-1">
-                            {{ $message }}
-                          </p>
-                        @enderror
                       </div>
                       <div class="col-md-6">
-
                       </div>
                       <div class="col-md-6 text-end"> <a
                           href="{{ route('form-quen-mat-khau') }}">Quên mật

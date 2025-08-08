@@ -13,7 +13,8 @@ return new class extends Migration
   {
     Schema::create('chung_chi', function (Blueprint $table) {
       $table->id('ma_cc');
-      $table->foreignId('ma_hv')->constrained('hoc_vien', 'ma_hv')->onDelete('cascade');
+      $table->unsignedBigInteger('ma_hv')->nullable();
+      $table->foreign('ma_hv')->references('ma_hv')->on('hoc_vien')->onDelete('cascade');
       $table->string('ten_cc');
       $table->string('so_hieu');
       $table->date('ngay_vao_so');
