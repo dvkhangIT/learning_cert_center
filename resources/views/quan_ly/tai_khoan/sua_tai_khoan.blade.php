@@ -14,7 +14,7 @@
       </nav>
     </div>
     <div class="ms-auto">
-      <a class="btn btn-outline-primary"
+      <a class="btn btn-custom-color"
         href="{{ route('quan-ly.tai-khoan.danh-sach-tai-khoan') }}">
         <i class="fa-solid fa-arrow-left"></i>
       </a>

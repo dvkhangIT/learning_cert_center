@@ -9,21 +9,20 @@
 @endsection
 @section('content')
   <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-    <div class="breadcrumb-title pe-3">Học viên</div>
+    <div class="breadcrumb-title pe-3">Tài khoản</div>
     <div class="ps-3">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb mb-0 p-0">
           <li class="breadcrumb-item"><a href="javascript:;"><i
                 class="bx bx-home-alt"></i></a>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">Cập nhật học viên
+          <li class="breadcrumb-item active" aria-current="page">Thay đổi mật khẩu
           </li>
         </ol>
       </nav>
     </div>
     <div class="ms-auto">
-      <a class="btn btn-custom-color"
-        href="{{ route('quan-ly.hoc-vien.danh-sach-hoc-vien') }}">
+      <a class="btn btn-custom-color" href="{{ route('quan-ly.trang-chu') }}">
         <i class="fa-solid fa-arrow-left"></i>
       </a>
     </div>
@@ -33,80 +32,45 @@
       <div class="col-xl-6 mx-auto">
         <div class="card">
           <div class="card-body p-4">
-            <form method="POST"
-              action="{{ route('quan-ly.hoc-vien.sua-hoc-vien', $hocVien->ma_hv) }}"
+            <form method="POST" action="{{ route('luu-mat-khau') }}"
               class="row g-3">
               @csrf
-              @method('PUT')
               <div class="col-md-12">
-                <label for="input3" class="form-label">Họ tên</label>
-                <input type="text"
-                  value="{{ old('hoten_hv', $hocVien->hoten_hv) }}"
-                  class="form-control @error('hoten_hv')
+                <label for="input3" class="form-label">Mật khẩu hiện tại</label>
+                <input type="password"
+                  class="form-control @error('current_password')
                     is-invalid
                 @enderror"
-                  id="input3" name="hoten_hv" placeholder="Họ tên học viên">
-                @error('hoten_hv')
+                  id="input3" name="current_password">
+                @error('current_password')
                   <div class="invalid-feedback">
                     {{ $message }}
                   </div>
                 @enderror
               </div>
               <div class="col-md-12">
-                <label class="form-label">Ngày sinh</label>
-                <input type="text"
-                  class="datepicker form-control @error('ngay_sinh')
-                  is-invalid
-              @enderror"
-                  name="ngay_sinh" id="ngay_sinh" placeholder="Chọn ngày"
-                  value="{{ old('ngay_sinh', $hocVien->ngay_sinh) }}">
-                @error('ngay_sinh')
-                  <div class="invalid-feedback">
-                    {{ $message }}
-                  </div>
-                @enderror
-              </div>
-              <div class="col-md-12">
-                <label class="form-label">Nơi sinh</label>
-                <select
-                  class="noi_sinh form-select @error('noi_sinh')
+                <label for="input3" class="form-label">Mật khẩu mới</label>
+                <input type="password"
+                  class="form-control @error('new_password')
                     is-invalid
                 @enderror"
-                  id="single-select-field" data-placeholder="Chọn tỉnh/thành phố"
-                  name="noi_sinh">
-                  <option></option>
-                </select>
-                @error('noi_sinh')
+                  id="input3" name="new_password">
+                @error('new_password')
                   <div class="invalid-feedback">
                     {{ $message }}
                   </div>
                 @enderror
               </div>
               <div class="col-md-12">
-                @php
-                  $gioiTinhCu = old('gioi_tinh', $hocVien->gioi_tinh ?? '');
-                @endphp
-                <label for="input6" class="form-label">Giới tính</label>
-                <div class="d-flex align-items-center gap-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio"
-                      name="gioi_tinh" id="nam" value="nam"
-                      {{ $gioiTinhCu == 'nam' ? 'checked' : '' }}>
-                    <label class="form-check-label" for="nam">
-                      Nam
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio"
-                      name="gioi_tinh" id="nu" value="nu"
-                      {{ $gioiTinhCu == 'nu' ? 'checked' : '' }}>
-                    <label class="form-check-label" for="nu">
-                      Nữ
-                    </label>
-                  </div>
-                </div>
-                @error('gioi_tinh')
-                  <div class="error">
+                <label for="input3" class="form-label">Xác nhận mật khẩu
+                  mới</label>
+                <input type="password"
+                  class="form-control @error('new_password_confirmation')
+                    is-invalid
+                @enderror"
+                  id="input3" name="new_password_confirmation">
+                @error('new_password_confirmation')
+                  <div class="invalid-feedback">
                     {{ $message }}
                   </div>
                 @enderror
@@ -175,18 +139,21 @@
   <script>
     $(document).ready(function() {
       let url = 'https://provinces.open-api.vn/api/v1/p/';
-      let selectedProvince = "{{ $hocVien->noi_sinh }}";
       $.ajax({
         method: "get",
         url: url,
         success: function(response) {
-          $('.noi_sinh').html('<option value=""></option>');
+          const select = $('.noi_sinh');
+          select.html('<option value=""></option>');
           response.forEach(function(province) {
-            $('.noi_sinh').append(
+            select.append(
               `<option value="${province.name}">${province.name}</option>`
             );
-          })
-          $('.noi_sinh').val(selectedProvince).trigger('change');
+          });
+          const oldValue = "{{ old('noi_sinh') }}";
+          if (oldValue) {
+            select.val(oldValue);
+          }
         },
         error: function() {
           alert("Không thể tải danh sách tỉnh/thành phố.");

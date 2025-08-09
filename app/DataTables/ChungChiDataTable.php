@@ -27,7 +27,7 @@ class ChungChiDataTable extends DataTable
   {
     return (new EloquentDataTable($query))
       ->addColumn('action', function ($query) {
-        $btnEdit = '<a href="' . route('quan-ly.chung-chi.form-sua-chung-chi', $query->ma_cc) . '" title="Sửa chứng chỉ" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>';
+        $btnEdit = '<a href="' . route('quan-ly.chung-chi.form-sua-chung-chi', $query->ma_cc) . '" title="Sửa chứng chỉ" class="btn btn-custom-color btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>';
         $btnDelete = '<a href="' . route('quan-ly.chung-chi.xoa-chung-chi', $query->ma_cc) . '" title="Xóa chứng chỉ" class="delete-item btn btn-outline-danger btn-sm mx-1"><i class="fa-solid fa-trash"></i></a>';
         return $btnEdit . $btnDelete;
       })

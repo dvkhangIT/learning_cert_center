@@ -75,7 +75,8 @@
              <a href="{{ route('quan-ly.hoc-vien.danh-sach-hoc-vien') }}"><i
                  class='bx bx-radio-circle'></i>Danh sách học viên</a>
            </li>
-           <li> <a href="{{ route('quan-ly.hoc-vien.form-tao-hoc-vien') }}"><i
+           <li class="{{ setActive(['quan-ly.hoc-vien.form-tao-hoc-vien']) }}">
+             <a href="{{ route('quan-ly.hoc-vien.form-tao-hoc-vien') }}"><i
                  class='bx bx-radio-circle'></i>Thêm học viên</a>
            </li>
          </ul>
@@ -99,6 +100,20 @@
            </li>
          </ul>
        </li>
+       {{-- <li class="{{ setActive(['quan-ly.chung-chi.*']) }}">
+         <a href="javascript:;" class="has-arrow">
+           <div class="parent-icon"><i class="bx bx-category"></i>
+           </div>
+           <div class="menu-title">Quản lý điểm</div>
+         </a>
+         <ul>
+           <li
+             class="{{ setActive(['quan-ly.chung-chi.danh-sach-chung-chi']) }}">
+             <a href="{{ route('quan-ly.chung-chi.danh-sach-chung-chi') }}"><i
+                 class='bx bx-radio-circle'></i>Điểm thi</a>
+           </li>
+         </ul>
+       </li> --}}
      </ul>
      <!--end navigation-->
    </div>

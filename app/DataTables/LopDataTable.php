@@ -28,7 +28,7 @@ class LopDataTable extends DataTable
     return (new EloquentDataTable($query))
       ->addColumn('action', function ($query) {
         $btnMore = '<div class="dropdown">
-											<button class="btn-outline-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">•••</button>
+											<button class="btn-custom-color" type="button" data-bs-toggle="dropdown" aria-expanded="false">•••</button>
 											<ul class="dropdown-menu">
 												<li><a class="dropdown-item btn" href="' . route('quan-ly.lop.sua-lop', $query->ma_lop) . '">Sửa thông tin lớp</a>
 												</li>

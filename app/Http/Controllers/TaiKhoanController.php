@@ -152,4 +152,29 @@ class TaiKhoanController extends Controller
     toastr()->success('Mật khẩu được thay đổi thành công.', ' ');
     return redirect()->route('dang-nhap');
   }
+  public function formDoiMatKhau()
+  {
+    return view('tai_khoan.doi_mat_khau');
+  }
+  public function luuMatKhau(Request $request)
+  {
+    $request->validate([
+      'current_password' => ['required'],
+      'new_password' => ['required', 'min:8', 'confirmed'],
+    ], [
+      'current_password.required' => 'Vui lòng nhập mật khẩu hiện tại.',
+      'new_password.required' => 'Vui lòng nhập mật khẩu mới.',
+      'new_password.min' => 'Mật khẩu mới phải có ít nhất 8 ký tự.',
+      'new_password.confirmed' => 'Xác nhận mật khẩu mới không khớp.',
+    ]);
+    if (!Hash::check($request->current_password, Auth::user()->mat_khau)) {
+      toastr()->error('Mật khẩu hiện tại không chính xác.', ' ');
+    }
+    $taiKhoan = Auth()->user();
+    $taiKhoan->mat_khau = Hash::make($request->new_password);
+    $taiKhoan->ngay_cap_nhat = now();
+    $taiKhoan->save();
+    toastr()->success('Đổi mật khẩu thành công!', ' ');
+    return redirect()->route('quan-ly.trang-chu');
+  }
 }

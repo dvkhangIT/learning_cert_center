@@ -14,7 +14,7 @@
       </nav>
     </div>
     <div class="ms-auto">
-      <a class="btn btn-outline-primary"
+      <a class="btn btn-custom-color"
         href="{{ route('quan-ly.hoc-vien.form-tao-hoc-vien') }}"><i
           class="fa-solid fa-plus"></i>Thêm học viên</a>
     </div>

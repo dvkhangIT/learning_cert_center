@@ -14,7 +14,7 @@
       </nav>
     </div>
     <div class="ms-auto">
-      <a class="btn btn-outline-primary"
+      <a class="btn btn-custom-color"
         href="{{ route('quan-ly.chung-chi.form-tao-chung-chi') }}"><i
           class="fa-solid fa-plus"></i>Tạo chứng chỉ</a>
     </div>

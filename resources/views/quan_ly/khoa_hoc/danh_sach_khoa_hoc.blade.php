@@ -15,7 +15,7 @@
     </div>
     <div class="ms-auto">
       <a data-bs-toggle="modal" data-bs-target="#createCourse"
-        class="btn btn-outline-primary course-create"
+        class="btn btn-custom-color course-create"
         href="{{ route('quan-ly.khoa-hoc.luu-khoa-hoc') }}"><i
           class="fa-solid fa-plus"></i>Tạo khóa
         học</a>

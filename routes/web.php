@@ -43,6 +43,8 @@ Route::group(['middleware' => 'guest'], function () {
 Route::group(['middleware' => 'auth'], function () {
   Route::get('dang-xuat', [TaiKhoanController::class, 'dangXuat'])->name('dang-xuat');
   Route::get('dashboard', [DashboardController::class, 'index'])->name('user.dashboard');
+  Route::get('doi-mat-khau', [TaiKhoanController::class, 'formDoiMatKhau'])->name('form-doi-mat-khau');
+  Route::post('doi-mat-khau', [TaiKhoanController::class, 'luuMatKhau'])->name('luu-mat-khau');
 });
 Route::group(['prefix' => 'quan-ly', 'middleware' => 'checkRole'], function () {
   Route::get('trang-chu', [ThongKeController::class, 'trangChu'])->name('quan-ly.trang-chu');
