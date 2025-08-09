@@ -17,6 +17,7 @@ class KetQuaSeeder extends Seeder
     $faker = Faker::create();
     foreach (range(1, 15) as $i) {
       DB::table('ket_qua')->insert([
+        'ma_hv' => $i,
         'ma_cc' => $i,
         'diem_nghe' => rand(50, 100),
         'diem_doc' => rand(50, 100),
