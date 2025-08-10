@@ -18,6 +18,7 @@ class ChungChiSeeder extends Seeder
     foreach (range(1, 15) as $i) {
       DB::table('chung_chi')->insert([
         'ma_hv' => rand(1, 20),
+        'ma_loai_chung_chi' => rand(1, 4),
         'ten_cc' => 'CC ' . $faker->word,
         'so_hieu' => 'SH-' . $faker->unique()->numerify('###'),
         'so_vao_so' => $faker->unique()->numerify('CC-###'),

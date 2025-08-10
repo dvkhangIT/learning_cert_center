@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\CourseController;
 use App\Http\Controllers\admin\StudentController;
 use App\Http\Controllers\quan_ly\ChungChiController;
 use App\Http\Controllers\quan_ly\HocVienController;
+use App\Http\Controllers\quan_ly\KetQuaController;
 use App\Http\Controllers\quan_ly\KhoaHocController;
 use App\Http\Controllers\quan_ly\LopController;
 use App\Http\Controllers\quan_ly\NguoiDungController;
@@ -94,4 +95,15 @@ Route::group(['prefix' => 'quan-ly', 'middleware' => 'checkRole'], function () {
   Route::get('sua-chung-chi/{ma_cc}', [ChungChiController::class, 'formSuaChungChi'])->name('quan-ly.chung-chi.form-sua-chung-chi');
   Route::put('sua-chung-chi/{ma_cc}', [ChungChiController::class, 'suaChungChi'])->name('quan-ly.chung-chi.sua-chung-chi');
   Route::delete('xoa-chung-chi/{ma_cc}', [ChungChiController::class, 'xoaChungChi'])->name('quan-ly.chung-chi.xoa-chung-chi');
+
+  // Điểm thi
+  // Route::get('ket-qua', [KetQuaController::class, 'danhSacKetQua'])->name('quan-ly.ket-qua.danh-sach-ket-qua');
+
+  Route::get('ket-qua/tieng-anh-ctut', [KetQuaController::class, 'danhSachTiengAnhCtut'])->name('quan-ly.ket-qua.tieng-anh-ctut');
+  Route::get('ket-qua/tieng-anh-bac-3', [KetQuaController::class, 'danhSachTiengAnhBac3'])->name('quan-ly.ket-qua.tieng-anh-bac-3');
+  Route::get('ket-qua/tieng-nhat-n4', [KetQuaController::class, 'danhSachTiengNhatN4'])->name('quan-ly.ket-qua.tieng-nhat-n4');
+  Route::get('ket-qua/cntt-can-ban', [KetQuaController::class, 'danhSachCnttCanBan'])->name('quan-ly.ket-qua.cntt-co-ban');
+
+  Route::get('sua-ket-qua/{ma_kq}', [KetQuaController::class, 'formSuaKetQua'])->name('quan-ly.ket-qua.form-sua-ket-qua');
+  Route::put('sua-ket-qua/{ma_kq}', [KetQuaController::class, 'suaKetQua'])->name('quan-ly.ket-qua.sua-ket-qua');
 });
