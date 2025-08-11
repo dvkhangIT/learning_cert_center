@@ -9,6 +9,7 @@ use App\DataTables\TiengNhatN4DataTable;
 use App\Http\Controllers\Controller;
 use App\Models\KetQua;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class KetQuaController extends Controller
 {
@@ -48,39 +49,92 @@ class KetQuaController extends Controller
     ];
     $cacLoaiDiem = [];
     foreach ($cacMaDiemCanThiet as $maDiem) {
-      // Kiểm tra xem mã điểm có tồn tại trong danh sách tên không
       if (isset($danhSachTenDiem[$maDiem])) {
-        // Tạo một mảng mới với key là mã điểm và value là tên hiển thị
         $cacLoaiDiem[$maDiem] = $danhSachTenDiem[$maDiem];
       }
     }
-    // return view('ketqua.edit', [
-    //   'ketQua' => $ketQua,
-    //   'cacLoaiDiem' => $cacLoaiDiemDeHienThi,
-    // ]);
-    // dd($cacLoaiDiem);
     return view('quan_ly.ket_qua.sua_ket_qua', compact('ketQua', 'cacLoaiDiem'));
   }
   public function suaKetQua(Request $request, string $ma_kq)
   {
-    $request->validate([
-      'diem_nghe' => 'numeric|min:0',
-      'diem_noi' => 'numeric|min:0',
-      'diem_doc' => 'numeric|min:0',
-      'diem_viet' => 'numeric|min:0',
-      'diem_tu_vung' => 'numeric|min:0',
-      'diem_ngu_phap_doc' => 'numeric|min:0',
-      'diem_trac_nghiem' => 'numeric|min:0',
-      'diem_thuc_hanh' => 'numeric|min:0',
-    ]);
     $ketQua = KetQua::findOrFail($ma_kq);
-    $ketQua->update($request->all());
-    $ketQua->trang_thai;
-    $redirectRoute = $ketQua->chungChi?->loaiChungChi?->route_name;
-    toastr()->success('Cập nhật thành công!', ' ');
-    if (!$redirectRoute) {
-      return redirect()->back();
+    $rules = [];
+    $messages = [];
+    $tenLoaiCC = $ketQua->chungChi?->loaiChungChi?->ten_loai_cc;
+    switch ($tenLoaiCC) {
+      case 'Chứng nhận năng lực tiếng Anh CTUT':
+        $rules['diem_nghe'] = 'required|numeric|min:0|max:500';
+        $rules['diem_doc'] = 'required|numeric|min:0|max:500';
+        $messages = [
+          'diem_nghe.required' => 'Vui lòng nhập điểm nghe.',
+          'diem_nghe.numeric'  => 'Điểm nghe phải là số.',
+          'diem_nghe.min'      => 'Điểm nghe không được nhỏ hơn 0.',
+          'diem_nghe.max'      => 'Điểm nghe không được lớn hơn 500.',
+
+          'diem_doc.required'  => 'Vui lòng nhập điểm đọc.',
+          'diem_doc.numeric'   => 'Điểm đọc phải là số.',
+          'diem_doc.min'       => 'Điểm đọc không được nhỏ hơn 0.',
+          'diem_doc.max'       => 'Điểm đọc không được lớn hơn 500.',
+        ];
+        break;
+      case 'Chứng nhận năng lực tiếng Anh tương đương bậc 3':
+        $rules['diem_nghe'] = 'required|numeric|min:0|max:10';
+        $rules['diem_noi']  = 'required|numeric|min:0|max:10';
+        $rules['diem_doc']  = 'required|numeric|min:0|max:10';
+        $rules['diem_viet'] = 'required|numeric|min:0|max:10';
+        $messages = [
+          '*.required' => 'Vui lòng nhập :attribute.',
+          '*.numeric'  => ':attribute phải là số.',
+          '*.min'      => ':attribute không được nhỏ hơn 0.',
+          '*.max'      => ':attribute không được lớn hơn 10.',
+        ];
+        break;
+      case 'Chứng nhận năng lực tiếng Nhật tương đương N4':
+        $rules['diem_tu_vung']     = 'required|numeric|min:0|max:60';
+        $rules['diem_ngu_phap_doc'] = 'required|numeric|min:0|max:60';
+        $rules['diem_nghe']        = 'required|numeric|min:0|max:60';
+        $messages = [
+          '*.required' => 'Vui lòng nhập :attribute.',
+          '*.numeric'  => ':attribute phải là số.',
+          '*.min'      => ':attribute không được nhỏ hơn 0.',
+          '*.max'      => ':attribute không được lớn hơn 60.',
+        ];
+        break;
+      case 'Chứng chỉ ứng dụng CNTT cơ bản':
+        $rules['diem_trac_nghiem'] = 'required|numeric|min:0|max:10';
+        $rules['diem_thuc_hanh']   = 'required|numeric|min:0|max:10';
+        $messages = [
+          '*.required' => 'Vui lòng nhập :attribute.',
+          '*.numeric'  => ':attribute phải là số.',
+          '*.min'      => ':attribute không được nhỏ hơn 0.',
+          '*.max'      => ':attribute không được lớn hơn 10.',
+        ];
+        break;
     }
-    return redirect()->route($redirectRoute);
+    $attributes = [
+      'diem_nghe'         => 'điểm nghe',
+      'diem_noi'          => 'điểm nói',
+      'diem_doc'          => 'điểm đọc',
+      'diem_viet'         => 'điểm viết',
+      'diem_tu_vung'      => 'điểm từ vựng',
+      'diem_ngu_phap_doc' => 'điểm ngữ pháp - đọc hiểu',
+      'diem_trac_nghiem'  => 'điểm trắc nghiệm',
+      'diem_thuc_hanh'    => 'điểm thực hành',
+    ];
+    // Validator với thông báo tiếng Việt
+    $validator = Validator::make($request->all(), $rules, $messages, $attributes);
+
+    if ($validator->fails()) {
+      return redirect()->back()->withErrors($validator)->withInput();
+    }
+
+    $ketQua->update($request->all());
+
+    toastr()->success('Cập nhật thành công!', ' ');
+    $redirectRoute = $ketQua->chungChi?->loaiChungChi?->route_name;
+
+    return $redirectRoute
+      ? redirect()->route($redirectRoute)
+      : redirect()->back();
   }
 }

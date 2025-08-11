@@ -16,7 +16,8 @@
           <li class="breadcrumb-item"><a href="javascript:;"><i
                 class="bx bx-home-alt"></i></a>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">Sửa chứng chỉ
+          <li class="breadcrumb-item active" aria-current="page">
+            {{ $ketQua->chungChi->loaiChungChi->ten_loai_cc }}
           </li>
         </ol>
       </nav>
