@@ -36,47 +36,21 @@ class TaiKhoanController extends Controller
       ]
     );
     if ($validator->passes()) {
-      if (Auth::attempt(['email' => $request->email, 'password' => $request->mat_khau])) {
+      if (Auth::attempt(['email' => $request->email, 'password' => $request->mat_khau, 'trang_thai' => 1])) {
         $vai_tro = Auth::user()->vai_tro;
         if ($vai_tro === 'quanly') {
           toastr()->success('Đăng nhập thành cônng!', ' ');
-          return redirect()->route('quan-ly.trang-chu');
+          return redirect()->route('quan-ly.tong-quan');
         } else {
           toastr()->success('Đăng nhập thành cônng!', ' ');
           return redirect()->route('user.dashboard');
         }
       } else {
-        toastr()->error('Tài khoản hoặc mật khẩu không đúng!', ' ');
+        toastr()->error('Tài khoản, mật khẩu không đúng hoặc tài khoản đã bị khóa!', ' ');
         return redirect()->route('form-dang-nhap');
       }
     } else {
       return redirect()->route('form-dang-nhap')->withInput()->withErrors($validator);
-    }
-  }
-  public function register(Request $request)
-  {
-    return view('register');
-  }
-  public function processRegister(Request $request)
-  {
-    $validator = Validator::make(
-      $request->all(),
-      [
-        'name' => 'required',
-        'email' => 'required|email|unique:users',
-        'password' => 'required|confirmed'
-      ]
-    );
-    if ($validator->passes()) {
-      $user = new User();
-      $user->name = $request->name;
-      $user->email = $request->email;
-      $user->role = 'user';
-      $user->password = Hash::make($request->password);
-      $user->save();
-      return redirect()->route('login')->with('success', 'You have register successfully!');
-    } else {
-      return redirect()->route('register')->withInput()->withErrors($validator);
     }
   }
   public function dangXuat()
@@ -175,6 +149,6 @@ class TaiKhoanController extends Controller
     $taiKhoan->ngay_cap_nhat = now();
     $taiKhoan->save();
     toastr()->success('Đổi mật khẩu thành công!', ' ');
-    return redirect()->route('quan-ly.trang-chu');
+    return redirect()->route('quan-ly.tong-quan');
   }
 }

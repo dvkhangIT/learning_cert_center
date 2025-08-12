@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\quan_ly;
 
 use App\DataTables\CnttCoBanDataTable;
+use App\DataTables\KetQuaDaXoaDataTable;
 use App\DataTables\TiengAnhBac3DataTable;
 use App\DataTables\TiengAnhCtutDataTable;
 use App\DataTables\TiengNhatN4DataTable;
@@ -133,6 +134,25 @@ class KetQuaController extends Controller
     toastr()->success('Cập nhật thành công!', ' ');
     $redirectRoute = $ketQua->chungChi?->loaiChungChi?->route_name;
 
+    return $redirectRoute
+      ? redirect()->route($redirectRoute)
+      : redirect()->back();
+  }
+  public function xoaKetQua(string $ma_kq)
+  {
+    KetQua::findOrFail($ma_kq)->delete();
+    return response()->json(['status' => 'success', 'message' => 'Xóa thành công!']);
+  }
+  public function danhSachKetQuaDaXoa(KetQuaDaXoaDataTable $dataTable)
+  {
+    return $dataTable->render('quan_ly.ket_qua.ket_qua_da_xoa');
+  }
+  public function khoiPhucKetQua(string $ma_kq)
+  {
+    $ketQua = KetQua::withTrashed()->findOrFail($ma_kq);
+    $ketQua->restore();
+    toastr()->success('Khôi phục kết quả thành công!', ' ');
+    $redirectRoute = $ketQua->chungChi?->loaiChungChi?->route_name;
     return $redirectRoute
       ? redirect()->route($redirectRoute)
       : redirect()->back();

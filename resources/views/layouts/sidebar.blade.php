@@ -1,5 +1,5 @@
    <div class="sidebar-wrapper" data-simplebar="true">
-     <a href="{{ route('quan-ly.trang-chu') }}" class="sidebar-header">
+     <a href="{{ route('quan-ly.tong-quan') }}" class="sidebar-header">
        <div>
          <img src="{{ asset('assets/images/logo.png') }}" class="logo-icon"
            alt="logo icon">
@@ -12,8 +12,8 @@
      </a>
      <!--navigation-->
      <ul class="metismenu" id="menu">
-       <li class="{{ setActive(['quan-ly.trang-chu']) }}">
-         <a href="{{ route('quan-ly.trang-chu') }}" class="">
+       <li class="{{ setActive(['quan-ly.tong-quan']) }}">
+         <a href="{{ route('quan-ly.tong-quan') }}" class="">
            <div class="parent-icon"><i class='bx bx-home-alt'></i>
            </div>
            <div class="menu-title">Tổng quan</div>
@@ -123,6 +123,10 @@
            <li class="{{ setActive(['quan-ly.ket-qua.cntt-co-ban']) }}">
              <a href="{{ route('quan-ly.ket-qua.cntt-co-ban') }}"><i
                  class='bx bx-radio-circle'></i>CNTT cơ bản</a>
+           </li>
+           <li class="{{ setActive(['quan-ly.ket-qua.ket-qua-da-xoa']) }}">
+             <a href="{{ route('quan-ly.ket-qua.ket-qua-da-xoa') }}"><i
+                 class='bx bx-radio-circle'></i>Kết quả đã xóa</a>
            </li>
          </ul>
        </li>

@@ -48,7 +48,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::post('doi-mat-khau', [TaiKhoanController::class, 'luuMatKhau'])->name('luu-mat-khau');
 });
 Route::group(['prefix' => 'quan-ly', 'middleware' => 'checkRole'], function () {
-  Route::get('trang-chu', [ThongKeController::class, 'trangChu'])->name('quan-ly.trang-chu');
+  Route::get('thong-ke', [ThongKeController::class, 'thongKe'])->name('quan-ly.tong-quan');
 
   // Tài khoản
   Route::get('danh-sach-tai-khoan', [NguoiDungController::class, 'danhSachTaiKhoan'])->name('quan-ly.tai-khoan.danh-sach-tai-khoan');
@@ -97,13 +97,16 @@ Route::group(['prefix' => 'quan-ly', 'middleware' => 'checkRole'], function () {
   Route::delete('xoa-chung-chi/{ma_cc}', [ChungChiController::class, 'xoaChungChi'])->name('quan-ly.chung-chi.xoa-chung-chi');
 
   // Điểm thi
-  // Route::get('ket-qua', [KetQuaController::class, 'danhSacKetQua'])->name('quan-ly.ket-qua.danh-sach-ket-qua');
-
   Route::get('ket-qua/tieng-anh-ctut', [KetQuaController::class, 'danhSachTiengAnhCtut'])->name('quan-ly.ket-qua.tieng-anh-ctut');
   Route::get('ket-qua/tieng-anh-bac-3', [KetQuaController::class, 'danhSachTiengAnhBac3'])->name('quan-ly.ket-qua.tieng-anh-bac-3');
   Route::get('ket-qua/tieng-nhat-n4', [KetQuaController::class, 'danhSachTiengNhatN4'])->name('quan-ly.ket-qua.tieng-nhat-n4');
   Route::get('ket-qua/cntt-can-ban', [KetQuaController::class, 'danhSachCnttCanBan'])->name('quan-ly.ket-qua.cntt-co-ban');
-
   Route::get('sua-ket-qua/{ma_kq}', [KetQuaController::class, 'formSuaKetQua'])->name('quan-ly.ket-qua.form-sua-ket-qua');
   Route::put('sua-ket-qua/{ma_kq}', [KetQuaController::class, 'suaKetQua'])->name('quan-ly.ket-qua.sua-ket-qua');
+  Route::delete('xoa-ket-qua/{ma_kq}', [KetQuaController::class, 'xoaKetQua'])->name('quan-ly.ket-qua.xoa-ket-qua');
+  // khôi phục kết quả khi xóa
+  Route::get('quan-ly/ket-qua-da-xoa', [KetQuaController::class, 'danhSachKetQuaDaXoa'])
+    ->name('quan-ly.ket-qua.ket-qua-da-xoa');
+  Route::patch('/quan-ly/khoi-phuc-ket-qua/{ma_kq}', [KetQuaController::class, 'khoiPhucKetQua'])
+    ->name('quan-ly.ket-qua.khoi-phuc-ket-qua');
 });

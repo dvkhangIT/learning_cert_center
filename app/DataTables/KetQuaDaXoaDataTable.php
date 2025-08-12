@@ -14,9 +14,10 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class TiengAnhBac3DataTable extends DataTable
+class KetQuaDaXoaDataTable extends DataTable
 {
   use DefaultConfig;
+
   /**
    * Build DataTable class.
    *
@@ -27,9 +28,20 @@ class TiengAnhBac3DataTable extends DataTable
   {
     return (new EloquentDataTable($query))
       ->addColumn('action', function ($query) {
-        $btnEdit = '<a href="' . route('quan-ly.ket-qua.form-sua-ket-qua', $query->ma_kq) . '" title="Sửa học viên" class="btn btn-custom-color btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>';
-        $btnDelete = '<a href="' . route('quan-ly.ket-qua.xoa-ket-qua', $query->ma_kq) . '" title="Xóa điểm" class="delete-item btn btn-outline-danger btn-sm mx-1"><i class="fa-solid fa-trash"></i></a>';
-        return $btnEdit . $btnDelete;
+        $restoreUrl = route('quan-ly.ket-qua.khoi-phuc-ket-qua', $query->ma_kq);
+        // Dùng helper function để tạo HTML cho các thẻ input ẩn
+        $csrfField = csrf_field();
+        $methodField = method_field('PATCH');
+        // Tạo chuỗi HTML hoàn chỉnh
+        $btnRestore = '
+                <form action="' . $restoreUrl . '" method="POST" class="d-inline">
+                    ' . $csrfField . '
+                    ' . $methodField . '
+                    <button type="submit" title="Khôi phục" class="btn btn-outline-success btn-sm mx-1">
+                        <i class="fa-solid fa-arrow-rotate-right"></i>
+                    </button>
+                </form>';
+        return $btnRestore;
       })
       ->addColumn('ten_hoc_vien', function ($query) {
         return $query->hocVien->hoten_hv;
@@ -43,11 +55,8 @@ class TiengAnhBac3DataTable extends DataTable
       ->addColumn('ket_qua', function ($query) {
         return $query->trang_thai;
       })
-      ->addColumn('ngay_tao', function ($query) {
-        return Carbon::parse($query->ngay_tao)->format('d/m/Y');
-      })
-      ->addColumn('ngay_cap_nhat', function ($query) {
-        return Carbon::parse($query->ngay_cap_nhat)->format('d/m/Y');
+      ->addColumn('ngay_xoa', function ($query) {
+        return Carbon::parse($query->ngay_xoa)->format('d/m/Y');
       })
       ->rawColumns(['action', 'ngay_tao', 'ngay_cap_nhat'])
       ->setRowId('ma_kq');
@@ -56,17 +65,14 @@ class TiengAnhBac3DataTable extends DataTable
   /**
    * Get query source of dataTable.
    *
-   * @param \App\Models\TiengAnhBac3 $model
+   * @param \App\Models\KetQuaDaXoa $model
    * @return \Illuminate\Database\Eloquent\Builder
    */
   public function query(KetQua $model): QueryBuilder
   {
-    return $model->newQuery()
+    return $model->newQuery()->onlyTrashed()
       ->with('chungChi.loaiChungChi', 'hocVien')
-      ->leftJoin('hoc_vien', 'ket_qua.ma_hv', '=', 'hoc_vien.ma_hv')
-      ->whereHas('chungChi.loaiChungChi', function ($query) {
-        $query->where('ten_loai_cc', 'Chứng nhận năng lực tiếng Anh tương đương bậc 3');
-      });
+      ->leftJoin('hoc_vien', 'ket_qua.ma_hv', '=', 'hoc_vien.ma_hv');
   }
 
   /**
@@ -76,7 +82,7 @@ class TiengAnhBac3DataTable extends DataTable
    */
   public function html(): HtmlBuilder
   {
-    return $this->applyDefaultHtmlConfig($this->builder(), 'tienganhbac3-table', true)
+    return $this->applyDefaultHtmlConfig($this->builder(), 'ketquadaxoa-table', true)
       ->columns($this->getColumns())
       ->minifiedAjax()
       //->dom('Bfrtip')
@@ -105,19 +111,22 @@ class TiengAnhBac3DataTable extends DataTable
   {
     return [
       Column::make('ma_kq')->title('#')->type('string'),
-      Column::computed('ten_hoc_vien')->title('Học viên')->orderable(true),
+      Column::computed('ten_hoc_vien')->title('Học viên')->orderable(true)->width(200),
       Column::computed('ten_chung_chi')->title('Chứng chỉ'),
       Column::make('diem_nghe')->title('Điểm nghe'),
-      Column::make('diem_noi')->title('Điểm nói'),
       Column::make('diem_doc')->title('Điểm đọc'),
+      Column::make('diem_noi')->title('Điểm nói'),
       Column::make('diem_viet')->title('Điểm viết'),
+      Column::make('diem_tu_vung')->title('Điểm từ vựng'),
+      Column::make('diem_ngu_phap_doc')->title('Điểm ngữ pháp - Đọc'),
+      Column::make('diem_trac_nghiem')->title('Điểm trắc nghiệm'),
+      Column::make('diem_thuc_hanh')->title('Điểm thực hành'),
       Column::computed('ket_qua')->title('Kết quả')->addClass('text-center'),
-      Column::make('ngay_tao')->title('Ngày tạo'),
-      Column::make('ngay_cap_nhat')->title('Cập nhật'),
+      Column::make('ngay_xoa')->title('Ngày xóa'),
       Column::computed('action')->title('Thao tác')
         ->exportable(false)
         ->printable(false)
-        ->width(150)
+        ->width(50)
         ->addClass('text-center no-export'),
     ];
   }
@@ -129,6 +138,6 @@ class TiengAnhBac3DataTable extends DataTable
    */
   protected function filename(): string
   {
-    return 'TiengAnhBac3_' . date('YmdHis');
+    return 'KetQuaDaXoa_' . date('YmdHis');
   }
 }

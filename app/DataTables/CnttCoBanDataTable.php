@@ -29,7 +29,7 @@ class CnttCoBanDataTable extends DataTable
     return (new EloquentDataTable($query))
       ->addColumn('action', function ($query) {
         $btnEdit = '<a href="' . route('quan-ly.ket-qua.form-sua-ket-qua', $query->ma_kq) . '" title="Sửa học viên" class="btn btn-custom-color btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>';
-        $btnDelete = '<a href="" title="Xóa học viên" class="delete-item btn btn-outline-danger btn-sm mx-1"><i class="fa-solid fa-trash"></i></a>';
+        $btnDelete = '<a href="' . route('quan-ly.ket-qua.xoa-ket-qua', $query->ma_kq) . '" title="Xóa điểm" class="delete-item btn btn-outline-danger btn-sm mx-1"><i class="fa-solid fa-trash"></i></a>';
         return $btnEdit . $btnDelete;
       })
       ->addColumn('ten_hoc_vien', function ($query) {
