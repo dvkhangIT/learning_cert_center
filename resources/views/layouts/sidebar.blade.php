@@ -1,5 +1,5 @@
    <div class="sidebar-wrapper" data-simplebar="true">
-     <div class="sidebar-header">
+     <a href="{{ route('quan-ly.trang-chu') }}" class="sidebar-header">
        <div>
          <img src="{{ asset('assets/images/logo.png') }}" class="logo-icon"
            alt="logo icon">
@@ -9,7 +9,7 @@
        </div>
        <div class="toggle-icon ms-auto"><i class='bx bx-arrow-back'></i>
        </div>
-     </div>
+     </a>
      <!--navigation-->
      <ul class="metismenu" id="menu">
        <li class="{{ setActive(['quan-ly.trang-chu']) }}">
@@ -21,7 +21,7 @@
        </li>
        <li class="{{ setActive(['quan-ly.tai-khoan.*']) }}">
          <a href="javascript:;" class="has-arrow">
-           <div class="parent-icon"><i class="bx bx-category"></i>
+           <div class="parent-icon"><i class="fadeIn animated bx bx-user"></i>
            </div>
            <div class="menu-title">Quản lý tài khoản</div>
          </a>
@@ -39,12 +39,13 @@
        </li>
        <li class="{{ setActive(['quan-ly.khoa-hoc.*']) }}">
          <a href="javascript:;" class="has-arrow">
-           <div class="parent-icon"><i class="bx bx-category"></i>
+           <div class="parent-icon"><i class="fadeIn animated bx bx-book"></i>
            </div>
            <div class="menu-title">Quản lý khóa học</div>
          </a>
          <ul>
-           <li class="{{ setActive(['quan-ly.khoa-hoc.danh-sach-khoa-hoc']) }}">
+           <li
+             class="{{ setActive(['quan-ly.khoa-hoc.danh-sach-khoa-hoc']) }}">
              <a href="{{ route('quan-ly.khoa-hoc.danh-sach-khoa-hoc') }}"><i
                  class='bx bx-radio-circle'></i>Danh sách khóa học</a>
            </li>
@@ -65,7 +66,7 @@
        </li>
        <li class="{{ setActive(['quan-ly.hoc-vien.*']) }}">
          <a href="javascript:;" class="has-arrow">
-           <div class="parent-icon"><i class="bx bx-category"></i>
+           <div class="parent-icon"><i class="fadeIn animated bx bx-group"></i>
            </div>
            <div class="menu-title">Quản lý học viên</div>
          </a>
@@ -83,7 +84,7 @@
        </li>
        <li class="{{ setActive(['quan-ly.chung-chi.*']) }}">
          <a href="javascript:;" class="has-arrow">
-           <div class="parent-icon"><i class="bx bx-category"></i>
+           <div class="parent-icon"><i class="fadeIn animated bx bx-award"></i>
            </div>
            <div class="menu-title">Quản lý chứng chỉ</div>
          </a>
@@ -102,7 +103,7 @@
        </li>
        <li class="{{ setActive(['quan-ly.ket-qua.*']) }}">
          <a href="javascript:;" class="has-arrow">
-           <div class="parent-icon"><i class="bx bx-category"></i>
+           <div class="parent-icon"><i class='bx bx-line-chart'></i>
            </div>
            <div class="menu-title">Quản lý kết quả</div>
          </a>
