@@ -54,7 +54,7 @@
     @yield('css')
     {{-- custom css --}}
     <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
-    <title>Quản lý chứng chỉ</title>
+    <title>CTUT | @yield('title', $title ?? '')</title>
   </head>
 
   <body>

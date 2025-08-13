@@ -1,15 +1,17 @@
    <div class="sidebar-wrapper" data-simplebar="true">
-     <a href="{{ route('quan-ly.tong-quan') }}" class="sidebar-header">
-       <div>
+     <div class="sidebar-header">
+       <a href="{{ route('quan-ly.tong-quan') }}">
          <img src="{{ asset('assets/images/logo.png') }}" class="logo-icon"
            alt="logo icon">
-       </div>
+       </a>
        <div>
-         <h4 class="logo-text">CTUT</h4>
+         {{-- <h4 class="logo-text">CTUT</h4> --}}
+         <h4 class="logo-text text-uppercase">Trung tâm <br> Ngoại ngữ - Tin học
+         </h4>
        </div>
        <div class="toggle-icon ms-auto"><i class='bx bx-arrow-back'></i>
        </div>
-     </a>
+     </div>
      <!--navigation-->
      <ul class="metismenu" id="menu">
        <li class="{{ setActive(['quan-ly.tong-quan']) }}">

@@ -1,4 +1,5 @@
 @extends('layouts.master')
+@section('title', 'Thống kê')
 @section('content')
   <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
     <div class="col">
@@ -98,8 +99,8 @@
           datasets: [{
             data: [Number({{ $chart['dat'] }}), Number(
               {{ $chart['khong_dat'] }})],
-            backgroundColor: ['#4CAF50', '#F44336'],
-            borderColor: ['#388E3C', '#D32F2F'],
+            backgroundColor: ['#0e4582', '#F44336'],
+            borderColor: ['#0e4582', '#D32F2F'],
             borderWidth: 1,
             borderRadius: 6
           }]
