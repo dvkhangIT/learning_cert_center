@@ -9,14 +9,14 @@ class LoaiChungChi extends Model
 {
   use HasFactory;
   protected $table = 'loai_chung_chi';
-  protected $primaryKey = 'ma_loai_chung_chi';
+  protected $primaryKey = 'ma_loai_cc';
   public $timestamps = false;
   protected $casts = [
     'cau_hinh_diem' => 'array',
   ];
   public function loaiChungChi()
   {
-    return $this->belongsTo(LoaiChungChi::class, 'ma_loai_chung_chi');
+    return $this->belongsTo(LoaiChungChi::class, 'ma_loai_cc');
   }
   public function getRouteNameAttribute(): ?string
   {

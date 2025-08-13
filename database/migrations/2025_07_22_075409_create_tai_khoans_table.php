@@ -18,7 +18,6 @@ return new class extends Migration
       $table->string('mat_khau');
       $table->enum('vai_tro', ['quanly', 'nhanvien'])->default('nhanvien');
       $table->enum('trang_thai', [1, 0])->default(1);
-      $table->string('remember_token')->nullable();
       $table->timestamp('ngay_tao')->nullable();
       $table->timestamp('ngay_cap_nhat')->nullable();
     });

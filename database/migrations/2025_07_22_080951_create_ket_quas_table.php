@@ -13,7 +13,7 @@ return new class extends Migration
   {
     Schema::create('ket_qua', function (Blueprint $table) {
       $table->id('ma_kq');
-      $table->foreignId('ma_hv')->constrained('hoc_vien', 'ma_hv')->onDelete('set null');
+      $table->foreignId('ma_hv')->nullable()->constrained('hoc_vien', 'ma_hv')->onDelete('set null');
       $table->foreignId('ma_cc')->nullable()->constrained('chung_chi', 'ma_cc')->onDelete('set null');
       $table->float('diem_nghe')->nullable();
       $table->float('diem_doc')->nullable();

@@ -25,15 +25,15 @@ class ThongKeController extends Controller
     $loaiChungChis = LoaiChungChi::all();
 
     foreach ($loaiChungChis as $loai) {
-      $startDate = ChungChi::where('ma_loai_chung_chi', $loai->ma_loai_chung_chi)->min('ngay_bat_dau');
-      $endDate   = ChungChi::where('ma_loai_chung_chi', $loai->ma_loai_chung_chi)->max('ngay_ket_thuc');
+      $startDate = ChungChi::where('ma_loai_cc', $loai->ma_loai_cc)->min('ngay_bat_dau');
+      $endDate   = ChungChi::where('ma_loai_cc', $loai->ma_loai_cc)->max('ngay_ket_thuc');
 
       if (!$startDate || !$endDate) {
         continue;
       }
 
       $thongKeTrangThai = KetQua::join('chung_chi', 'ket_qua.ma_cc', '=', 'chung_chi.ma_cc')
-        ->where('chung_chi.ma_loai_chung_chi', $loai->ma_loai_chung_chi)
+        ->where('chung_chi.ma_loai_cc', $loai->ma_loai_cc)
         ->whereBetween('chung_chi.ngay_bat_dau', [$startDate, $endDate])
         ->selectRaw("trang_thai, COUNT(*) as so_luong")
         ->groupBy('trang_thai')
@@ -43,7 +43,7 @@ class ThongKeController extends Controller
       $khongDat = $thongKeTrangThai['Không đạt'] ?? 0;
 
       $dataCharts[] = [
-        'id' => 'chart_' . $loai->ma_loai_chung_chi,
+        'id' => 'chart_' . $loai->ma_loai_cc,
         'ten_loai' => $loai->ten_loai_cc,
         'start' => Carbon::parse($startDate)->format('d/m/Y'),
         'end' => Carbon::parse($endDate)->format('d/m/Y'),

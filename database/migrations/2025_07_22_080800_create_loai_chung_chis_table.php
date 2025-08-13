@@ -12,7 +12,7 @@ return new class extends Migration
   public function up(): void
   {
     Schema::create('loai_chung_chi', function (Blueprint $table) {
-      $table->id('ma_loai_chung_chi');
+      $table->id('ma_loai_cc');
       $table->string('ten_loai_cc')->unique()->comment('Tên loại chứng chỉ, ví dụ: Tin học Căn bản');
       $table->json('cau_hinh_diem')->nullable()->comment('Mảng JSON chứa tên các cột điểm yêu cầu');
       $table->timestamp('ngay_tao')->nullable();

@@ -22,6 +22,6 @@ class ChungChi extends Model
   }
   public function loaiChungChi()
   {
-    return $this->belongsTo(LoaiChungChi::class, 'ma_loai_chung_chi', 'ma_loai_chung_chi');
+    return $this->belongsTo(LoaiChungChi::class, 'ma_loai_cc', 'ma_loai_cc');
   }
 }
