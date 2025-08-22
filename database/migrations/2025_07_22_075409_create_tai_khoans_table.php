@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -21,6 +22,15 @@ return new class extends Migration
       $table->timestamp('ngay_tao')->nullable();
       $table->timestamp('ngay_cap_nhat')->nullable();
     });
+    DB::table('tai_khoan')->insert([
+      'ho_ten' => 'Quản trị viên',
+      'email' => 'admin@gmail.com',
+      'mat_khau' => Hash::make('12345'),
+      'vai_tro' => 'quanly',
+      'trang_thai' => 1,
+      'ngay_tao' => now(),
+      'ngay_cap_nhat' => now(),
+    ]);
   }
 
   /**

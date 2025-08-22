@@ -75,6 +75,25 @@
                 </div>
               @enderror
             </div>
+            <div class="col-md-12 mb-2">
+              <label class="form-label">Loại chưng chỉ</label>
+              <select id="chungChiSelect"
+                class="form-select mb-3 @error('ma_loai_cc')
+                  is-invalid @enderror"
+                id="single-select-field" data-placeholder="Loại chứng chỉ"
+                name="ma_loai_cc">
+                @foreach ($loaiChungChi as $lcc)
+                  <option value=""></option>
+                  <option
+                    {{ old('ma_loai_cc') == $lcc->ma_loai_cc ? 'selected' : '' }}
+                    value="{{ $lcc->ma_loai_cc }}">{{ $lcc->ten_loai_cc }}
+                  </option>
+                @endforeach
+              </select>
+              @error('ma_loai_cc')
+                <div class="invalid-feedback d-block">{{ $message }}</div>
+              @enderror
+            </div>
             <div class="col-md-12">
               <label class="form-label">Ngày vào sổ</label>
               <input type="text"
@@ -190,33 +209,38 @@
     });
   </script>
   <script>
-    $.fn.select2.defaults.set('language', {
-      errorLoading: function() {
-        return "Không thể tải kết quả.";
-      },
-      inputTooLong: function(args) {
-        var overChars = args.input.length - args.maximum;
-        return "Vui lòng xóa bớt " + overChars + " ký tự";
-      },
-      inputTooShort: function(args) {
-        var remainingChars = args.minimum - args.input.length;
-        return "Vui lòng nhập thêm " + remainingChars + " ký tự";
-      },
-      loadingMore: function() {
-        return "Đang tải thêm kết quả…";
-      },
-      maximumSelected: function(args) {
-        return "Chỉ có thể chọn tối đa " + args.maximum + " mục";
-      },
-      noResults: function() {
-        return "Không tìm thấy kết quả";
-      },
-      searching: function() {
-        return "Đang tìm…";
-      },
-      removeAllItems: function() {
-        return "Xóa tất cả các mục";
-      }
+    $(document).ready(function() {
+      $('#chungChiSelect').select2({
+        theme: 'bootstrap-5',
+        language: {
+          errorLoading: function() {
+            return "Không thể tải kết quả.";
+          },
+          inputTooLong: function(args) {
+            var overChars = args.input.length - args.maximum;
+            return "Vui lòng xóa bớt " + overChars + " ký tự";
+          },
+          inputTooShort: function(args) {
+            var remainingChars = args.minimum - args.input.length;
+            return "Vui lòng nhập thêm " + remainingChars + " ký tự";
+          },
+          loadingMore: function() {
+            return "Đang tải thêm kết quả…";
+          },
+          maximumSelected: function(args) {
+            return "Chỉ có thể chọn tối đa " + args.maximum + " mục";
+          },
+          noResults: function() {
+            return "Không tìm thấy kết quả";
+          },
+          searching: function() {
+            return "Đang tìm…";
+          },
+          removeAllItems: function() {
+            return "Xóa tất cả các mục";
+          }
+        }
+      });
     });
   </script>
 @endsection

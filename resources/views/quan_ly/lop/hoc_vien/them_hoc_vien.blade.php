@@ -44,8 +44,7 @@
                 <div class="col-md-12 mb-2">
                   <select id="hocVienSelect"
                     class="form-select mb-3 @error('hoc_vien_id')
-                  is-invalid
-              @enderror"
+                  is-invalid @enderror"
                     id="single-select-field" data-placeholder="Chọn học viên"
                     name="hoc_vien_id[]" multiple>
                     @foreach ($hocVien as $hv)
@@ -85,35 +84,34 @@
   <script>
     $(document).ready(function() {
       $('#hocVienSelect').select2({
-        theme: 'bootstrap-5'
-      });
-
-      $.fn.select2.defaults.set('language', {
-        errorLoading: function() {
-          return "Không thể tải kết quả.";
-        },
-        inputTooLong: function(args) {
-          var overChars = args.input.length - args.maximum;
-          return "Vui lòng xóa bớt " + overChars + " ký tự";
-        },
-        inputTooShort: function(args) {
-          var remainingChars = args.minimum - args.input.length;
-          return "Vui lòng nhập thêm " + remainingChars + " ký tự";
-        },
-        loadingMore: function() {
-          return "Đang tải thêm kết quả…";
-        },
-        maximumSelected: function(args) {
-          return "Chỉ có thể chọn tối đa " + args.maximum + " mục";
-        },
-        noResults: function() {
-          return "Không tìm thấy kết quả";
-        },
-        searching: function() {
-          return "Đang tìm…";
-        },
-        removeAllItems: function() {
-          return "Xóa tất cả các mục";
+        theme: 'bootstrap-5',
+        language: {
+          errorLoading: function() {
+            return "Không thể tải kết quả.";
+          },
+          inputTooLong: function(args) {
+            var overChars = args.input.length - args.maximum;
+            return "Vui lòng xóa bớt " + overChars + " ký tự";
+          },
+          inputTooShort: function(args) {
+            var remainingChars = args.minimum - args.input.length;
+            return "Vui lòng nhập thêm " + remainingChars + " ký tự";
+          },
+          loadingMore: function() {
+            return "Đang tải thêm kết quả…";
+          },
+          maximumSelected: function(args) {
+            return "Chỉ có thể chọn tối đa " + args.maximum + " mục";
+          },
+          noResults: function() {
+            return "Không tìm thấy kết quả";
+          },
+          searching: function() {
+            return "Đang tìm…";
+          },
+          removeAllItems: function() {
+            return "Xóa tất cả các mục";
+          }
         }
       });
     });

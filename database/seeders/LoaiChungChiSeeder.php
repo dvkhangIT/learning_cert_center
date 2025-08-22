@@ -37,7 +37,7 @@ class LoaiChungChiSeeder extends Seeder
         'ngay_cap_nhat' => now(),
       ],
       [
-        'ten_loai_cc' => 'Chứng chỉ ứng dụng CNTT căn bản',
+        'ten_loai_cc' => 'Chứng chỉ ứng dụng CNTT cơ bản',
         'cau_hinh_diem' => json_encode(['diem_trac_nghiem', 'diem_thuc_hanh']),
         'ngay_tao' => now(),
         'ngay_cap_nhat' => now(),

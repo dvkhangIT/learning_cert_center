@@ -5,6 +5,7 @@ namespace App\Http\Controllers\quan_ly;
 use App\DataTables\ChungChiDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\ChungChi;
+use App\Models\LoaiChungChi;
 use Illuminate\Http\Request;
 
 class ChungChiController extends Controller
@@ -15,14 +16,16 @@ class ChungChiController extends Controller
   }
   public function formTaoChungChi()
   {
-    return view('quan_ly.chung_chi.tao_chung_chi');
+    $loaiChungChi = LoaiChungChi::all();
+    return view('quan_ly.chung_chi.tao_chung_chi', compact('loaiChungChi'));
   }
   public function luuChungChi(Request $request)
   {
     $request->validate([
       'ten_cc' => 'required|string|min:10|max:100|unique:chung_chi,ten_cc',
-      'so_hieu' => 'required|string|size:10',
-      'so_vao_so' => 'required|string|size:7',
+      'so_hieu' => 'required|string',
+      'so_vao_so' => 'required|string',
+      'ma_loai_cc' => 'required',
       'ngay_vao_so' => 'required|date',
       'ngay_bat_dau' => 'required|date|before_or_equal:ngay_ket_thuc',
       'ngay_ket_thuc' => 'required|date|after_or_equal:ngay_bat_dau',
@@ -34,19 +37,19 @@ class ChungChiController extends Controller
       'ten_cc.unique' => 'Tên chứng chỉ đã tồn tại.',
 
       'so_hieu.required' => 'Vui lòng nhập số hiệu.',
-      'so_hieu.size' => 'Số hiệu phải đúng :size ký tự.',
       'so_hieu.string' => 'Số hiệu phải là chuỗi.',
 
       'so_vao_so.required' => 'Vui lòng nhập số vào sổ.',
-      'so_vao_so.size' => 'Số vào sổ phải đúng :size ký tự.',
       'so_vao_so.string' => 'Số vào sổ phải là chuỗi.',
+
+      'ma_loai_cc.required' => 'Vui lòng chọn loại chứng chỉ.',
 
       'ngay_vao_so.required' => 'Vui lòng chọn ngày vào sổ.',
       'ngay_vao_so.date' => 'Ngày vào sổ không đúng định dạng.',
 
       'ngay_bat_dau.required' => 'Vui lòng chọn ngày bắt đầu.',
       'ngay_bat_dau.date' => 'Ngày bắt đầu không đúng định dạng.',
-      'ngay_bat_dau.before_or_equal' => 'Ngày bắt đầu phải trước hoặc bằng ngày kết thúc.',
+      'ngay_bat_dau.before_or_equal' => 'Ngày bắt đầu phải trước hoặc bằng ngày kết thúc',
 
       'ngay_ket_thuc.required' => 'Vui lòng chọn ngày kết thúc.',
       'ngay_ket_thuc.date' => 'Ngày kết thúc không đúng định dạng.',
@@ -55,6 +58,7 @@ class ChungChiController extends Controller
     $chungChi = new ChungChi();
     $chungChi->ten_cc = $request->ten_cc;
     $chungChi->so_hieu = $request->so_hieu;
+    $chungChi->ma_loai_cc = $request->ma_loai_cc;
     $chungChi->ngay_vao_so = $request->ngay_vao_so;
     $chungChi->so_vao_so = $request->so_vao_so;
     $chungChi->ngay_bat_dau = $request->ngay_bat_dau;
@@ -67,15 +71,16 @@ class ChungChiController extends Controller
   }
   public function formSuaChungChi(string $ma_cc)
   {
-    $chungChi = ChungChi::findOrFail($ma_cc);
-    return view('quan_ly.chung_chi.sua_chung_chi', compact('chungChi'));
+    $loaiChungChi = LoaiChungChi::all();
+    $chungChi = ChungChi::with('loaiChungChi')->findOrFail($ma_cc);
+    return view('quan_ly.chung_chi.sua_chung_chi', compact('chungChi', 'loaiChungChi'));
   }
   public function suaChungChi(Request $request, string $ma_cc)
   {
     $request->validate([
       'ten_cc' => 'required|string|min:10|max:100|unique:chung_chi,ten_cc,' . $ma_cc . ',ma_cc',
-      'so_hieu' => 'required|string|size:10',
-      'so_vao_so' => 'required|string|size:7',
+      'so_hieu' => 'required|string',
+      'so_vao_so' => 'required|string',
       'ngay_vao_so' => 'required|date',
       'ngay_bat_dau' => 'required|date|before_or_equal:ngay_ket_thuc',
       'ngay_ket_thuc' => 'required|date|after_or_equal:ngay_bat_dau',
@@ -87,11 +92,9 @@ class ChungChiController extends Controller
       'ten_cc.unique' => 'Tên chứng chỉ đã tồn tại.',
 
       'so_hieu.required' => 'Vui lòng nhập số hiệu.',
-      'so_hieu.size' => 'Số hiệu phải đúng :size ký tự.',
       'so_hieu.string' => 'Số hiệu phải là chuỗi.',
 
       'so_vao_so.required' => 'Vui lòng nhập số vào sổ.',
-      'so_vao_so.size' => 'Số vào sổ phải đúng :size ký tự.',
       'so_vao_so.string' => 'Số vào sổ phải là chuỗi.',
 
       'ngay_vao_so.required' => 'Vui lòng chọn ngày vào sổ.',
