@@ -45,6 +45,13 @@ class HocVienDataTable extends DataTable
       ->addColumn('ngay_sinh', function ($query) {
         return Carbon::parse($query->ngay_sinh)->format('d/m/Y');
       })
+      ->addColumn('gioi_tinh', function ($query) {
+        if ($query->gioi_tinh == 'nam') {
+          return 'Nam';
+        } else if ($query->gioi_tinh == 'nu') {
+          return "Nữ";
+        }
+      })
       ->rawColumns(['lop', 'action', 'ngay_tao', 'ngay_cap_nhat', 'ngay_sinh'])
       ->setRowId('ma_hv');
   }

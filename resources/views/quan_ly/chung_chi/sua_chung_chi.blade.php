@@ -1,11 +1,9 @@
 @extends('layouts.master')
 @section('css')
+  <link rel="stylesheet" href="{{ asset('assets/css/flatpickr.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
   <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css">
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+    href="{{ asset('assets/css/select2-bootstrap-5-theme.min.css') }}">
 @endsection
 @section('title', $chungChi->ten_cc)
 @section('content')
@@ -70,8 +68,7 @@
                 class="form-control @error('so_vao_so')
                   is-invalid
               @enderror"
-                name="so_vao_so"
-                value="{{ old('so_vao_so', $chungChi->so_vao_so) }}">
+                name="so_vao_so" value="{{ $chungChi->so_vao_so }}">
               @error('so_vao_so')
                 <div class="invalid-feedback">
                   {{ $message }}
@@ -86,11 +83,10 @@
                 id="single-select-field" data-placeholder="Loại chứng chỉ"
                 name="ma_loai_cc">
                 @foreach ($loaiChungChi as $lcc)
-                  <option value=""></option>
                   <option
                     {{ $chungChi->ma_loai_cc == $lcc->ma_loai_cc ? 'selected' : '' }}
-                    value="{{ $chungChi->ma_loai_cc }}">
-                    {{ $chungChi->loaiChungChi->ten_loai_cc }}
+                    value="{{ $lcc->ma_loai_cc }}">
+                    {{ $lcc->ten_loai_cc }}
                   </option>
                 @endforeach
               </select>
@@ -160,23 +156,15 @@
   </script>
 @endsection
 @push('scripts')
-  <link rel="stylesheet"
-    href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
   <script
     src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js">
   </script>
 @endpush
 @section('scripts')
-  <script
-    src=" https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js">
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/vn.js"></script>
-  <script
-    src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js">
-  </script>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/vi.js">
-  </script>
+  <script src="{{ asset('assets/js/flatpickr.min.js') }}"></script>
+  <script src="{{ asset('assets/js/vn.js') }}"></script>
+  <script src="{{ asset('assets/js/select2.min.js') }}"></script>
+  <script src="{{ asset('assets/js/vi.js') }}"></script>
   <script src="{{ asset('assets/plugins/select2/js/select2-custom.js') }}">
   </script>
   <script>
@@ -213,33 +201,38 @@
     });
   </script>
   <script>
-    $.fn.select2.defaults.set('language', {
-      errorLoading: function() {
-        return "Không thể tải kết quả.";
-      },
-      inputTooLong: function(args) {
-        var overChars = args.input.length - args.maximum;
-        return "Vui lòng xóa bớt " + overChars + " ký tự";
-      },
-      inputTooShort: function(args) {
-        var remainingChars = args.minimum - args.input.length;
-        return "Vui lòng nhập thêm " + remainingChars + " ký tự";
-      },
-      loadingMore: function() {
-        return "Đang tải thêm kết quả…";
-      },
-      maximumSelected: function(args) {
-        return "Chỉ có thể chọn tối đa " + args.maximum + " mục";
-      },
-      noResults: function() {
-        return "Không tìm thấy kết quả";
-      },
-      searching: function() {
-        return "Đang tìm…";
-      },
-      removeAllItems: function() {
-        return "Xóa tất cả các mục";
-      }
+    $(document).ready(function() {
+      $('#chungChiSelect').select2({
+        theme: 'bootstrap-5',
+        language: {
+          errorLoading: function() {
+            return "Không thể tải kết quả.";
+          },
+          inputTooLong: function(args) {
+            var overChars = args.input.length - args.maximum;
+            return "Vui lòng xóa bớt " + overChars + " ký tự";
+          },
+          inputTooShort: function(args) {
+            var remainingChars = args.minimum - args.input.length;
+            return "Vui lòng nhập thêm " + remainingChars + " ký tự";
+          },
+          loadingMore: function() {
+            return "Đang tải thêm kết quả…";
+          },
+          maximumSelected: function(args) {
+            return "Chỉ có thể chọn tối đa " + args.maximum + " mục";
+          },
+          noResults: function() {
+            return "Không tìm thấy kết quả";
+          },
+          searching: function() {
+            return "Đang tìm…";
+          },
+          removeAllItems: function() {
+            return "Xóa tất cả các mục";
+          }
+        }
+      });
     });
   </script>
 @endsection

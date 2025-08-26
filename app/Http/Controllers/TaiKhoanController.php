@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\ForgotPasswordMail;
 use App\Mail\SendForgotPasswordMail;
 use App\Models\TaiKhoan;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -126,9 +124,10 @@ class TaiKhoanController extends Controller
     toastr()->success('Mật khẩu được thay đổi thành công.', ' ');
     return redirect()->route('dang-nhap');
   }
-  public function formDoiMatKhau()
+  public function thongtinTaiKhoan()
   {
-    return view('tai_khoan.doi_mat_khau');
+    $user = Auth::user();
+    return view('tai_khoan.thong_tin_tai_khoan', compact('user'));
   }
   public function luuMatKhau(Request $request)
   {
@@ -150,5 +149,27 @@ class TaiKhoanController extends Controller
     $taiKhoan->save();
     toastr()->success('Đổi mật khẩu thành công!', ' ');
     return redirect()->route('quan-ly.tong-quan');
+  }
+  public function capNhatThongtinTaiKhoan(Request $request, string $ma_tk)
+  {
+    $request->validate([
+      'ho_ten' => 'required|string|max:255',
+      'email' => 'required|email|unique:tai_khoan,email,' . $ma_tk . ',ma_tk'
+    ], [
+      'ho_ten.required' => 'Vui lòng nhập họ và tên.',
+      'ho_ten.string' => 'Họ và tên phải là chuỗi ký tự.',
+      'ho_ten.max' => 'Họ và tên không được vượt quá 255 ký tự.',
+
+      'email.required' => 'Vui lòng nhập email.',
+      'email.email' => 'Email không hợp lệ.',
+      'email.unique' => 'Email này đã được sử dụng.',
+    ]);
+    $user =  TaiKhoan::findOrFail($ma_tk);
+    $user->ho_ten = $request->ho_ten;
+    $user->email = $request->email;
+    $user->ngay_cap_nhat = now();
+    $user->save();
+    toastr()->success('Cập nhật thông tin thành công.', ' ');
+    return redirect()->back();
   }
 }

@@ -39,6 +39,13 @@ class HocVienTrongLopDataTable extends DataTable
       ->addColumn('ngay_sinh', function ($query) {
         return \Carbon\Carbon::parse($query->ngay_sinh)->format('d/m/Y');
       })
+      ->addColumn('gioi_tinh', function ($query) {
+        if ($query->gioi_tinh == 'nam') {
+          return 'Nam';
+        } else if ($query->gioi_tinh == 'nu') {
+          return "Nữ";
+        }
+      })
       ->rawColumns(['ngay_sinh', 'action'])
       ->setRowId('ma_hv');
   }

@@ -16,10 +16,10 @@
             </div>
           </a>
           <ul class="dropdown-menu dropdown-menu-end">
-            <li><a href="{{ route('form-doi-mat-khau') }}"
+            <li><a href="{{ route('thong-tin-tai-khoan') }}"
                 class="dropdown-item d-flex align-items-center">
-                <i class="fadeIn animated bx bx-key"></i><span>Đổi
-                  mật khẩu</span></a>
+                <i class="fadeIn animated bx bx-user"></i><span>Tài
+                  khoản</span></a>
             </li>
             <li><a class="dropdown-item d-flex align-items-center"
                 href="{{ route('dang-xuat') }}"><i

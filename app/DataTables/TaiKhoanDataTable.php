@@ -93,10 +93,9 @@ class TaiKhoanDataTable extends DataTable
       Column::make('ma_tk')->title('#')->addClass('text-center')->width(50),
       Column::make('ho_ten')->title('Họ tên'),
       Column::make('email')->title('Email'),
-      Column::make('vai_tro')->title('Vai trò')->addClass('text-center'),
       Column::make('trang_thai')->title('Trạng thái')->addClass('text-center')->width(150),
       Column::make('ngay_tao')->title('Ngày tạo'),
-      Column::make('ngay_cap_nhat')->title('Ngày sửa'),
+      Column::make('ngay_cap_nhat')->title('Cập nhật'),
       Column::computed('action')
         ->title('Thao tác')
         ->exportable(false)

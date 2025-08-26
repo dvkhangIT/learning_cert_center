@@ -81,6 +81,7 @@ class ChungChiController extends Controller
       'ten_cc' => 'required|string|min:10|max:100|unique:chung_chi,ten_cc,' . $ma_cc . ',ma_cc',
       'so_hieu' => 'required|string',
       'so_vao_so' => 'required|string',
+      'ma_loai_cc' => 'required',
       'ngay_vao_so' => 'required|date',
       'ngay_bat_dau' => 'required|date|before_or_equal:ngay_ket_thuc',
       'ngay_ket_thuc' => 'required|date|after_or_equal:ngay_bat_dau',
@@ -97,6 +98,8 @@ class ChungChiController extends Controller
       'so_vao_so.required' => 'Vui lòng nhập số vào sổ.',
       'so_vao_so.string' => 'Số vào sổ phải là chuỗi.',
 
+      'ma_loai_cc.required' => 'Vui lòng chọn loại chứng chỉ.',
+
       'ngay_vao_so.required' => 'Vui lòng chọn ngày vào sổ.',
       'ngay_vao_so.date' => 'Ngày vào sổ không đúng định dạng.',
 
@@ -111,6 +114,7 @@ class ChungChiController extends Controller
     $chungChi = ChungChi::findOrFail($ma_cc);
     $chungChi->ten_cc = $request->ten_cc;
     $chungChi->so_hieu = $request->so_hieu;
+    $chungChi->ma_loai_cc = $request->ma_loai_cc;
     $chungChi->ngay_vao_so = $request->ngay_vao_so;
     $chungChi->so_vao_so = $request->so_vao_so;
     $chungChi->ngay_bat_dau = $request->ngay_bat_dau;

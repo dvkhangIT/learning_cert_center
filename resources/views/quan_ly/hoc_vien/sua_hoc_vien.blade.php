@@ -1,11 +1,9 @@
 @extends('layouts.master')
 @section('css')
+  <link rel="stylesheet" href="{{ asset('assets/css/flatpickr.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
   <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css">
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+    href="{{ asset('assets/css/select2-bootstrap-5-theme.min.css') }}">
 @endsection
 @section('title', $hocVien->hoten_hv)
 @section('content')
@@ -125,13 +123,10 @@
   </div>
 @endsection
 @section('scripts')
-  <script
-    src=" https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js">
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/vn.js"></script>
-  <script
-    src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js">
-  </script>
+  <script src="{{ asset('assets/js/flatpickr.min.js') }}"></script>
+  <script src="{{ asset('assets/js/vn.js') }}"></script>
+  <script src="{{ asset('assets/js/select2.min.js') }}"></script>
+  <script src="{{ asset('assets/js/vi.js') }}"></script>
   <script src="{{ asset('assets/plugins/select2/js/select2-custom.js') }}">
   </script>
   <script>

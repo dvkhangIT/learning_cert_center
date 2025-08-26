@@ -40,7 +40,7 @@
           <div class="d-flex align-items-center">
             <div>
               <p class="mb-0 text-secondary">Số lượng lớp</p>
-              <h4 class="my-1 text-success">{{ $lop }}</h4>
+              <h4 class="my-1 text-success">{{ $countLop }}</h4>
             </div>
             <div
               class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto">
@@ -69,74 +69,83 @@
   </div><!--end row-->
 
   <div class="row">
-    @foreach ($dataCharts as $chart)
-      <div class="col-12 col-lg-6 d-flex">
-        <div class="card radius-10 w-100">
-          <div class="card-header">
-            <div class="d-flex align-items-center">
-              <div>
-                <h6 class="mb-0"> {{ $chart['ten_loai'] }} — Kết quả từ
-                  {{ $chart['start'] }} đến {{ $chart['end'] }}</h6>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <canvas id="{{ $chart['id'] }}" height="120"></canvas>
+    <div class="col-12 col-lg-12 d-flex">
+      <div class="card radius-10 w-100">
+        <div class="card-header">
+          <div class="d-flex align-items-center justify-content-center">
+            <h6 class="mb-0">Thông kê kết quả theo lớp</h6>
           </div>
         </div>
+        <div class="card-body">
+          <canvas id="ketQuaChart"></canvas>
+        </div>
       </div>
-    @endforeach
+    </div>
   </div>
 @endsection
 @section('scripts')
-  {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> --}}
   <script>
-    @foreach ($dataCharts as $chart)
-      new Chart(document.getElementById('{{ $chart['id'] }}').getContext('2d'), {
-        type: 'bar',
-        data: {
-          labels: ['Đạt', 'Không đạt'],
-          datasets: [{
-            data: [Number({{ $chart['dat'] }}), Number(
-              {{ $chart['khong_dat'] }})],
-            backgroundColor: ['#0e4582', '#F44336'],
-            borderColor: ['#0e4582', '#D32F2F'],
-            borderWidth: 1,
-            borderRadius: 6
-          }]
+    const ctx = document.getElementById('ketQuaChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: @json($labels),
+        datasets: [{
+            label: 'Đạt',
+            data: @json($datDat),
+            backgroundColor: '#0e4582'
+          },
+          {
+            label: 'Không đạt',
+            data: @json($datKhongDat),
+            backgroundColor: 'rgba(255, 99, 132, 0.7)'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: {
+          duration: 1500, // thời gian chạy animation
+          easing: 'easeOutBounce', // hiệu ứng bật
         },
-        options: {
-          indexAxis: 'y',
-          responsive: true,
-          plugins: {
-            legend: {
-              display: false
-            },
-            tooltip: {
-              callbacks: {
-                label: function(context) {
-                  let total = context.dataset.data.reduce((a, b) => Number(
-                    a) + Number(b), 0);
-                  let value = Number(context.parsed.x); // giá trị của thanh
-                  let percentage = total > 0 ? ((value / total) * 100)
-                    .toFixed(1) + '%' : '0%';
-                  let label = context.chart.data.labels[context
-                    .dataIndex]; // Lấy đúng nhãn
-                  return label + ': ' + value + ' (' + percentage + ')';
-                }
+        transitions: {
+          show: {
+            animations: {
+              x: {
+                from: 0
+              },
+              y: {
+                from: 0
               }
             }
           },
-          scales: {
-            x: {
-              beginAtZero: true,
-              ticks: {
-                stepSize: 1
+          hide: {
+            animations: {
+              x: {
+                to: 0
+              },
+              y: {
+                to: 0
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            stacked: false
+          },
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1,
+              callback: function(value) {
+                return Number.isInteger(value) ? value : null;
               }
             }
           }
         }
-      });
-    @endforeach
+      }
+    });
   </script>
 @endsection
