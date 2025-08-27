@@ -17,6 +17,7 @@ class KetQua extends Model
   const CREATED_AT = 'ngay_tao';
   const UPDATED_AT = 'ngay_cap_nhat';
   protected $fillable = [
+    'ma_cc','ma_hv',
     'diem_nghe',
     'diem_noi',
     'diem_doc',

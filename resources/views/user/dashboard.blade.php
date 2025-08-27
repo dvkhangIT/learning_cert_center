@@ -1,71 +1,141 @@
-<!doctype html>
-<html lang="en">
-
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>User - Dashboard</title>
-    <link rel="stylesheet"
-      href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-  </head>
-
-  <body class="bg-light">
-    <nav
-      class="navbar navbar-expand-md bg-white shadow-lg bsb-navbar bsb-navbar-hover bsb-navbar-caret">
-      <div class="container">
-        <a class="navbar-brand" href="#">
-          <strong>Laravel 10 Multi Auth</strong>
-        </a>
-        <button class="navbar-toggler border-0" type="button"
-          data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-          aria-controls="offcanvasNavbar">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-            fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-            <path fill-rule="evenodd"
-              d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-          </svg>
-        </button>
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
-          aria-labelledby="offcanvasNavbarLabel">
-          <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-              aria-label="Close"></button>
-          </div>
-          <div class="offcanvas-body">
-            <ul class="navbar-nav justify-content-end flex-grow-1">
-
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#!"
-                  id="accountDropdown" role="button" data-bs-toggle="dropdown"
-                  aria-expanded="false">Hello, {{ Auth::user()->name }}</a>
-                <ul class="dropdown-menu border-0 shadow bsb-zoomIn"
-                  aria-labelledby="accountDropdown">
-                  <li>
-                    <a class="dropdown-item"
-                      href="{{ route('dang-xuat') }}">Logout</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </nav>
-    <div class="container">
-      <div class="card border-0 shadow my-5">
-        <div class="card-header bg-light">
-          <h3 class="h5 pt-2">Dashboard User</h3>
-        </div>
+@extends('layouts.master')
+@section('content')
+  <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
+    <div class="col">
+      <div class="card radius-10 border-start border-0 border-4 border-info">
         <div class="card-body">
-          You are logged in !!
+          <div class="d-flex align-items-center">
+            <div>
+              <p class="mb-0 text-secondary">Số lượng học viên</p>
+              <h4 class="my-1 text-info">{{ $hocVien }}</h4>
+            </div>
+            <div
+              class="widgets-icons-2 rounded-circle bg-gradient-blues text-white ms-auto">
+              <i class="fadeIn animated bx bx-group"></i>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-      crossorigin="anonymous"></script>
-  </body>
+    <div class="col">
+      <div class="card radius-10 border-start border-0 border-4 border-danger">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div>
+              <p class="mb-0 text-secondary">Số lượng khóa học</p>
+              <h4 class="my-1 text-danger">{{ $khoaHoc }}</h4>
+            </div>
+            <div
+              class="widgets-icons-2 rounded-circle bg-gradient-burning text-white ms-auto">
+              <i class="fadeIn animated bx bx-book"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card radius-10 border-start border-0 border-4 border-success">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div>
+              <p class="mb-0 text-secondary">Số lượng lớp</p>
+              <h4 class="my-1 text-success">{{ $lop }}</h4>
+            </div>
+            <div
+              class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto">
+              <i class="bx bx-category"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card radius-10 border-start border-0 border-4 border-warning">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div>
+              <p class="mb-0 text-secondary">Số lượng chứng chỉ</p>
+              <h4 class="my-1 text-warning">{{ $chungChi }}</h4>
+            </div>
+            <div
+              class="widgets-icons-2 rounded-circle bg-gradient-orange text-white ms-auto">
+              <i class="fadeIn animated bx bx-award"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!--end row-->
 
-</html>
+  <div class="row">
+    @foreach ($dataCharts as $chart)
+      <div class="col-12 col-lg-6 d-flex">
+        <div class="card radius-10 w-100">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <div>
+                <h6 class="mb-0"> {{ $chart['ten_loai'] }} — Kết quả từ
+                  {{ $chart['start'] }} đến {{ $chart['end'] }}</h6>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <canvas id="{{ $chart['id'] }}" height="120"></canvas>
+          </div>
+        </div>
+      </div>
+    @endforeach
+  </div>
+@endsection
+@section('scripts')
+  {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> --}}
+  <script>
+    @foreach ($dataCharts as $chart)
+      new Chart(document.getElementById('{{ $chart['id'] }}').getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: ['Đạt', 'Không đạt'],
+          datasets: [{
+            data: [Number({{ $chart['dat'] }}), Number(
+              {{ $chart['khong_dat'] }})],
+            backgroundColor: ['#4CAF50', '#F44336'],
+            borderColor: ['#388E3C', '#D32F2F'],
+            borderWidth: 1,
+            borderRadius: 6
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  let total = context.dataset.data.reduce((a, b) => Number(
+                    a) + Number(b), 0);
+                  let value = Number(context.parsed.x); // giá trị của thanh
+                  let percentage = total > 0 ? ((value / total) * 100)
+                    .toFixed(1) + '%' : '0%';
+                  let label = context.chart.data.labels[context
+                    .dataIndex]; // Lấy đúng nhãn
+                  return label + ': ' + value + ' (' + percentage + ')';
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              ticks: {
+                stepSize: 1
+              }
+            }
+          }
+        }
+      });
+    @endforeach
+  </script>
+@endsection

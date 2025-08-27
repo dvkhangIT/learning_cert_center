@@ -12,6 +12,8 @@ use App\Http\Controllers\quan_ly\LopController;
 use App\Http\Controllers\quan_ly\NguoiDungController;
 use App\Http\Controllers\quan_ly\ThongKeController;
 use App\Http\Controllers\user\DashboardController;
+use App\Http\Controllers\nhan_vien\KetQuaController as NhanVienKetQuaController;
+use App\Http\Controllers\nhan_vien\ChungChiController as NhanVienChungChiController;
 use App\Http\Controllers\TaiKhoanController;
 use Illuminate\Support\Facades\Route;
 
@@ -109,4 +111,37 @@ Route::group(['prefix' => 'quan-ly', 'middleware' => 'checkRole'], function () {
     ->name('quan-ly.ket-qua.ket-qua-da-xoa');
   Route::patch('/quan-ly/khoi-phuc-ket-qua/{ma_kq}', [KetQuaController::class, 'khoiPhucKetQua'])
     ->name('quan-ly.ket-qua.khoi-phuc-ket-qua');
+});
+
+// Staff routes (nhân viên)
+Route::group(['prefix' => 'nhan-vien', 'middleware' => 'checkStaff'], function () {
+  // Tổng quan nhân viên có thể dùng dashboard chung hoặc trang riêng nếu có
+  Route::get('thong-ke', [DashboardController::class, 'index'])->name('nhan-vien.tong-quan');
+
+  // Tra cứu chứng chỉ (nhân viên)
+  Route::get('chung-chi/tra-cuu', [NhanVienChungChiController::class, 'traCuu'])->name('nhan-vien.chung-chi.tra-cuu');
+  Route::patch('chung-chi/{ma_cc}/cap-nhat-trang-thai', [NhanVienChungChiController::class, 'capNhatTrangThai'])->name('nhan-vien.chung-chi.cap-nhat-trang-thai');
+  Route::get('chung-chi/{ma_cc}/in', [NhanVienChungChiController::class, 'inChungChi'])->name('nhan-vien.chung-chi.in');
+  
+  // In chứng chỉ (nhân viên)
+  Route::get('chung-chi/in/danh-sach', [NhanVienChungChiController::class, 'danhSachInChungChi'])->name('nhan-vien.chung-chi.in-danh-sach');
+
+  // Kết quả - Tiếng Anh CTUT (nhân viên chỉ cập nhật Đạt/Không đạt)
+  Route::get('ket-qua/tieng-anh-ctut', [NhanVienKetQuaController::class, 'danhSachTiengAnhCtut'])
+    ->name('nhan-vien.ket-qua.tieng-anh-ctut');
+  Route::get('ket-qua/tieng-anh-bac-3', [\App\Http\Controllers\nhan_vien\KetQuaController::class, 'danhSachTiengAnhBac3'])
+    ->name('nhan-vien.ket-qua.tieng-anh-bac-3');
+  Route::get('ket-qua/tieng-nhat-n4', [\App\Http\Controllers\nhan_vien\KetQuaController::class, 'danhSachTiengNhatN4'])
+    ->name('nhan-vien.ket-qua.tieng-nhat-n4');
+  Route::get('ket-qua/cntt-can-ban', [\App\Http\Controllers\nhan_vien\KetQuaController::class, 'danhSachCnttCanBan'])
+    ->name('nhan-vien.ket-qua.cntt-co-ban');
+  Route::patch('ket-qua/{ma_kq}/cap-nhat-trang-thai', [NhanVienKetQuaController::class, 'capNhatTrangThai'])
+    ->name('nhan-vien.ket-qua.cap-nhat-trang-thai');
+  Route::delete('ket-qua/{ma_kq}', [NhanVienKetQuaController::class, 'xoaKetQua'])
+    ->name('nhan-vien.ket-qua.xoa-ket-qua');
+  // Nhập điểm (sửa kết quả) cho nhân viên
+  Route::get('sua-ket-qua/{ma_kq}', [NhanVienKetQuaController::class, 'formSuaKetQua'])
+    ->name('nhan-vien.ket-qua.form-sua-ket-qua');
+  Route::put('sua-ket-qua/{ma_kq}', [NhanVienKetQuaController::class, 'suaKetQua'])
+    ->name('nhan-vien.ket-qua.sua-ket-qua');
 });
