@@ -1,4 +1,5 @@
 @extends('tai_khoan.master')
+@section('title', 'Đăng nhập hệ thống')
 @section('content')
   <div class="wrapper">
     <div

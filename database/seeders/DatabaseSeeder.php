@@ -24,7 +24,6 @@ class DatabaseSeeder extends Seeder
       KhoaHocSeeder::class,
       LopSeeder::class,
       HocVienLopSeeder::class,
-      LoaiChungChiSeeder::class,
       ChungChiSeeder::class,
       KetQuaSeeder::class,
     ]);
