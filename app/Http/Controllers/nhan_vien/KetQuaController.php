@@ -186,7 +186,7 @@ class KetQuaController extends Controller
   {
     $requiredScoreKeys = $ketQua->chungChi?->loaiChungChi?->cau_hinh_diem ?? [];
     foreach ($requiredScoreKeys as $scoreKey) {
-      if (!is_null($ketQua->{$scoreKey}) && $ketQua->{$scoreKey} > 0) {
+      if (!is_null($ketQua->{$scoreKey})) {
         return true;
       }
     }
