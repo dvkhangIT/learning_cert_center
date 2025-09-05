@@ -13,14 +13,29 @@
   </div>
   <div class="card">
     <div class="card-body">
-      <form action="{{ url('nhan-vien/chung-chi/tra-cuu') }}" method="get" class="row g-3 align-items-end">
+      @if ($errors->any())
+        <div class="alert alert-danger">
+          <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
+      
+      <form action="{{ route('nhan-vien.chung-chi.tra-cuu.post') }}" method="post" class="row g-3 align-items-end">
+        @csrf
         <div class="col-md-3">
           <label class="form-label">Số hiệu chứng chỉ</label>
-          <input type="text" name="so_hieu" class="form-control" value="{{ request('so_hieu') }}">
+          <input type="text" name="so_hieu" class="form-control @error('so_hieu') is-invalid @enderror" 
+                 value="{{ old('so_hieu', request('so_hieu')) }}" 
+                 placeholder="SH-001">
         </div>
         <div class="col-md-3">
           <label class="form-label">Số vào sổ</label>
-          <input type="text" name="so_vao_so" class="form-control" value="{{ request('so_vao_so') }}">
+          <input type="text" name="so_vao_so" class="form-control @error('so_vao_so') is-invalid @enderror" 
+                 value="{{ old('so_vao_so', request('so_vao_so')) }}" 
+                 placeholder="CC-001">
         </div>
         <div class="col-md-3">
           <button class="btn btn-primary">Tìm kiếm</button>

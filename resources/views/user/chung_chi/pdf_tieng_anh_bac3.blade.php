@@ -34,7 +34,6 @@
     }
     .motto {
       font-size: 14px;
-      font-style: italic;
       margin-bottom: 15px;
     }
     .certificate-title {
@@ -115,11 +114,13 @@
     .result-row {
       margin-bottom: 8px;
       font-size: 16px;
+      display: flex;
+      align-items: baseline;
     }
     .result-label {
       font-weight: bold;
-      display: inline-block;
-      width: 150px;
+      min-width: 150px;
+      flex-shrink: 0;
     }
     .footer {
       position: absolute;
@@ -198,11 +199,11 @@
         <div class="results-title">Kết quả:</div>
         <div class="result-row">
           <span class="result-label">Điểm Nghe:</span>
-          <span>{{ $chungChi->ketQua->diem_nghe ?? 'N/A' }}</span>
+          <span style="margin-left: 10px;">{{ $chungChi->ketQua->diem_nghe ?? 'N/A' }}</span>
         </div>
         <div class="result-row">
           <span class="result-label">Điểm Đọc:</span>
-          <span>{{ $chungChi->ketQua->diem_doc ?? 'N/A' }}</span>
+          <span style="margin-left: 10px;">{{ $chungChi->ketQua->diem_doc ?? 'N/A' }}</span>
         </div>
         <div class="result-row">
           <span class="result-label">Điểm Viết:</span>

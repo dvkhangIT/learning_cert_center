@@ -119,7 +119,8 @@ Route::group(['prefix' => 'nhan-vien', 'middleware' => 'checkStaff'], function (
   Route::get('thong-ke', [DashboardController::class, 'index'])->name('nhan-vien.tong-quan');
 
   // Tra cứu chứng chỉ (nhân viên)
-  Route::get('chung-chi/tra-cuu', [NhanVienChungChiController::class, 'traCuu'])->name('nhan-vien.chung-chi.tra-cuu');
+  Route::get('chung-chi/tra-cuu', [NhanVienChungChiController::class, 'traCuuForm'])->name('nhan-vien.chung-chi.tra-cuu');
+  Route::post('chung-chi/tra-cuu', [NhanVienChungChiController::class, 'traCuu'])->name('nhan-vien.chung-chi.tra-cuu.post');
   Route::patch('chung-chi/{ma_cc}/cap-nhat-trang-thai', [NhanVienChungChiController::class, 'capNhatTrangThai'])->name('nhan-vien.chung-chi.cap-nhat-trang-thai');
   Route::get('chung-chi/{ma_cc}/in', [NhanVienChungChiController::class, 'inChungChi'])->name('nhan-vien.chung-chi.in');
   

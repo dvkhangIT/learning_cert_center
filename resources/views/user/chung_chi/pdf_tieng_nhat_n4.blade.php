@@ -34,7 +34,6 @@
     }
     .motto {
       font-size: 14px;
-      font-style: italic;
       margin-bottom: 15px;
     }
     .certificate-title {
@@ -110,11 +109,13 @@
     .result-row {
       margin-bottom: 8px;
       font-size: 16px;
+      display: flex;
+      align-items: baseline;
     }
     .result-label {
       font-weight: bold;
-      display: inline-block;
-      width: 220px;
+      min-width: 220px;
+      flex-shrink: 0;
     }
     .footer {
       position: absolute;
@@ -144,6 +145,7 @@
     }
     .serial-number {
       font-weight: bold;
+      color: #e74c3c;
     }
   </style>
 </head>
@@ -170,6 +172,8 @@
         <div class="info-row">
           <span class="info-label">Sinh ngày:</span>
           <span class="info-value">{{ $chungChi->hocVien->ngay_sinh ? \Carbon\Carbon::parse($chungChi->hocVien->ngay_sinh)->format('d/m/Y') : 'N/A' }}</span>
+          <span class="info-label">Nơi sinh:</span>
+          <span class="info-value">{{ $chungChi->hocVien->noi_sinh ?? 'N/A' }}</span>
         </div>
       </div>
 
@@ -185,22 +189,22 @@
         <div class="results-title">Kết quả:</div>
         <div class="result-row">
           <span class="result-label">Điểm Ngữ pháp – Đọc:</span>
-          <span>{{ $chungChi->ketQua->diem_ngu_phap_doc ?? 'N/A' }}</span>
+          <span style="margin-left: 10px;">{{ $chungChi->ketQua->diem_ngu_phap_doc ?? 'N/A' }}</span>
         </div>
         <div class="result-row">
           <span class="result-label">Điểm Từ vựng – Hán tự:</span>
-          <span>{{ $chungChi->ketQua->diem_tu_vung ?? 'N/A' }}</span>
+          <span style="margin-left: 10px;">{{ $chungChi->ketQua->diem_tu_vung ?? 'N/A' }}</span>
         </div>
         <div class="result-row">
           <span class="result-label">Điểm Nghe:</span>
-          <span>{{ $chungChi->ketQua->diem_nghe ?? 'N/A' }}</span>
+          <span style="margin-left: 10px;">{{ $chungChi->ketQua->diem_nghe ?? 'N/A' }}</span>
         </div>
       </div>
     </div>
 
     <div class="footer">
       <div class="certificate-number">
-        <div>Số hiệu: {{ $chungChi->so_hieu ?? 'N/A' }}</div>
+        <div class="serial-number">Số hiệu: {{ $chungChi->so_hieu ?? 'N/A' }}</div>
         <div>Số vào sổ cấp chứng nhận: {{ $chungChi->so_vao_so ?? 'N/A' }}</div>
       </div>
       <div class="signature-section">
