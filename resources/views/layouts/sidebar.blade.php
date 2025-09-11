@@ -84,13 +84,26 @@
            </li>
          </ul>
        </li>
-       <li class="{{ setActive(['quan-ly.chung-chi.*']) }}">
+       <li
+         class="{{ setActive(['quan-ly.chung-chi.*', 'quan-ly.loai-chung-chi.*']) }}">
          <a href="javascript:;" class="has-arrow">
            <div class="parent-icon"><i class="fadeIn animated bx bx-award"></i>
            </div>
            <div class="menu-title">Quản lý chứng chỉ</div>
          </a>
          <ul>
+           <li
+             class="{{ setActive(['quan-ly.loai-chung-chi.danh-sach-loai-chung-chi']) }}">
+             <a
+               href="{{ route('quan-ly.loai-chung-chi.danh-sach-loai-chung-chi') }}"><i
+                 class='bx bx-radio-circle'></i>Loại chứng chỉ</a>
+           </li>
+           <li
+             class="{{ setActive(['quan-ly.loai-chung-chi.form-tao-loai-chung-chi']) }}">
+             <a
+               href="{{ route('quan-ly.loai-chung-chi.form-tao-loai-chung-chi') }}"><i
+                 class='bx bx-radio-circle'></i>Tạo loại chứng chỉ</a>
+           </li>
            <li
              class="{{ setActive(['quan-ly.chung-chi.danh-sach-chung-chi']) }}">
              <a href="{{ route('quan-ly.chung-chi.danh-sach-chung-chi') }}"><i

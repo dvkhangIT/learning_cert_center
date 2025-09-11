@@ -15,14 +15,15 @@
           <li class="breadcrumb-item"><a href="javascript:;"><i
                 class="bx bx-home-alt"></i></a>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">Tạo chứng chỉ
+          <li class="breadcrumb-item active" aria-current="page">Tạo loaij chứng
+            chỉ
           </li>
         </ol>
       </nav>
     </div>
     <div class="ms-auto">
       <a class="btn btn-custom-color"
-        href="{{ route('quan-ly.chung-chi.danh-sach-chung-chi') }}">
+        href="{{ route('quan-ly.loai-chung-chi.danh-sach-loai-chung-chi') }}">
         <i class="fa-solid fa-arrow-left"></i>
       </a>
     </div>
@@ -31,96 +32,85 @@
     <div class="col-xl-8 mx-auto">
       <div class="card">
         <div class="card-body p-4">
-          <form action="{{ route('quan-ly.chung-chi.luu-chung-chi') }}"
+          <form
+            action="{{ route('quan-ly.loai-chung-chi.sua-loai-chung-chi', $loaiChungChi->ma_loai_cc) }}"
             class="row g-3 needs-validation" method="POST">
             @csrf
-            <div class="col-md-12 mb-2">
-              <label class="form-label">Loại chứng chỉ</label>
-              <select id="chungChiSelect"
-                class="form-select mb-3 @error('ma_loai_cc')
-                  is-invalid @enderror"
-                id="single-select-field" data-placeholder="Loại chứng chỉ"
-                name="ma_loai_cc">
-                @foreach ($loaiChungChi as $lcc)
-                  <option value=""></option>
-                  <option
-                    {{ old('ma_loai_cc') == $lcc->ma_loai_cc ? 'selected' : '' }}
-                    value="{{ $lcc->ma_loai_cc }}">{{ $lcc->ten_loai_cc }}
-                  </option>
-                @endforeach
-              </select>
-              @error('ma_loai_cc')
-                <div class="invalid-feedback d-block">{{ $message }}</div>
-              @enderror
-            </div>
-            <div class="col-md-6">
-              <label for="so_hieu" class="form-label">Số hiệu</label>
-              <input type="text" id="so_hieu"
-                class="form-control @error('so_hieu')
-                  is-invalid
-              @enderror"
-                name="so_hieu" value="{{ old('so_hieu') }}">
-              @error('so_hieu')
-                <div class="invalid-feedback">
-                  {{ $message }}
-                </div>
-              @enderror
-            </div>
-            <div class="col-md-6">
-              <label for="so_vao_so" class="form-label">Số vào sổ</label>
-              <input type="text" id="so_vao_so"
-                class="form-control @error('so_vao_so')
-                  is-invalid
-              @enderror"
-                name="so_vao_so" value="{{ old('so_vao_so') }}">
-              @error('so_vao_so')
-                <div class="invalid-feedback">
-                  {{ $message }}
-                </div>
-              @enderror
-            </div>
+            @method('PUT')
             <div class="col-md-12">
-              <label class="form-label">Ngày vào sổ</label>
-              <input type="text"
-                class="datepicker form-control @error('ngay_vao_so')
+              <label for="ten_loai_cc" class="form-label">Tên chứng chỉ</label>
+              <input type="text" id="ten_loai_cc"
+                class="form-control @error('ten_loai_cc')
                   is-invalid
               @enderror"
-                name="ngay_vao_so" id="ngay_vao_so" placeholder="Chọn ngày"
-                value="{{ old('ngay_vao_so') }}">
-              @error('ngay_vao_so')
+                name="ten_loai_cc"
+                value="{{ old('ten_loai_cc', $loaiChungChi->ten_loai_cc) }}">
+              @error('ten_loai_cc')
                 <div class="invalid-feedback">
                   {{ $message }}
                 </div>
               @enderror
+            </div>
+            <label class="">Cấu hình điểm</label>
+            <div class="col-md-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox"
+                  name="cau_hinh_diem[]" value="diem_nghe" id="diem_nghe"
+                  {{ in_array('diem_nghe', $loaiChungChi->cau_hinh_diem ?? []) ? 'checked' : '' }}>
+                <label for="diem_nghe">Nghe</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox"
+                  name="cau_hinh_diem[]" value="diem_noi" id="diem_noi"
+                  {{ in_array('diem_noi', $loaiChungChi->cau_hinh_diem ?? []) ? 'checked' : '' }}>
+                <label for="diem_noi">Nói</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox"
+                  name="cau_hinh_diem[]" value="diem_doc" id="diem_doc"
+                  {{ in_array('diem_doc', $loaiChungChi->cau_hinh_diem ?? []) ? 'checked' : '' }}>
+                <label for="diem_doc">Đọc</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox"
+                  name="cau_hinh_diem[]" value="diem_viet" id="diem_viet"
+                  {{ in_array('diem_viet', $loaiChungChi->cau_hinh_diem ?? []) ? 'checked' : '' }}>
+                <label for="diem_viet">Viết</label>
+              </div>
             </div>
             <div class="col-md-6">
-              <label class="form-label">Ngày bắt đầu</label>
-              <input type="text"
-                class="datepicker form-control @error('ngay_bat_dau')
-                  is-invalid
-              @enderror"
-                name="ngay_bat_dau" id="ngay_bat_dau" placeholder="Chọn ngày"
-                value="{{ old('ngay_bat_dau') }}">
-              @error('ngay_bat_dau')
-                <div class="invalid-feedback">
-                  {{ $message }}
-                </div>
-              @enderror
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox"
+                  name="cau_hinh_diem[]" value="diem_tu_vung" id="diem_tu_vung"
+                  {{ in_array('diem_tu_vung', $loaiChungChi->cau_hinh_diem ?? []) ? 'checked' : '' }}>
+                <label for="diem_tu_vung">Từ vựng</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox"
+                  name="cau_hinh_diem[]" value="diem_ngu_phap_doc"
+                  id="diem_ngu_phap_doc"
+                  {{ in_array('diem_ngu_phap_doc', $loaiChungChi->cau_hinh_diem ?? []) ? 'checked' : '' }}>
+                <label for="diem_ngu_phap_doc">Ngữ pháp (đọc)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox"
+                  name="cau_hinh_diem[]" value="diem_trac_nghiem"
+                  id="diem_trac_nghiem"
+                  {{ in_array('diem_trac_nghiem', $loaiChungChi->cau_hinh_diem ?? []) ? 'checked' : '' }}>
+                <label for="diem_trac_nghiem">Trắc nghiệm</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox"
+                  name="cau_hinh_diem[]" value="diem_thuc_hanh"
+                  id="diem_thuc_hanh"
+                  {{ in_array('diem_thuc_hanh', $loaiChungChi->cau_hinh_diem ?? []) ? 'checked' : '' }}>
+                <label for="diem_thuc_hanh">Thực hành</label>
+              </div>
             </div>
-            <div class="col-md-6">
-              <label class="form-label">Ngày kết thúc</label>
-              <input type="text"
-                class="datepicker form-control @error('ngay_ket_thuc')
-                  is-invalid
-              @enderror"
-                name="ngay_ket_thuc" id="ngay_ket_thuc" placeholder="Chọn ngày"
-                value="{{ old('ngay_ket_thuc') }}">
-              @error('ngay_ket_thuc')
-                <div class="invalid-feedback">
-                  {{ $message }}
-                </div>
-              @enderror
-            </div>
+            @error('cau_hinh_diem')
+              <div class="text-danger">{{ $message }}</div>
+            @enderror
+
             <div class="col-md-12">
               <div class="d-md-flex d-grid align-items-center gap-3">
                 <button id="submit-btn" type="submit"

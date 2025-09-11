@@ -10,14 +10,16 @@ class LoaiChungChi extends Model
   use HasFactory;
   protected $table = 'loai_chung_chi';
   protected $primaryKey = 'ma_loai_cc';
-  public $timestamps = false;
+  public $timestamps = true;
+  const CREATED_AT = 'ngay_tao';
+  const UPDATED_AT = 'ngay_cap_nhat';
   protected $casts = [
     'cau_hinh_diem' => 'array',
   ];
-  public function loaiChungChi()
-  {
-    return $this->belongsTo(LoaiChungChi::class, 'ma_loai_cc');
-  }
+  // public function loaiChungChi()
+  // {
+  //   return $this->belongsTo(LoaiChungChi::class, 'ma_loai_cc');
+  // }
   public function getRouteNameAttribute(): ?string
   {
     switch ($this->ten_loai_cc) {

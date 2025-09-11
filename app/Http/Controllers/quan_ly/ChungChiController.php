@@ -22,7 +22,6 @@ class ChungChiController extends Controller
   public function luuChungChi(Request $request)
   {
     $request->validate([
-      'ten_cc' => 'required|string|min:10|max:100|unique:chung_chi,ten_cc',
       'so_hieu' => 'required|string',
       'so_vao_so' => 'required|string',
       'ma_loai_cc' => 'required',
@@ -30,12 +29,6 @@ class ChungChiController extends Controller
       'ngay_bat_dau' => 'required|date|before_or_equal:ngay_ket_thuc',
       'ngay_ket_thuc' => 'required|date|after_or_equal:ngay_bat_dau',
     ], [
-      'ten_cc.required' => 'Vui lòng nhập tên chứng chỉ.',
-      'ten_cc.string' => 'Tên chứng chỉ phải là chuỗi.',
-      'ten_cc.min' => 'Tên chứng chỉ phải có ít nhất :min ký tự.',
-      'ten_cc.max' => 'Tên chứng chỉ không được vượt quá :max ký tự.',
-      'ten_cc.unique' => 'Tên chứng chỉ đã tồn tại.',
-
       'so_hieu.required' => 'Vui lòng nhập số hiệu.',
       'so_hieu.string' => 'Số hiệu phải là chuỗi.',
 
@@ -56,7 +49,6 @@ class ChungChiController extends Controller
       'ngay_ket_thuc.after_or_equal' => 'Ngày kết thúc phải sau hoặc bằng ngày bắt đầu.',
     ]);
     $chungChi = new ChungChi();
-    $chungChi->ten_cc = $request->ten_cc;
     $chungChi->so_hieu = $request->so_hieu;
     $chungChi->ma_loai_cc = $request->ma_loai_cc;
     $chungChi->ngay_vao_so = $request->ngay_vao_so;

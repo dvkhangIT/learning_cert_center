@@ -1,13 +1,10 @@
 <?php
 
-use App\Http\Controllers\admin\AccountController;
-use App\Http\Controllers\admin\ClassController;
-use App\Http\Controllers\admin\CourseController;
-use App\Http\Controllers\admin\StudentController;
 use App\Http\Controllers\quan_ly\ChungChiController;
 use App\Http\Controllers\quan_ly\HocVienController;
 use App\Http\Controllers\quan_ly\KetQuaController;
 use App\Http\Controllers\quan_ly\KhoaHocController;
+use App\Http\Controllers\quan_ly\LoaiChungChiController;
 use App\Http\Controllers\quan_ly\LopController;
 use App\Http\Controllers\quan_ly\NguoiDungController;
 use App\Http\Controllers\quan_ly\ThongKeController;
@@ -88,6 +85,14 @@ Route::group(['prefix' => 'quan-ly', 'middleware' => 'checkRole'], function () {
   Route::get('sua-hoc-vien/{ma_hv}', [HocVienController::class, 'formSuaHocVien'])->name('quan-ly.hoc-vien.form-sua-hoc-vien');
   Route::put('sua-hoc-vien/{ma_hv}', [HocVienController::class, 'suaHocVien'])->name('quan-ly.hoc-vien.sua-hoc-vien');
   Route::delete('xoa-hoc-vien/{ma_hv}', [HocVienController::class, 'xoaHocVien'])->name('quan-ly.hoc-vien.xoa-hoc-vien');
+
+  // Loại chứng chỉ
+  Route::get('danh-sach-loai-chung-chi', [LoaiChungChiController::class, 'danhSachLoaiChungChi'])->name('quan-ly.loai-chung-chi.danh-sach-loai-chung-chi');
+  Route::get('tao-loai-chung-chi', [LoaiChungChiController::class, 'formTaoLoaiChungChi'])->name('quan-ly.loai-chung-chi.form-tao-loai-chung-chi');
+  Route::post('luu-loai-chung-chi', [LoaiChungChiController::class, 'luuLoaiChungChi'])->name('quan-ly.loai-chung-chi.luu-loai-chung-chi');
+  Route::get('sua-loai-chung-chi/{ma_loai_cc}', [LoaiChungChiController::class, 'formSuaLoaiChungChi'])->name('quan-ly.loai-chung-chi.form-sua-loai-chung-chi');
+  Route::put('sua-loai-chung-chi/{ma_loai_cc}', [LoaiChungChiController::class, 'suaLoaiChungChi'])->name('quan-ly.loai-chung-chi.sua-loai-chung-chi');
+  Route::delete('xoa-loai-chung-chi/{ma_loai_cc}', [LoaiChungChiController::class, 'xoaLoaiChungChi'])->name('quan-ly.loai-chung-chi.xoa-loai-chung-chi');
 
   // Chứng chỉ
   Route::get('danh-sach-chung-chi', [ChungChiController::class, 'danhSachChungChi'])->name('quan-ly.chung-chi.danh-sach-chung-chi');
