@@ -8,6 +8,7 @@ use App\DataTables\Staff\TiengNhatN4DataTable;
 use App\DataTables\Staff\CnttCoBanDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\KetQua;
+use App\Models\ChungChi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -63,14 +64,37 @@ class KetQuaController extends Controller
     return response()->json(['status' => 'success', 'message' => 'Xóa thành công!']);
   }
 
-  public function formSuaKetQua(string $ma_kq)
+  public function formTaoKetQua(string $ma_cc)
   {
-    $ketQua = KetQua::with('chungChi.loaiChungChi')->findOrFail($ma_kq);
-    if ($this->hasAnyScore($ketQua)) {
+    $chungChi = ChungChi::with('loaiChungChi', 'hocVien')->findOrFail($ma_cc);
+    
+    // Tạo kết quả mới nếu chưa có
+    $ketQua = KetQua::firstOrCreate(
+      ['ma_cc' => $ma_cc],
+      [
+        'ma_hv' => $chungChi->ma_hv,
+        'trang_thai' => 'Chưa xét',
+        'ngay_tao' => now(),
+        'ngay_cap_nhat' => now(),
+      ]
+    );
+    
+    return $this->formSuaKetQua($ketQua->ma_kq);
+  }
+
+  public function formSuaKetQua(string $ma_cc)
+  {
+    $chungChi = ChungChi::with('loaiChungChi', 'hocVien')->findOrFail($ma_cc);
+    
+    // Tìm kết quả hiện tại hoặc tạo mới
+    $ketQua = KetQua::where('ma_cc', $ma_cc)->first();
+    
+    if ($ketQua && $this->hasAnyScore($ketQua)) {
       toastr()->error('Nhân viên chỉ được nhập điểm 1 lần!', ' ');
-      return redirect()->route($this->getStaffRouteByLoai($ketQua->chungChi?->loaiChungChi?->ten_loai_cc));
+      return redirect()->route($this->getStaffRouteByLoai($chungChi->loaiChungChi?->ten_loai_cc));
     }
-    $cacMaDiemCanThiet = $ketQua->chungChi->loaiChungChi->cau_hinh_diem ?? [];
+    
+    $cacMaDiemCanThiet = $chungChi->loaiChungChi->cau_hinh_diem ?? [];
     $danhSachTenDiem = [
       'diem_nghe' => 'Điểm nghe',
       'diem_doc' => 'Điểm đọc',
@@ -87,19 +111,32 @@ class KetQuaController extends Controller
         $cacLoaiDiem[$maDiem] = $danhSachTenDiem[$maDiem];
       }
     }
+    
+    // Tạo object ketQua giả để truyền vào view
+    if (!$ketQua) {
+      $ketQua = new KetQua();
+      $ketQua->ma_cc = $ma_cc;
+      $ketQua->ma_hv = $chungChi->ma_hv;
+      $ketQua->chungChi = $chungChi;
+    }
+    
     return view('nhan_vien.ket_qua.sua_ket_qua', compact('ketQua', 'cacLoaiDiem'));
   }
 
-  public function suaKetQua(Request $request, string $ma_kq)
+  public function suaKetQua(Request $request, string $ma_cc)
   {
-    $ketQua = KetQua::with('chungChi.loaiChungChi')->findOrFail($ma_kq);
-    if ($this->hasAnyScore($ketQua)) {
+    $chungChi = ChungChi::with('loaiChungChi', 'hocVien')->findOrFail($ma_cc);
+    
+    // Tìm kết quả hiện tại hoặc tạo mới
+    $ketQua = KetQua::where('ma_cc', $ma_cc)->first();
+    
+    if ($ketQua && $this->hasAnyScore($ketQua)) {
       toastr()->error('Nhân viên chỉ được nhập điểm 1 lần!', ' ');
-      return redirect()->route($this->getStaffRouteByLoai($ketQua->chungChi?->loaiChungChi?->ten_loai_cc));
+      return redirect()->route($this->getStaffRouteByLoai($chungChi->loaiChungChi?->ten_loai_cc));
     }
     $rules = [];
     $messages = [];
-    $tenLoaiCC = $ketQua->chungChi?->loaiChungChi?->ten_loai_cc;
+    $tenLoaiCC = $chungChi->loaiChungChi?->ten_loai_cc;
     switch ($tenLoaiCC) {
       case 'Chứng nhận năng lực tiếng Anh CTUT':
         $rules['diem_nghe'] = 'required|numeric|min:0|max:500';
@@ -165,10 +202,25 @@ class KetQuaController extends Controller
       return redirect()->back()->withErrors($validator)->withInput();
     }
 
-    $ketQua->update($request->all());
+    // Tạo kết quả mới hoặc cập nhật kết quả hiện tại
+    if (!$ketQua) {
+      $ketQua = new KetQua();
+      $ketQua->ma_cc = $ma_cc;
+      $ketQua->ma_hv = $chungChi->ma_hv;
+      $ketQua->ngay_tao = now();
+    }
+    
+    // Cập nhật điểm số
+    $ketQua->fill($request->all());
+    
+    // Tính trạng thái dựa trên điểm số
+    $ketQua->trang_thai = $this->tinhTrangThai($ketQua, $tenLoaiCC);
+    $ketQua->ngay_cap_nhat = now();
+    
+    $ketQua->save();
 
-    toastr()->success('Cập nhật thành công!', ' ');
-    return redirect()->route($this->getStaffRouteByLoai($ketQua->chungChi?->loaiChungChi?->ten_loai_cc));
+    toastr()->success('Nhập điểm thành công!', ' ');
+    return redirect()->route($this->getStaffRouteByLoai($chungChi->loaiChungChi?->ten_loai_cc));
   }
 
   private function getStaffRouteByLoai(?string $tenLoaiCC): string
@@ -191,6 +243,38 @@ class KetQuaController extends Controller
       }
     }
     return false;
+  }
+
+  private function tinhTrangThai(KetQua $ketQua, string $tenLoaiCC): string
+  {
+    switch ($tenLoaiCC) {
+      case 'Chứng nhận năng lực tiếng Anh CTUT':
+        // Tổng điểm >= 600/1000 thì đạt
+        $tongDiem = ($ketQua->diem_nghe ?? 0) + ($ketQua->diem_doc ?? 0);
+        return $tongDiem >= 600 ? 'Đạt' : 'Không đạt';
+        
+      case 'Chứng nhận năng lực tiếng Anh tương đương bậc 3':
+        // Tất cả điểm >= 5/10 thì đạt
+        $diemNghe = $ketQua->diem_nghe ?? 0;
+        $diemNoi = $ketQua->diem_noi ?? 0;
+        $diemDoc = $ketQua->diem_doc ?? 0;
+        $diemViet = $ketQua->diem_viet ?? 0;
+        return ($diemNghe >= 5 && $diemNoi >= 5 && $diemDoc >= 5 && $diemViet >= 5) ? 'Đạt' : 'Không đạt';
+        
+      case 'Chứng nhận năng lực tiếng Nhật tương đương N4':
+        // Tổng điểm >= 90/180 thì đạt
+        $tongDiem = ($ketQua->diem_tu_vung ?? 0) + ($ketQua->diem_ngu_phap_doc ?? 0) + ($ketQua->diem_nghe ?? 0);
+        return $tongDiem >= 90 ? 'Đạt' : 'Không đạt';
+        
+      case 'Chứng chỉ ứng dụng CNTT cơ bản':
+        // Tất cả điểm >= 5/10 thì đạt
+        $diemTracNghiem = $ketQua->diem_trac_nghiem ?? 0;
+        $diemThucHanh = $ketQua->diem_thuc_hanh ?? 0;
+        return ($diemTracNghiem >= 5 && $diemThucHanh >= 5) ? 'Đạt' : 'Không đạt';
+        
+      default:
+        return 'Chưa xét';
+    }
   }
 }
 

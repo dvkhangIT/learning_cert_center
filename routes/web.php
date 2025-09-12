@@ -141,8 +141,10 @@ Route::group(['prefix' => 'nhan-vien', 'middleware' => 'checkStaff'], function (
   Route::delete('ket-qua/{ma_kq}', [NhanVienKetQuaController::class, 'xoaKetQua'])
     ->name('nhan-vien.ket-qua.xoa-ket-qua');
   // Nhập điểm (sửa kết quả) cho nhân viên
-  Route::get('sua-ket-qua/{ma_kq}', [NhanVienKetQuaController::class, 'formSuaKetQua'])
+  Route::get('tao-ket-qua/{ma_cc}', [NhanVienKetQuaController::class, 'formTaoKetQua'])
+    ->name('nhan-vien.ket-qua.tao-moi');
+  Route::get('sua-ket-qua/{ma_cc}', [NhanVienKetQuaController::class, 'formSuaKetQua'])
     ->name('nhan-vien.ket-qua.form-sua-ket-qua');
-  Route::put('sua-ket-qua/{ma_kq}', [NhanVienKetQuaController::class, 'suaKetQua'])
+  Route::put('sua-ket-qua/{ma_cc}', [NhanVienKetQuaController::class, 'suaKetQua'])
     ->name('nhan-vien.ket-qua.sua-ket-qua');
 });

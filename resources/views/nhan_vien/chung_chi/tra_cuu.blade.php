@@ -29,13 +29,13 @@
           <label class="form-label">Số hiệu chứng chỉ</label>
           <input type="text" name="so_hieu" class="form-control @error('so_hieu') is-invalid @enderror" 
                  value="{{ old('so_hieu', request('so_hieu')) }}" 
-                 placeholder="SH-001">
+                 >
         </div>
         <div class="col-md-3">
           <label class="form-label">Số vào sổ</label>
           <input type="text" name="so_vao_so" class="form-control @error('so_vao_so') is-invalid @enderror" 
                  value="{{ old('so_vao_so', request('so_vao_so')) }}" 
-                 placeholder="CC-001">
+                 >
         </div>
         <div class="col-md-3">
           <button class="btn btn-primary">Tìm kiếm</button>

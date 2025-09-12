@@ -8,7 +8,7 @@
           <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
           </li>
           <li class="breadcrumb-item active" aria-current="page">
-            {{ $ketQua->chungChi->loaiChungChi->ten_loai_cc }}
+            {{ $ketQua->chungChi->loaiChungChi->ten_loai_cc ?? 'Nhập điểm' }}
           </li>
         </ol>
       </nav>
@@ -18,7 +18,7 @@
     <div class="col-xl-8 mx-auto">
       <div class="card">
         <div class="card-body p-4">
-          <form action="{{ route('nhan-vien.ket-qua.sua-ket-qua', $ketQua->ma_kq) }}" class="row g-3 needs-validation" method="POST">
+          <form action="{{ route('nhan-vien.ket-qua.sua-ket-qua', $ketQua->ma_cc) }}" class="row g-3 needs-validation" method="POST">
             @csrf
             @method('PUT')
             @foreach ($cacLoaiDiem as $maDiem => $tenDiem)

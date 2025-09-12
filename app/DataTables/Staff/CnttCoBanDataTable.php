@@ -3,7 +3,7 @@
 namespace App\DataTables\Staff;
 
 use App\DataTables\Traits\DefaultConfig;
-use App\Models\KetQua;
+use App\Models\ChungChi;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -20,29 +20,34 @@ class CnttCoBanDataTable extends DataTable
   {
     return (new EloquentDataTable($query))
       ->addColumn('action', function ($query) {
-        $btnEdit = '<a href="' . route('nhan-vien.ket-qua.form-sua-ket-qua', $query->ma_kq) . '" title="Nhập điểm" class="btn btn-custom-color btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>';
+        $btnEdit = '<a href="' . route('nhan-vien.ket-qua.form-sua-ket-qua', $query->ma_cc) . '" title="Nhập điểm" class="btn btn-custom-color btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>';
         return $btnEdit;
       })
       ->editColumn('ket_qua', function ($query) {
         return $query->trang_thai ?? 'Chưa xét';
       })
-      ->addColumn('ten_hoc_vien', function ($query) { return $query->hocVien->hoten_hv; })
+      ->addColumn('ten_hoc_vien', function ($query) { return $query->hocVien->hoten_hv . ' (' . $query->hocVien->ma_hv . ')'; })
       ->orderColumn('ten_hoc_vien', function ($query, $direction) { $query->orderBy('hoc_vien.hoten_hv', $direction); })
-      ->addColumn('ten_chung_chi', function ($query) { return $query->chungChi->ten_cc; })
-      ->addColumn('ngay_tao', function ($query) { return Carbon::parse($query->ngay_tao)->format('d/m/Y'); })
-      ->addColumn('ngay_cap_nhat', function ($query) { return Carbon::parse($query->ngay_cap_nhat)->format('d/m/Y'); })
-      ->rawColumns(['action', 'ngay_tao', 'ngay_cap_nhat'])
-      ->setRowId('ma_kq');
+      ->addColumn('ma_chung_chi', function ($query) { return $query->ma_cc; })
+      ->addColumn('ngay_tao', function ($query) {
+        return $query->ket_qua_ngay_tao ? Carbon::parse($query->ket_qua_ngay_tao)->format('d/m/Y') : '-';
+      })
+      ->addColumn('ngay_cap_nhat', function ($query) {
+        return $query->ket_qua_ngay_cap_nhat ? Carbon::parse($query->ket_qua_ngay_cap_nhat)->format('d/m/Y') : '-';
+      })
+      ->rawColumns(['action'])
+      ->setRowId('ma_cc');
   }
 
-  public function query(KetQua $model): QueryBuilder
+  public function query(ChungChi $model): QueryBuilder
   {
     return $model->newQuery()
-      ->with('chungChi.loaiChungChi', 'hocVien')
-      ->leftJoin('hoc_vien', 'ket_qua.ma_hv', '=', 'hoc_vien.ma_hv')
-      ->whereHas('chungChi.loaiChungChi', function ($query) {
-        $query->where('ten_loai_cc', 'Chứng chỉ ứng dụng CNTT cơ bản');
-      });
+      ->with('loaiChungChi', 'hocVien', 'ketQua')
+      ->leftJoin('hoc_vien', 'chung_chi.ma_hv', '=', 'hoc_vien.ma_hv')
+      ->leftJoin('ket_qua', 'chung_chi.ma_cc', '=', 'ket_qua.ma_cc')
+      ->where('chung_chi.ma_loai_cc', 4)
+      ->orderBy('chung_chi.ma_cc', 'asc')
+      ->select('chung_chi.*', 'ket_qua.diem_trac_nghiem', 'ket_qua.diem_thuc_hanh', 'ket_qua.trang_thai', 'ket_qua.ma_kq', 'ket_qua.ngay_tao as ket_qua_ngay_tao', 'ket_qua.ngay_cap_nhat as ket_qua_ngay_cap_nhat');
   }
 
   public function html(): HtmlBuilder
@@ -61,14 +66,14 @@ class CnttCoBanDataTable extends DataTable
   public function getColumns(): array
   {
     return [
-      Column::make('ma_kq')->title('#')->type('string'),
-      Column::computed('ten_hoc_vien')->title('Học viên')->orderable(true),
-      Column::computed('ten_chung_chi')->title('Chứng chỉ'),
+      Column::make('ma_cc')->title('#')->type('string'),
+      Column::computed('ten_hoc_vien')->title('Học viên/Mã học viên')->orderable(true),
+      Column::computed('ma_chung_chi')->title('Mã chứng chỉ'),
       Column::make('diem_trac_nghiem')->title('Trắc nghiệm'),
       Column::make('diem_thuc_hanh')->title('Thực hành'),
       Column::computed('ket_qua')->title('Kết quả')->addClass('text-center'),
-      Column::make('ngay_tao')->title('Ngày tạo'),
-      Column::make('ngay_cap_nhat')->title('Cập nhật'),
+      Column::computed('ngay_tao')->title('Ngày tạo'),
+      Column::computed('ngay_cap_nhat')->title('Cập nhật'),
       Column::computed('action')->title('Thao tác')->exportable(false)->printable(false)->width(150)->addClass('text-center no-export'),
     ];
   }

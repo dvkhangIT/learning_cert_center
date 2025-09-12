@@ -17,13 +17,13 @@ class ChungChiController extends Controller
 
   public function traCuu(Request $request)
   {
-    $request->validate([
-      'so_hieu' => 'nullable|string|regex:/^SH-\d{3}$/',
-      'so_vao_so' => 'nullable|string|regex:/^CC-\d{3}$/',
-    ], [
-      'so_hieu.regex' => 'Số hiệu chứng chỉ phải có định dạng SH-### (ví dụ: SH-001)',
-      'so_vao_so.regex' => 'Số vào sổ phải có định dạng CC-### (ví dụ: CC-001)',
-    ]);
+    // $request->validate([
+    //   'so_hieu' => 'nullable|string|regex:/^SH-\d{3}$/',
+    //   'so_vao_so' => 'nullable|string|regex:/^CC-\d{3}$/',
+    // ], [
+    //   'so_hieu.regex' => 'Số hiệu chứng chỉ phải có định dạng SH-### (ví dụ: SH-001)',
+    //   'so_vao_so.regex' => 'Số vào sổ phải có định dạng CC-### (ví dụ: CC-001)',
+    // ]);
 
     // Kiểm tra ít nhất một trường phải được nhập
     if (!$request->filled('so_hieu') && !$request->filled('so_vao_so')) {
