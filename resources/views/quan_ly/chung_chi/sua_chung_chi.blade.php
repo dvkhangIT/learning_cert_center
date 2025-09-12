@@ -36,17 +36,23 @@
             class="row g-3 needs-validation" method="POST">
             @csrf
             @method('PUT')
-            <div class="col-md-12">
-              <label for="ten_cc" class="form-label">Chứng chỉ</label>
-              <input type="text" id="ten_cc"
-                class="form-control @error('ten_cc')
-                  is-invalid
-              @enderror"
-                name="ten_cc" value="{{ old('ten_cc', $chungChi->ten_cc) }}">
-              @error('ten_cc')
-                <div class="invalid-feedback">
-                  {{ $message }}
-                </div>
+            <div class="col-md-12 mb-2">
+              <label class="form-label">Loại chứng chỉ</label>
+              <select id="chungChiSelect"
+                class="form-select mb-3 @error('ma_loai_cc')
+                  is-invalid @enderror"
+                id="single-select-field" data-placeholder="Loại chứng chỉ"
+                name="ma_loai_cc">
+                @foreach ($loaiChungChi as $lcc)
+                  <option
+                    {{ $chungChi->ma_loai_cc == $lcc->ma_loai_cc ? 'selected' : '' }}
+                    value="{{ $lcc->ma_loai_cc }}">
+                    {{ $lcc->ten_loai_cc }}
+                  </option>
+                @endforeach
+              </select>
+              @error('ma_loai_cc')
+                <div class="invalid-feedback d-block">{{ $message }}</div>
               @enderror
             </div>
             <div class="col-md-6">
@@ -73,25 +79,6 @@
                 <div class="invalid-feedback">
                   {{ $message }}
                 </div>
-              @enderror
-            </div>
-            <div class="col-md-12 mb-2">
-              <label class="form-label">Loại chưng chỉ</label>
-              <select id="chungChiSelect"
-                class="form-select mb-3 @error('ma_loai_cc')
-                  is-invalid @enderror"
-                id="single-select-field" data-placeholder="Loại chứng chỉ"
-                name="ma_loai_cc">
-                @foreach ($loaiChungChi as $lcc)
-                  <option
-                    {{ $chungChi->ma_loai_cc == $lcc->ma_loai_cc ? 'selected' : '' }}
-                    value="{{ $lcc->ma_loai_cc }}">
-                    {{ $lcc->ten_loai_cc }}
-                  </option>
-                @endforeach
-              </select>
-              @error('ma_loai_cc')
-                <div class="invalid-feedback d-block">{{ $message }}</div>
               @enderror
             </div>
             <div class="col-md-12">
