@@ -27,8 +27,8 @@ class TiengAnhBac3DataTable extends DataTable
         return $query->trang_thai ?? 'Chưa xét';
       })
       ->addColumn('ten_hoc_vien', function ($query) { return $query->hocVien->hoten_hv . ' (' . $query->hocVien->ma_hv . ')'; })
-      ->orderColumn('ten_hoc_vien', function ($query, $direction) { $query->orderBy('hoc_vien.hoten_hv', $direction); })
       ->addColumn('ma_chung_chi', function ($query) { return $query->ma_cc; })
+      ->orderColumn('ma_chung_chi', function ($query, $order) { $query->orderBy('chung_chi.ma_cc', $order); })
       ->addColumn('ngay_tao', function ($query) {
         return $query->ket_qua_ngay_tao ? Carbon::parse($query->ket_qua_ngay_tao)->format('d/m/Y') : '-';
       })
@@ -55,7 +55,7 @@ class TiengAnhBac3DataTable extends DataTable
     return $this->applyDefaultHtmlConfig($this->builder(), 'tienganhbac3-staff-table', true)
       ->columns($this->getColumns())
       ->minifiedAjax()
-      ->orderBy(1)
+      // ->orderBy(0) // Sắp xếp theo cột đầu tiên (ma_cc)
       ->selectStyleSingle()
       ->buttons([
         Button::make('excel')->exportOptions(['columns' => ':not(.no-export)'])->text('<i class="fa-solid fa-file-excel me-1"></i> Xuất Excel'),
@@ -66,17 +66,16 @@ class TiengAnhBac3DataTable extends DataTable
   public function getColumns(): array
   {
     return [
-      Column::make('ma_cc')->title('#')->type('string'),
-      Column::computed('ten_hoc_vien')->title('Học viên/Mã học viên')->orderable(true),
-      Column::computed('ma_chung_chi')->title('Mã chứng chỉ'),
-      Column::make('diem_nghe')->title('Nghe'),
-      Column::make('diem_noi')->title('Nói'),
-      Column::make('diem_doc')->title('Đọc'),
-      Column::make('diem_viet')->title('Viết'),
-      Column::computed('ket_qua')->title('Kết quả')->addClass('text-center'),
-      Column::computed('ngay_tao')->title('Ngày tạo'),
-      Column::computed('ngay_cap_nhat')->title('Cập nhật'),
-      Column::computed('action')->title('Thao tác')->exportable(false)->printable(false)->width(150)->addClass('text-center no-export'),
+      Column::computed('ma_chung_chi')->title('Mã chứng chỉ')->orderable(true)->searchable(true),
+      Column::computed('ten_hoc_vien')->title('Học viên/Mã học viên')->orderable(false)->searchable(false),
+      Column::make('diem_nghe')->title('Nghe')->orderable(false)->searchable(false),
+      Column::make('diem_noi')->title('Nói')->orderable(false)->searchable(false),
+      Column::make('diem_doc')->title('Đọc')->orderable(false)->searchable(false),
+      Column::make('diem_viet')->title('Viết')->orderable(false)->searchable(false),
+      Column::computed('ket_qua')->title('Kết quả')->addClass('text-center')->orderable(false)->searchable(false),
+      Column::computed('ngay_tao')->title('Ngày tạo')->orderable(false)->searchable(false),
+      Column::computed('ngay_cap_nhat')->title('Cập nhật')->orderable(false)->searchable(false),
+      Column::computed('action')->title('Thao tác')->exportable(false)->printable(false)->width(150)->addClass('text-center no-export')->searchable(false),
     ];
   }
 

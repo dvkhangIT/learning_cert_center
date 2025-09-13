@@ -32,7 +32,7 @@
                   @forelse($chungChis as $cc)
                     <tr>
                       <td>{{ $cc->ma_cc }}</td>
-                      <td>{{ $cc->ten_cc }}</td>
+                      <td>{{ $cc->loaiChungChi->ten_loai_cc ?? '-' }}</td>
                       <td>{{ $cc->so_hieu }}</td>
                       <td>{{ isset($cc->ngay_vao_so) ? \Carbon\Carbon::parse($cc->ngay_vao_so)->format('d/m/Y') : '-' }}</td>
                       <td>{{ $cc->so_vao_so }}</td>

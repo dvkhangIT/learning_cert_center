@@ -48,16 +48,11 @@
     @foreach($results as $cc)
       <div class="card mb-3">
         <div class="card-body">
-          <div class="row g-3 align-items-center">
+          <div class="row g-3 align-items-start">
+            <div class="col-md-3"><strong>Loại chứng chỉ:</strong> {{ $cc->loaiChungChi->ten_loai_cc ?? '-' }}</div>
             <div class="col-md-3"><strong>Học viên:</strong> {{ $cc->hocVien->hoten_hv ?? '-' }}</div>
-            <div class="col-md-3"><strong>Tên chứng chỉ:</strong> {{ $cc->ten_cc }}</div>
             <div class="col-md-2"><strong>Số hiệu:</strong> {{ $cc->so_hieu }}</div>
             <div class="col-md-2"><strong>Số vào sổ:</strong> {{ $cc->so_vao_so }}</div>
-            <div class="col-md-2"><strong>Loại chứng chỉ:</strong> {{ $cc->loaiChungChi->ten_loai_cc ?? '-' }}</div>
-            {{-- <div class="col-md-2"><strong>Ngày bắt đầu:</strong> {{ isset($cc->ngay_bat_dau) ? \Carbon\Carbon::parse($cc->ngay_bat_dau)->format('d/m/Y') : '-' }}</div>
-            <div class="col-md-2"><strong>Ngày kết thúc:</strong> {{ isset($cc->ngay_ket_thuc) ? \Carbon\Carbon::parse($cc->ngay_ket_thuc)->format('d/m/Y') : '-' }}</div>
-            <div class="col-md-2"><strong>Ngày tạo:</strong> {{ isset($cc->ngay_tao) ? \Carbon\Carbon::parse($cc->ngay_tao)->format('d/m/Y') : '-' }}</div> --}}
-            <div class="col-md-2"><strong>Ngày cập nhật:</strong> {{ isset($cc->ngay_cap_nhat) ? \Carbon\Carbon::parse($cc->ngay_cap_nhat)->format('d/m/Y') : '-' }}</div>
             <div class="col-md-2"><strong>Kết quả hiện tại:</strong> {{ $cc->ketQua->trang_thai ?? 'Chưa xét' }}</div>
           </div>
         </div>
