@@ -32,6 +32,9 @@ class TiengAnhCtutDataTable extends DataTable
       ->addColumn('ma_chung_chi', function ($query) {
         return $query->ma_cc;
       })
+      ->filterColumn('ma_chung_chi', function ($query, $keyword) {
+        $query->where('chung_chi.ma_cc', 'like', "%{$keyword}%");
+      })
       ->orderColumn('ma_chung_chi', function ($query, $order) {
         $query->orderBy('chung_chi.ma_cc', $order);
       })

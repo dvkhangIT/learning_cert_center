@@ -28,6 +28,9 @@ class CnttCoBanDataTable extends DataTable
       })
       ->addColumn('ten_hoc_vien', function ($query) { return $query->hocVien->hoten_hv . ' (' . $query->hocVien->ma_hv . ')'; })
       ->addColumn('ma_chung_chi', function ($query) { return $query->ma_cc; })
+      ->filterColumn('ma_chung_chi', function ($query, $keyword) {
+        $query->where('chung_chi.ma_cc', 'like', "%{$keyword}%");
+      })
       ->orderColumn('ma_chung_chi', function ($query, $order) { $query->orderBy('chung_chi.ma_cc', $order); })
       ->addColumn('ngay_tao', function ($query) {
         return $query->ket_qua_ngay_tao ? Carbon::parse($query->ket_qua_ngay_tao)->format('d/m/Y') : '-';
