@@ -39,7 +39,7 @@
               <select id="chungChiSelect"
                 class="form-select mb-3 @error('ma_loai_cc')
                   is-invalid @enderror"
-                id="single-select-field" data-placeholder="Loại chứng chỉ"
+                id="single-select-field" data-placeholder="Chọn loại chứng chỉ"
                 name="ma_loai_cc">
                 @foreach ($loaiChungChi as $lcc)
                   <option value=""></option>
@@ -50,6 +50,24 @@
                 @endforeach
               </select>
               @error('ma_loai_cc')
+                <div class="invalid-feedback d-block">{{ $message }}</div>
+              @enderror
+            </div>
+            <div class="col-md-12 mb-2">
+              <label class="form-label">Học viên</label>
+              <select id="hocVienSelect"
+                class="form-select mb-3 @error('ma_hv')
+                  is-invalid @enderror"
+                id="single-select-field" data-placeholder="Chọn học viên"
+                name="ma_hv">
+                @foreach ($hocVien as $hv)
+                  <option value=""></option>
+                  <option {{ old('ma_hv') == $hv->ma_hv ? 'selected' : '' }}
+                    value="{{ $hv->ma_hv }}">{{ $hv->hoten_hv }}
+                  </option>
+                @endforeach
+              </select>
+              @error('ma_hv')
                 <div class="invalid-feedback d-block">{{ $message }}</div>
               @enderror
             </div>
@@ -183,6 +201,38 @@
   <script>
     $(document).ready(function() {
       $('#chungChiSelect').select2({
+        theme: 'bootstrap-5',
+        language: {
+          errorLoading: function() {
+            return "Không thể tải kết quả.";
+          },
+          inputTooLong: function(args) {
+            var overChars = args.input.length - args.maximum;
+            return "Vui lòng xóa bớt " + overChars + " ký tự";
+          },
+          inputTooShort: function(args) {
+            var remainingChars = args.minimum - args.input.length;
+            return "Vui lòng nhập thêm " + remainingChars + " ký tự";
+          },
+          loadingMore: function() {
+            return "Đang tải thêm kết quả…";
+          },
+          maximumSelected: function(args) {
+            return "Chỉ có thể chọn tối đa " + args.maximum + " mục";
+          },
+          noResults: function() {
+            return "Không tìm thấy kết quả";
+          },
+          searching: function() {
+            return "Đang tìm…";
+          },
+          removeAllItems: function() {
+            return "Xóa tất cả các mục";
+          }
+        }
+      });
+
+      $('#hocVienSelect').select2({
         theme: 'bootstrap-5',
         language: {
           errorLoading: function() {

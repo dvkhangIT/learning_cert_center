@@ -43,7 +43,7 @@
                     <p class="text-secondary mb-1">
                       {{ $user->vai_tro == 'quanly' ? 'Quản lý' : 'Nhân viên' }}
                     </p>
-                    <button class="btn btn-primary">Follow</button>
+                    {{-- <button class="btn btn-primary">Follow</button> --}}
                   </div>
                 </div>
               </div>
