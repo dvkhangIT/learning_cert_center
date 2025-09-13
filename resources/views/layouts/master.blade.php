@@ -110,35 +110,18 @@
     <script src="{{ asset('assets/dataTables/dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/dataTables/dataTables.bootstrap5.min.js') }}">
     </script>
-    <script
-      src="https://cdn.datatables.net/responsive/3.0.5/js/dataTables.responsive.min.js">
+    <script src="{{ asset('assets/dataTables/dataTables.responsive.min.js') }}">
     </script>
-    <script
-      src="https://cdn.datatables.net/buttons/3.2.4/js/dataTables.buttons.min.js">
+    <script src="{{ asset('assets/dataTables/dataTables.buttons.min.js') }}">
     </script>
-    <script src="https://cdn.datatables.net/buttons/3.2.4/js/buttons.html5.min.js">
-    </script>
-    <script src="https://cdn.datatables.net/buttons/3.2.4/js/buttons.print.min.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js">
-    </script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js">
-    </script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js">
-    </script>
+    <script src="{{ asset('assets/dataTables/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('assets/dataTables/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('assets/dataTables/jszip.min.js') }}"></script>
+    <script src="{{ asset('assets/dataTables/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('assets/dataTables/vfs_fonts.js') }}"></script>
     <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
-
     <script src="{{ asset('assets/js/sweetalert2.js') }}"></script>
     <script>
-      // $(document).ready(function() {
-      //   $.ajaxSetup({
-      //     headers: {
-      //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      //     }
-      //   });
-      // });
       $(document).ready(function() {
         $('body').on('click', '.delete-item', function(e) {
           e.preventDefault();
