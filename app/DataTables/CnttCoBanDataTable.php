@@ -42,7 +42,7 @@ class CnttCoBanDataTable extends DataTable
         $query->orderBy('chung_chi.ten_cc', 'asc');
       })
       ->addColumn('ten_chung_chi', function ($query) {
-        return $query->chungChi->ten_cc;
+        return $query->chungChi->loaiChungChi->ten_loai_cc;
       })
       ->addColumn('ket_qua', function ($query) {
         return $query->trang_thai;
@@ -110,7 +110,7 @@ class CnttCoBanDataTable extends DataTable
   {
     return [
       Column::make('ma_kq')->title('#')->type('string'),
-      Column::computed('ten_hoc_vien')->title('Học viên')->orderable(true),
+      Column::computed('ten_hoc_vien')->title('Học viên')->orderable(true)->width(150),
       Column::computed('ten_chung_chi')->title('Chứng chỉ'),
       Column::make('diem_trac_nghiem')->title('Điểm trắc nghiệm'),
       Column::make('diem_thuc_hanh')->title('Điểm thực hành'),

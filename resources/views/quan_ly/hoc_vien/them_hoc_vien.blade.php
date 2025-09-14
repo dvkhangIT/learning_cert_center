@@ -49,6 +49,24 @@
                   </div>
                 @enderror
               </div>
+              <div class="col-md-12 mb-2">
+                <label class="form-label">Lớp</label>
+                <select id="lopSelect" multiple
+                  class="form-select mb-3 @error('ma_lop')
+                  is-invalid @enderror"
+                  id="single-select-field" data-placeholder="Chọn lớp"
+                  name="ma_lop[]">
+                  @foreach ($lop as $lp)
+                    <option value=""></option>
+                    <option {{ old('ma_lop') == $lp->ma_lop ? 'selected' : '' }}
+                      value="{{ $lp->ma_lop }}">{{ $lp->ten_lop }}
+                    </option>
+                  @endforeach
+                </select>
+                @error('ma_lop')
+                  <div class="invalid-feedback d-block">{{ $message }}</div>
+                @enderror
+              </div>
               <div class="col-md-12">
                 <label class="form-label">Ngày sinh</label>
                 <input type="text" value="{{ old('ngay_sinh') }}"
@@ -180,6 +198,41 @@
         },
         error: function() {
           alert("Không thể tải danh sách tỉnh/thành phố.");
+        }
+      });
+    });
+  </script>
+  <script>
+    $(document).ready(function() {
+      $('#lopSelect').select2({
+        theme: 'bootstrap-5',
+        language: {
+          errorLoading: function() {
+            return "Không thể tải kết quả.";
+          },
+          inputTooLong: function(args) {
+            var overChars = args.input.length - args.maximum;
+            return "Vui lòng xóa bớt " + overChars + " ký tự";
+          },
+          inputTooShort: function(args) {
+            var remainingChars = args.minimum - args.input.length;
+            return "Vui lòng nhập thêm " + remainingChars + " ký tự";
+          },
+          loadingMore: function() {
+            return "Đang tải thêm kết quả…";
+          },
+          maximumSelected: function(args) {
+            return "Chỉ có thể chọn tối đa " + args.maximum + " mục";
+          },
+          noResults: function() {
+            return "Không tìm thấy kết quả";
+          },
+          searching: function() {
+            return "Đang tìm…";
+          },
+          removeAllItems: function() {
+            return "Xóa tất cả các mục";
+          }
         }
       });
     });

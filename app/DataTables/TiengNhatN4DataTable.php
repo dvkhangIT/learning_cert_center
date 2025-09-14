@@ -38,7 +38,7 @@ class TiengNhatN4DataTable extends DataTable
         $query->orderBy('hoc_vien.hoten_hv', $direction);
       })
       ->addColumn('ten_chung_chi', function ($query) {
-        return $query->chungChi->ten_cc;
+        return $query->chungChi->loaiChungChi->ten_loai_cc;
       })
       ->addColumn('ket_qua', function ($query) {
         return $query->trang_thai;
@@ -105,7 +105,7 @@ class TiengNhatN4DataTable extends DataTable
   {
     return [
       Column::make('ma_kq')->title('#')->type('string'),
-      Column::make('ten_hoc_vien')->title('Học viên')->orderable(true),
+      Column::make('ten_hoc_vien')->title('Học viên')->orderable(true)->width(150),
       Column::computed('ten_chung_chi')->title('Chứng chỉ'),
       Column::make('diem_ngu_phap_doc')->title('Điểm ngữ pháp - Đọc'),
       Column::make('diem_tu_vung')->title('Điểm từ vựng - Hán tự'),
