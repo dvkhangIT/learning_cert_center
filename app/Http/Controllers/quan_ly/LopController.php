@@ -94,43 +94,11 @@ class LopController extends Controller
     toastr()->success('Tạo lớp thành công!', ' ');
     return redirect()->route('quan-ly.lop.danh-sach-lop');
   }
-  public function getHocVien($ma_lop)
-  {
-    $hocVien = HocVien::whereDoesntHave('lop', function ($q) use ($ma_lop) {
-      $q->where('hoc_vien_lop.ma_lop', $ma_lop);
-    })->get(['ma_hv', 'hoten_hv']);
-
-    return response()->json($hocVien);
-  }
-
-  public function themHocVien(string $ma_lop, HocVienTrongLopDataTable $dataTable)
+  public function danhSachHocVien(HocVienTrongLopDataTable $dataTable, string $ma_lop)
   {
     $lop = Lop::findOrFail($ma_lop);
     $dataTable->setMaLop($ma_lop);
-    $hocVien = HocVien::whereDoesntHave('lop', function ($q) use ($ma_lop) {
-      $q->where('hoc_vien_lop.ma_lop', $ma_lop);
-    })->get(['ma_hv', 'hoten_hv']);
-    return $dataTable->render('quan_ly.lop.hoc_vien.them_hoc_vien', compact('lop', 'ma_lop', 'hocVien'));
-  }
-  public function luuHocVien(Request $request, string $ma_lop)
-  {
-    $request->validate([
-      'hoc_vien_id' => 'required|array',
-      'hoc_vien_id.*' => 'exists:hoc_vien,ma_hv',
-    ], [
-      'hoc_vien_id.required' => 'Vui lòng chọn ít nhất một học viên.',
-      'hoc_vien_id.*.exists' => 'Một trong các học viên đã chọn không hợp lệ.',
-    ]);
-    $lop = Lop::findOrFail($ma_lop);
-    $lop->hocVien()->attach($request->hoc_vien_id);
-    toastr()->success('Đã thêm học viên vào lớp', ' ');
-    return redirect()->back();
-  }
-  public function hocVienTrongLop(string $ma_lop, HocVienTrongLopDataTable $dataTable)
-  {
-    $lop = Lop::findOrFail($ma_lop);
-    $dataTable->setMaLop($ma_lop);
-    return $dataTable->render('quan_ly.lop.hoc_vien.hoc_vien_trong_lop', compact('lop', 'ma_lop'));
+    return $dataTable->render('quan_ly.lop.danh_sach_hoc_vien', compact('ma_lop', 'lop'));
   }
   public function xoaHocVien($ma_lop, $ma_hv)
   {

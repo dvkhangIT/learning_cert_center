@@ -32,11 +32,9 @@ class LopDataTable extends DataTable
 											<ul class="dropdown-menu">
 												<li><a class="dropdown-item btn" href="' . route('quan-ly.lop.sua-lop', $query->ma_lop) . '">Sửa thông tin lớp</a>
 												</li>
+												<li><a class="dropdown-item btn" href="' . route('quan-ly.lop.danh-sach-hoc-vien', $query->ma_lop) . '">Học viên</a>
+												</li>
 												<li><a class="delete-item dropdown-item btn" href="' . route('quan-ly.lop.xoa-lop', $query->ma_lop) . '" >Xóa lớp</a>
-												</li>
-												<li><a href="' . route('quan-ly.lop.them-hoc-vien', $query->ma_lop) . '" class="btn dropdown-item btn-them-hv">Thêm học viên</a>
-												</li>
-												<li><a href="' . route('quan-ly.lop.hoc-vien', $query->ma_lop) . '" class="btn dropdown-item">Danh sách học viên</a>
 												</li>
 											</ul>
 										</div>';

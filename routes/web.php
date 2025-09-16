@@ -71,11 +71,7 @@ Route::group(['prefix' => 'quan-ly', 'middleware' => 'checkRole'], function () {
   Route::get('sua-lop/{ma_lop}', [LopController::class, 'formSuaLop'])->name('quan-ly.lop.form-sua-lop');
   Route::put('sua-lop/{ma_lop}', [LopController::class, 'suaLop'])->name('quan-ly.lop.sua-lop');
   Route::delete('xoa-lop/{ma_lop}', [LopController::class, 'xoaLop'])->name('quan-ly.lop.xoa-lop');
-  Route::get('lop/{ma_lop}/hoc-vien-chua-co', [LopController::class, 'getHocVien']);
-  Route::get('lop/them-hoc-vien/{ma_lop}', [LopController::class, 'themHocVien'])->name('quan-ly.lop.them-hoc-vien');
-  Route::post('lop/luu-hoc-vien/{ma_lop}', [LopController::class, 'luuHocVien'])->name('quan-ly.lop.luu-hoc-vien');
-  Route::get('lop/{ma_lop}/hoc-vien', [LopController::class, 'hocVienTrongLop'])
-    ->name('quan-ly.lop.hoc-vien');
+  Route::get('lop/hoc-vien/{ma_lop}', [LopController::class, 'danhSachHocVien'])->name('quan-ly.lop.danh-sach-hoc-vien');
   Route::delete('lop/{ma_lop}/hoc-vien/{ma_hv}', [LopController::class, 'xoaHocVien'])->name('lop.hoc-vien.xoa');
 
   //Học viên
