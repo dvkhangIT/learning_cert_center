@@ -61,7 +61,16 @@
     <!--wrapper-->
     <div class="wrapper">
       <!--sidebar wrapper -->
-      @include('layouts.sidebar')
+      @php
+        // thay 'NV' bằng giá trị role của nhân viên trong DB nếu khác
+        $userRole = Auth::check() ? (Auth::user()->vai_tro ?? Auth::user()->role ?? null) : null;
+      @endphp
+
+      @if($userRole === 'nhanvien')
+        @include('layouts.sidebar_staff')
+      @else
+        @include('layouts.sidebar')
+      @endif
       <!--end sidebar wrapper -->
       <!--start header -->
       @include('layouts.header')
