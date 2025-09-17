@@ -1,0 +1,240 @@
+@extends('layouts.master')
+@section('css')
+  <link rel="stylesheet" href="{{ asset('assets/css/flatpickr.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
+  <link rel="stylesheet"
+    href="{{ asset('assets/css/select2-bootstrap-5-theme.min.css') }}">
+@endsection
+@section('title', 'Thêm học viên')
+@section('content')
+  <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">Học viên</div>
+    <div class="ps-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0 p-0">
+          <li class="breadcrumb-item"><a href="javascript:;"><i
+                class="bx bx-home-alt"></i></a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">Thêm học viên
+          </li>
+        </ol>
+      </nav>
+    </div>
+    <div class="ms-auto">
+      <a class="btn btn-custom-color"
+        href="{{ route('quan-ly.hoc-vien.danh-sach-hoc-vien') }}">
+        <i class="fa-solid fa-arrow-left"></i>
+      </a>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="row">
+      <div class="col-xl-6 mx-auto">
+        <div class="card">
+          <div class="card-body p-4">
+            <form method="POST"
+              action="{{ route('quan-ly.hoc-vien.luu-hoc-vien') }}"
+              class="row g-3">
+              @csrf
+              <div class="col-md-12">
+                <label for="input3" class="form-label">Họ tên</label>
+                <input type="text" value="{{ old('hoten_hv') }}"
+                  class="form-control @error('hoten_hv')
+                    is-invalid
+                @enderror"
+                  id="input3" name="hoten_hv" placeholder="Họ tên học viên">
+                @error('hoten_hv')
+                  <div class="invalid-feedback">
+                    {{ $message }}
+                  </div>
+                @enderror
+              </div>
+              <div class="col-md-12 mb-2">
+                <label class="form-label">Lớp</label>
+                <select id="lopSelect" multiple
+                  class="form-select mb-3 @error('ma_lop')
+                  is-invalid @enderror"
+                  id="single-select-field" data-placeholder="Chọn lớp"
+                  name="ma_lop[]">
+                  @foreach ($lop as $lp)
+                    <option value=""></option>
+                    <option {{ old('ma_lop') == $lp->ma_lop ? 'selected' : '' }}
+                      value="{{ $lp->ma_lop }}">{{ $lp->ten_lop }}
+                    </option>
+                  @endforeach
+                </select>
+                @error('ma_lop')
+                  <div class="invalid-feedback d-block">{{ $message }}</div>
+                @enderror
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Ngày sinh</label>
+                <input type="text" value="{{ old('ngay_sinh') }}"
+                  class="datepicker form-control @error('ngay_sinh')
+                  is-invalid
+              @enderror"
+                  name="ngay_sinh" id="ngay_sinh" placeholder="Chọn ngày"
+                  value="">
+                @error('ngay_sinh')
+                  <div class="invalid-feedback">
+                    {{ $message }}
+                  </div>
+                @enderror
+              </div>
+              <div class="col-md-12">
+                <label class="form-label">Nơi sinh</label>
+                <select
+                  class="noi_sinh form-select @error('noi_sinh')
+                    is-invalid
+                @enderror"
+                  id="single-select-field" data-placeholder="Chọn tỉnh/thành phố"
+                  name="noi_sinh">
+                  <option></option>
+                </select>
+                @error('noi_sinh')
+                  <div class="invalid-feedback">
+                    {{ $message }}
+                  </div>
+                @enderror
+              </div>
+              <div class="col-md-12">
+                <label for="input6" class="form-label">Giới tính</label>
+                <div class="d-flex align-items-center gap-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio"
+                      name="gioi_tinh" id="nam" value="nam"
+                      {{ old('gioi_tinh') == 'nam' ? 'checked' : '' }}>
+                    <label class="form-check-label" for="nam">Nam</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio"
+                      name="gioi_tinh" id="nu" value="nu"
+                      {{ old('gioi_tinh') == 'nu' ? 'checked' : '' }}>
+                    <label class="form-check-label" for="nu">Nữ</label>
+                  </div>
+                </div>
+                @error('gioi_tinh')
+                  <div class="error">
+                    {{ $message }}
+                  </div>
+                @enderror
+              </div>
+              <div class="col-md-12">
+                <div class="d-md-flex d-grid align-items-center gap-3">
+                  <button type="submit" class="btn btn-primary px-4">Lưu</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+@endsection
+@section('scripts')
+  <script src="{{ asset('assets/js/flatpickr.min.js') }}"></script>
+  <script src="{{ asset('assets/js/vn.js') }}"></script>
+  <script src="{{ asset('assets/js/select2.min.js') }}"></script>
+  <script src="{{ asset('assets/js/vi.js') }}"></script>
+  <script src="{{ asset('assets/plugins/select2/js/select2-custom.js') }}">
+  </script>
+  <script>
+    $(document).ready(function() {
+      flatpickr(".datepicker", {
+        locale: "vn",
+        dateFormat: "Y-m-d",
+        altInput: true,
+        altFormat: "d-m-Y",
+      });
+    });
+    $.fn.select2.defaults.set('language', {
+      errorLoading: function() {
+        return "Không thể tải kết quả.";
+      },
+      inputTooLong: function(args) {
+        var overChars = args.input.length - args.maximum;
+        return "Vui lòng xóa bớt " + overChars + " ký tự";
+      },
+      inputTooShort: function(args) {
+        var remainingChars = args.minimum - args.input.length;
+        return "Vui lòng nhập thêm " + remainingChars + " ký tự";
+      },
+      loadingMore: function() {
+        return "Đang tải thêm kết quả…";
+      },
+      maximumSelected: function(args) {
+        return "Chỉ có thể chọn tối đa " + args.maximum + " mục";
+      },
+      noResults: function() {
+        return "Không tìm thấy kết quả";
+      },
+      searching: function() {
+        return "Đang tìm…";
+      },
+      removeAllItems: function() {
+        return "Xóa tất cả các mục";
+      }
+    });
+  </script>
+  {{-- api tỉnh thành phố --}}
+  <script>
+    $(document).ready(function() {
+      let url = 'https://provinces.open-api.vn/api/v1/p/';
+      $.ajax({
+        method: "get",
+        url: url,
+        success: function(response) {
+          const select = $('.noi_sinh');
+          select.html('<option value=""></option>');
+          response.forEach(function(province) {
+            select.append(
+              `<option value="${province.name}">${province.name}</option>`
+            );
+          });
+          const oldValue = "{{ old('noi_sinh') }}";
+          if (oldValue) {
+            select.val(oldValue);
+          }
+        },
+        error: function() {
+          alert("Không thể tải danh sách tỉnh/thành phố.");
+        }
+      });
+    });
+  </script>
+  <script>
+    $(document).ready(function() {
+      $('#lopSelect').select2({
+        theme: 'bootstrap-5',
+        language: {
+          errorLoading: function() {
+            return "Không thể tải kết quả.";
+          },
+          inputTooLong: function(args) {
+            var overChars = args.input.length - args.maximum;
+            return "Vui lòng xóa bớt " + overChars + " ký tự";
+          },
+          inputTooShort: function(args) {
+            var remainingChars = args.minimum - args.input.length;
+            return "Vui lòng nhập thêm " + remainingChars + " ký tự";
+          },
+          loadingMore: function() {
+            return "Đang tải thêm kết quả…";
+          },
+          maximumSelected: function(args) {
+            return "Chỉ có thể chọn tối đa " + args.maximum + " mục";
+          },
+          noResults: function() {
+            return "Không tìm thấy kết quả";
+          },
+          searching: function() {
+            return "Đang tìm…";
+          },
+          removeAllItems: function() {
+            return "Xóa tất cả các mục";
+          }
+        }
+      });
+    });
+  </script>
+@endsection

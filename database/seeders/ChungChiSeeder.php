@@ -18,13 +18,13 @@ class ChungChiSeeder extends Seeder
     foreach (range(1, 15) as $i) {
       DB::table('chung_chi')->insert([
         'ma_hv' => rand(1, 20),
-        'ten_cc' => 'CC ' . $faker->word,
+        'ma_loai_cc' => rand(1, 4),
         'so_hieu' => 'SH-' . $faker->unique()->numerify('###'),
         'so_vao_so' => $faker->unique()->numerify('CC-###'),
         'ngay_vao_so' => $faker->dateTimeBetween('-1 month', 'now'),
         'ngay_bat_dau' => $faker->dateTimeBetween('-3 months', '-2 months'),
         'ngay_ket_thuc' => $faker->dateTimeBetween('-2 months', 'now'),
-        'ngay_cap_tao' => now(),
+        'ngay_tao' => now(),
         'ngay_cap_nhat' => now(),
       ]);
     }

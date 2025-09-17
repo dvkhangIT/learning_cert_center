@@ -13,8 +13,12 @@ return new class extends Migration
   {
     Schema::create('chung_chi', function (Blueprint $table) {
       $table->id('ma_cc');
-      $table->foreignId('ma_hv')->constrained('hoc_vien', 'ma_hv')->onDelete('cascade');
-      $table->string('ten_cc');
+      $table->foreignId('ma_hv')->nullable()->constrained('hoc_vien', 'ma_hv')->onDelete('cascade');
+      $table->unsignedBigInteger('ma_loai_cc')->nullable();
+      $table->foreign('ma_loai_cc')
+        ->references('ma_loai_cc')
+        ->on('loai_chung_chi')
+        ->onDelete('set null');
       $table->string('so_hieu');
       $table->date('ngay_vao_so');
       $table->string('so_vao_so');

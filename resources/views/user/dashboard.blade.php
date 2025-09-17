@@ -43,7 +43,7 @@
                   aria-labelledby="accountDropdown">
                   <li>
                     <a class="dropdown-item"
-                      href="{{ route('logout') }}">Logout</a>
+                      href="{{ route('dang-xuat') }}">Logout</a>
                   </li>
                 </ul>
               </li>

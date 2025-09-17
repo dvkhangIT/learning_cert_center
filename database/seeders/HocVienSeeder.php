@@ -21,7 +21,7 @@ class HocVienSeeder extends Seeder
         'ngay_sinh' => $faker->date('Y-m-d', '-18 years'),
         'noi_sinh' => $faker->city,
         'gioi_tinh' => $faker->randomElement(['Nam', 'Nữ']),
-        'ngay_cap_tao' => now(),
+        'ngay_tao' => now(),
         'ngay_cap_nhat' => now(),
       ]);
     }
