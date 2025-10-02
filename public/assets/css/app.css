@@ -2271,3 +2271,9 @@ table.dataTable th {
     width: 100% !important;
     height: 450px !important;
 }
+.error-checkbox{
+    width: 100%;
+    margin-top: .25rem;
+    font-size: .875em;
+    color: #fd3550;
+}

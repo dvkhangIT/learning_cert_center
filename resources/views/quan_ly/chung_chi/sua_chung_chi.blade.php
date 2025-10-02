@@ -2,8 +2,7 @@
 @section('css')
   <link rel="stylesheet" href="{{ asset('assets/css/flatpickr.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
-  <link rel="stylesheet"
-    href="{{ asset('assets/css/select2-bootstrap-5-theme.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/select2-bootstrap-5-theme.min.css') }}">
 @endsection
 @section('title', $chungChi->loaiChungChi->ten_loai_cc)
 @section('content')
@@ -12,8 +11,7 @@
     <div class="ps-3">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb mb-0 p-0">
-          <li class="breadcrumb-item"><a href="javascript:;"><i
-                class="bx bx-home-alt"></i></a>
+          <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
           </li>
           <li class="breadcrumb-item active" aria-current="page">Sửa chứng chỉ
           </li>
@@ -21,8 +19,7 @@
       </nav>
     </div>
     <div class="ms-auto">
-      <a class="btn btn-custom-color"
-        href="{{ route('quan-ly.chung-chi.danh-sach-chung-chi') }}">
+      <a class="btn btn-custom-color" href="{{ route('quan-ly.chung-chi.danh-sach-chung-chi') }}">
         <i class="fa-solid fa-arrow-left"></i>
       </a>
     </div>
@@ -31,22 +28,20 @@
     <div class="col-xl-8 mx-auto">
       <div class="card">
         <div class="card-body p-4">
-          <form
-            action="{{ route('quan-ly.chung-chi.sua-chung-chi', $chungChi->ma_cc) }}"
-            class="row g-3 needs-validation" method="POST">
+          <form action="{{ route('quan-ly.chung-chi.sua-chung-chi', $chungChi->ma_cc) }}" class="row g-3 needs-validation"
+            method="POST">
             @csrf
             @method('PUT')
             <div class="col-md-12 mb-2">
               <label class="form-label">Loại chứng chỉ</label>
+              {{ var_dump(old('ma_loai_cc')) }}
               <select id="chungChiSelect"
                 class="form-select mb-3 @error('ma_loai_cc')
                   is-invalid @enderror"
-                id="single-select-field" data-placeholder="Chọn loại chứng chỉ"
-                name="ma_loai_cc">
+                id="single-select-field" data-placeholder="Chọn loại chứng chỉ" name="ma_loai_cc">
                 @foreach ($loaiChungChi as $lcc)
-                  <option
-                    {{ $chungChi->ma_loai_cc == $lcc->ma_loai_cc ? 'selected' : '' }}
-                    value="{{ $lcc->ma_loai_cc }}">
+                  <option value="{{ $lcc->ma_loai_cc }}"
+                    {{ old('ma_loai_cc', $chungChi->ma_loai_cc ?? '') == $lcc->ma_loai_cc ? 'selected' : '' }}>
                     {{ $lcc->ten_loai_cc }}
                   </option>
                 @endforeach
@@ -57,15 +52,14 @@
             </div>
             <div class="col-md-12 mb-2">
               <label class="form-label">Học viên</label>
-              <select id="hocVienSelect"
-                class="form-select mb-3 @error('ma_hv')
+              <select id="hocVienSelect" class="form-select mb-3 @error('ma_hv')
                   is-invalid @enderror"
-                id="single-select-field" data-placeholder="Chọn học viên"
-                name="ma_hv">
+                id="single-select-field" data-placeholder="Chọn học viên" name="ma_hv">
                 @foreach ($hocVien as $hv)
                   <option value=""></option>
-                  <option {{ $chungChi->ma_hv == $hv->ma_hv ? 'selected' : '' }}
-                    value="{{ $hv->ma_hv }}">{{ $hv->hoten_hv }}
+                  <option {{ old('ma_hv', $chungChi->ma_hv ?? '') == $hv->ma_hv ? 'selected' : '' }}
+                    value="{{ $hv->ma_hv }}">
+                    {{ $hv->hoten_hv }}
                   </option>
                 @endforeach
               </select>
@@ -78,8 +72,8 @@
               <input type="text" id="so_hieu"
                 class="form-control @error('so_hieu')
                   is-invalid
-              @enderror"
-                name="so_hieu" value="{{ old('so_hieu', $chungChi->so_hieu) }}">
+              @enderror" name="so_hieu"
+                value="{{ old('so_hieu', $chungChi->so_hieu) }}">
               @error('so_hieu')
                 <div class="invalid-feedback">
                   {{ $message }}
@@ -143,8 +137,7 @@
             </div>
             <div class="col-md-12">
               <div class="d-md-flex d-grid align-items-center gap-3">
-                <button id="submit-btn" type="submit"
-                  class="btn btn-primary px-4">Lưu</button>
+                <button id="submit-btn" type="submit" class="btn btn-primary px-4">Lưu</button>
               </div>
             </div>
           </form>
@@ -161,17 +154,14 @@
   </script>
 @endsection
 @push('scripts')
-  <script
-    src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js">
-  </script>
+  <script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
 @endpush
 @section('scripts')
   <script src="{{ asset('assets/js/flatpickr.min.js') }}"></script>
   <script src="{{ asset('assets/js/vn.js') }}"></script>
   <script src="{{ asset('assets/js/select2.min.js') }}"></script>
   <script src="{{ asset('assets/js/vi.js') }}"></script>
-  <script src="{{ asset('assets/plugins/select2/js/select2-custom.js') }}">
-  </script>
+  <script src="{{ asset('assets/plugins/select2/js/select2-custom.js') }}"></script>
   <script>
     $(document).ready(function() {
       flatpickr(".datepicker", {
