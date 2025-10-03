@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-use Str;
+use Illuminate\Support\Str;
 
 class TaiKhoanController extends Controller
 {
@@ -143,12 +143,19 @@ class TaiKhoanController extends Controller
     if (!Hash::check($request->current_password, Auth::user()->mat_khau)) {
       toastr()->error('Mật khẩu hiện tại không chính xác.', ' ');
     }
+    /** @var TaiKhoan $taiKhoan */
     $taiKhoan = Auth()->user();
     $taiKhoan->mat_khau = Hash::make($request->new_password);
     $taiKhoan->ngay_cap_nhat = now();
     $taiKhoan->save();
     toastr()->success('Đổi mật khẩu thành công!', ' ');
-    return redirect()->route('quan-ly.tong-quan');
+    
+    // Redirect dựa trên vai trò của user
+    if ($taiKhoan->vai_tro === 'quanly') {
+      return redirect()->route('quan-ly.tong-quan');
+    } else {
+      return redirect()->route('user.dashboard');
+    }
   }
   public function capNhatThongtinTaiKhoan(Request $request, string $ma_tk)
   {
