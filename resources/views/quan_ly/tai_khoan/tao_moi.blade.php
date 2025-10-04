@@ -6,8 +6,7 @@
     <div class="ps-3">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb mb-0 p-0">
-          <li class="breadcrumb-item"><a href="javascript:;"><i
-                class="bx bx-home-alt"></i></a>
+          <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
           </li>
           <li class="breadcrumb-item active" aria-current="page">Tạo tài khoản
           </li>
@@ -15,8 +14,7 @@
       </nav>
     </div>
     <div class="ms-auto">
-      <a class="btn btn-custom-color"
-        href="{{ route('quan-ly.tai-khoan.danh-sach-tai-khoan') }}">
+      <a class="btn btn-custom-color" href="{{ route('quan-ly.tai-khoan.danh-sach-tai-khoan') }}">
         <i class="fa-solid fa-arrow-left"></i>
       </a>
     </div>
@@ -25,8 +23,7 @@
     <div class="col-xl-6 mx-auto">
       <div class="card">
         <div class="card-body p-4">
-          <form id="create-user-form"
-            action="{{ route('quan-ly.tai-khoan.luu-tai-khoan') }}"
+          <form id="create-user-form" action="{{ route('quan-ly.tai-khoan.luu-tai-khoan') }}"
             class="create-user-form row g-3 needs-validation" method="POST">
             @csrf
             <div class="col-md-12">
@@ -34,8 +31,8 @@
               <input type="text" value="{{ old('ho_ten') }}"
                 class="form-control @error('ho_ten')
                   is-invalid
-              @enderror"
-                name="ho_ten" id="input3">
+              @enderror" name="ho_ten"
+                id="input3">
               @error('ho_ten')
                 <div class="invalid-feedback">
                   {{ $message }}
@@ -47,8 +44,8 @@
               <input type="email"
                 class="form-control @error('email')
                     is-invalid
-              @enderror"
-                id="input4" name="email" value="{{ old('email') }}">
+              @enderror" id="input4"
+                name="email" value="{{ old('email') }}">
               @error('email')
                 <div class="invalid-feedback">
                   {{ $message }}
@@ -56,9 +53,21 @@
               @enderror
             </div>
             <div class="col-md-12">
+              <label for="input4" class="form-label">Mật khẩu</label>
+              <input type="password"
+                class="form-control @error('mat_khau')
+                    is-invalid
+              @enderror"
+                id="input4" name="mat_khau" value="{{ old('mat_khau') }}">
+              @error('mat_khau')
+                <div class="invalid-feedback">
+                  {{ $message }}
+                </div>
+              @enderror
+            </div>
+            <div class="col-md-12">
               <div class="d-md-flex d-grid align-items-center gap-3">
-                <button id="submit-btn" type="submit"
-                  class="btn btn-primary px-4">Lưu</button>
+                <button id="submit-btn" type="submit" class="btn btn-primary px-4">Lưu</button>
               </div>
             </div>
           </form>
@@ -75,9 +84,6 @@
   </script>
 @endsection
 @push('scripts')
-  <link rel="stylesheet"
-    href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
-  <script
-    src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js">
-  </script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
+  <script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
 @endpush
